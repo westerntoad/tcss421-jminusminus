@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grammar" beforeDir="false" afterPath="$PROJECT_DIR$/grammar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JAssignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JBinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JBinaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JBooleanBinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JBooleanBinaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JClassDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JClassDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JComparisonExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JComparisonExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JConstructorDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JConstructorDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JLiteralChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JLiteralChar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JLiteralInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JLiteralInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JLiteralString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JLiteralString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JMethodDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JMethodDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JTypeDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JTypeDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JUnaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JUnaryExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/JWhileStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JWhileStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/j--.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/j--.jj" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1WioJqpDF6mSNoLN7qdMmxO1tU5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/jvm" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Scan">
+    <configuration name="Analyze" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-a $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Compile" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="$Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaCCAnalyze" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.JavaCCMain" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-a $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaCCCompile" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.JavaCCMain" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="$Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaCCParse" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.JavaCCMain" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-p $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaCCPreAnalyze" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.JavaCCMain" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-pa $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaCCSPIM" type="Application" factoryName="Application">
+      <envs>
+        <env name="j" value="$PROJECT_DIR$/.." />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="jminusminus.JavaCCMain" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-s $Prompt$ -r $Prompt$ $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JavaCCScan" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.JavaCCMain" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-t $Prompt$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jminusminus.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Parse" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-p $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PreAnalyze" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-pa $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SPIM" type="Application" factoryName="Application">
+      <envs>
+        <env name="j" value="$PROJECT_DIR$/.." />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-s $Prompt$ -r $Prompt$ $Prompt$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scan" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
+      <module name="j--" />
+      <option name="PROGRAM_PARAMETERS" value="-t $Prompt$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jminusminus.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Analyze" />
+      <item itemvalue="Application.Compile" />
+      <item itemvalue="Application.JavaCCAnalyze" />
+      <item itemvalue="Application.JavaCCCompile" />
+      <item itemvalue="Application.JavaCCParse" />
+      <item itemvalue="Application.JavaCCPreAnalyze" />
+      <item itemvalue="Application.JavaCCSPIM" />
+      <item itemvalue="Application.JavaCCScan" />
+      <item itemvalue="Application.Parse" />
+      <item itemvalue="Application.PreAnalyze" />
+      <item itemvalue="Application.SPIM" />
+      <item itemvalue="Application.Scan" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="" />
+      <created>1579641706788</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579641706788</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.jj" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="571" y="30" width="845" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1611495685409">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="571" y="30" width="845" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1611495685409" />
+  </component>
+</project>
