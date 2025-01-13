@@ -96,6 +96,14 @@ class Scanner {
                     while (ch != '\n' && ch != EOFCH) {
                         nextCh();
                     }
+                } else if (ch == '*') {
+                    //multi line comment
+                    // CharReader maps all new lines to "*/".
+                    boolean flag = false;
+                    while (!(flag && ch == '/') && ch != EOFCH) {
+                        flag = (ch == '*');
+                        nextCh();
+                    }
                 } else {
                     reportScannerError("Operator / is not supported in j--");
                 }
