@@ -89,9 +89,15 @@ class Scanner {
             while (isWhitespace(ch)) {
                 nextCh();
             }
+            // TODO: Scan (and ignore) Java multi-line comments.
             if (ch == '/') {
                 nextCh();
-                if (ch == '/') {
+                if (ch == '*') { // multi-line comment support
+                    multiLineSupport();
+                    while (ch != '\n' && ch != EOFCH) {
+                        nextCh();
+                    }
+                } else if (ch == '/') {
                     // CharReader maps all new lines to '\n'.
                     while (ch != '\n' && ch != EOFCH) {
                         nextCh();
@@ -104,6 +110,7 @@ class Scanner {
             }
         }
         line = input.line();
+        // TODO: recognize and return all Java operators that are not reserved words.
         switch (ch) {
             case ',':
                 nextCh();
@@ -251,6 +258,14 @@ class Scanner {
                 }
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
             default:
+                // TODO: recognize and return all Java reserved words.
+                // TODO: recognize and return Java doubleprecision literals (returned as
+                // DOUBLE_LITERAL).
+                // TODO: recognize and return all other literals in Java, for example,
+                // FLOAT_LITERAL, LONG_LITERAL, etc
+                // TODO: Bonus, recognize and return all other representations of integers
+                // (hexadecimal, octal, etc.).
+
                 if (isIdentifierStart(ch)) {
                     buffer = new StringBuffer();
                     while (isIdentifierPart(ch)) {
@@ -323,7 +338,9 @@ class Scanner {
         }
     }
 
-    // Advances ch to the next character from input, and updates the line number.
+    /**
+     * Advances ch to the next character from input, and updates the line number.
+     */
     private void nextCh() {
         line = input.line();
         try {
@@ -333,7 +350,8 @@ class Scanner {
         }
     }
 
-    // Reports a lexical error and records the fact that an error has occurred. This fact can be
+    // Reports a lexical error and records the fact that an error has occurred. This
+    // fact can be
     // ascertained from the Scanner by sending it an errorHasOccurred message.
     private void reportScannerError(String message, Object... args) {
         isInError = true;
@@ -342,7 +360,8 @@ class Scanner {
         System.err.println();
     }
 
-    // Returns true if the specified character is a digit (0-9), and false otherwise.
+    // Returns true if the specified character is a digit (0-9), and false
+    // otherwise.
     private boolean isDigit(char c) {
         return (c >= '0' && c <= '9');
     }
@@ -352,20 +371,41 @@ class Scanner {
         return (c == ' ' || c == '\t' || c == '\n' || c == '\f');
     }
 
-    // Returns true if the specified character can start an identifier name, and false otherwise.
+    // Returns true if the specified character can start an identifier name, and
+    // false otherwise.
     private boolean isIdentifierStart(char c) {
         return (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_' || c == '$');
     }
 
-    // Returns true if the specified character can be part of an identifier name, and false
+    // Returns true if the specified character can be part of an identifier name,
+    // and false
     // otherwise.
     private boolean isIdentifierPart(char c) {
         return (isIdentifierStart(c) || isDigit(c));
     }
+
+    /**
+     * Abraham, Corey, Jeremiah
+     * Find '* /' termination
+     * Ignore rest
+     */
+    private void multiLineSupport() {
+        while (ch != EOFCH) {
+            nextCh();
+            if (ch == '*') {
+                nextCh();
+                if (ch == '/')
+                    return;
+            }
+        }
+        reportScannerError("Malformed Multiline comment");
+        return;
+    }
 }
 
 /**
- * A buffered character reader, which abstracts out differences between platforms, mapping all new
+ * A buffered character reader, which abstracts out differences between
+ * platforms, mapping all new
  * lines to '\n', and also keeps track of line numbers.
  */
 class CharReader {
