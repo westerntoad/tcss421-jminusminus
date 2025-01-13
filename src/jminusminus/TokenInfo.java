@@ -3,25 +3,26 @@
 package jminusminus;
 
 /**
- * An enum of token kinds. Each entry in this enum represents the kind of a token along with its
+ * An enum of token kinds. Each entry in this enum represents the kind of a
+ * token along with its
  * image (string representation).
  */
 enum TokenKind {
     // End of file.
     EOF(""),
 
-    // Reserved words.
+    // Reserved words. 51 tokens
     ABSTRACT("abstract"), BOOLEAN("boolean"), CHAR("char"), CLASS("class"), ELSE("else"),
     EXTENDS("extends"), IF("if"), IMPORT("import"), INSTANCEOF("instanceof"), INT("int"),
     NEW("new"), PACKAGE("package"), PRIVATE("private"), PROTECTED("protected"),
     PUBLIC("public"), RETURN("return"), STATIC("static"), SUPER("super"), THIS("this"),
     VOID("void"), WHILE("while"),
 
-    // Operators.
+    // Operators. 38 tokens
     ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
     MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"),
 
-    // Separators.
+    // Separators. 12 Tokens
     COMMA(","), DOT("."), LBRACK("["), LCURLY("{"), LPAREN("("), RBRACK("]"), RCURLY("}"),
     RPAREN(")"), SEMI(";"),
 
@@ -70,16 +71,20 @@ enum TokenKind {
 }
 
 /**
- * A representation of tokens returned by the Scanner method getNextToken(). A token has a kind
- * identifying what kind of token it is, an image for providing any semantic text, and the line in
+ * A representation of tokens returned by the Scanner method getNextToken(). A
+ * token has a kind
+ * identifying what kind of token it is, an image for providing any semantic
+ * text, and the line in
  * which it occurred in the source file.
  */
 public class TokenInfo {
     // Token kind.
     private TokenKind kind;
 
-    // Semantic text (if any). For example, the identifier name when the token kind is IDENTIFIER
-    // . For tokens without a semantic text, it is simply its string representation. For example,
+    // Semantic text (if any). For example, the identifier name when the token kind
+    // is IDENTIFIER
+    // . For tokens without a semantic text, it is simply its string representation.
+    // For example,
     // "+=" when the token kind is PLUS_ASSIGN.
     private String image;
 
@@ -87,7 +92,8 @@ public class TokenInfo {
     private int line;
 
     /**
-     * Constructs a TokenInfo object given its kind, the semantic text forming the token, and its
+     * Constructs a TokenInfo object given its kind, the semantic text forming the
+     * token, and its
      * line number.
      *
      * @param kind  the token's kind.
@@ -101,7 +107,8 @@ public class TokenInfo {
     }
 
     /**
-     * Constructs a TokenInfo object given its kind and its line number. Its image is simply the
+     * Constructs a TokenInfo object given its kind and its line number. Its image
+     * is simply the
      * token kind's string representation.
      *
      * @param kind the token's identifying number.
