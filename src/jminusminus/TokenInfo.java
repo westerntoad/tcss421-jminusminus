@@ -11,18 +11,40 @@ enum TokenKind {
     // End of file.
     EOF(""),
 
-    // Reserved words. 51 tokens
+    // Reserved words. 51 tokens, missing 30 tokens
     ABSTRACT("abstract"), BOOLEAN("boolean"), CHAR("char"), CLASS("class"), ELSE("else"),
     EXTENDS("extends"), IF("if"), IMPORT("import"), INSTANCEOF("instanceof"), INT("int"),
     NEW("new"), PACKAGE("package"), PRIVATE("private"), PROTECTED("protected"),
     PUBLIC("public"), RETURN("return"), STATIC("static"), SUPER("super"), THIS("this"),
     VOID("void"), WHILE("while"),
 
-    // Operators. 38 tokens
+    // Operators.
+    /*
+     * 38 tokens:
+     * = > < ! ~ ? : ->
+     * == >= <= != && || ++ --
+     * + - * / & | ^ % << >> >>>
+     * += -= *= /= &= |= ^= %= <<= >>= >>>=
+     * missing 26 tokens:
+     * < ~ ? : ->
+     * >= != ||
+     * / & | ^ % << >> >>>
+     * -= *= /= &= |= ^= %= <<= >>= >>>=
+     */
     ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
-    MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"),
+    MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"), // L = Logical
+    // ADDED 26 OPERATORS
+    // TODO: Assign better names.
+    LT("<"), BCOMP("~"), TERN_TRUE("?"), TERN_FALSE(":"),
+    LAMBDA("->"), GE(">="), NOT_EQUAL("!="), LOR("||"),
+    DIV("/"), BAND("&"), BOR("|"), BXOR("^"), MOD("%"),
+    BSHIFTL("<<"), BSHIFTR(">>"), BSSHIFTR(">>>"),
+    MINUS_ASSIGN("-="), MUL_ASSIGN("*="), DIV_ASSIGN("/="),
+    BAND_ASSIGN("&="), BOR_ASSIGN("|="), BXOR_ASSIGN("^="),
+    MOD_ASSIGN("%="), BSHIFTL_ASSIGN("<<="), BSHIFTR_ASSIGN(">>="),
+    BSSHIFTR_ASSIGN(">>>="),
 
-    // Separators. 12 Tokens
+    // Separators. 12 Tokens, missing 3 tokens: '...', '@', '::'
     COMMA(","), DOT("."), LBRACK("["), LCURLY("{"), LPAREN("("), RBRACK("]"), RCURLY("}"),
     RPAREN(")"), SEMI(";"),
 
