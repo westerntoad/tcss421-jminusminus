@@ -11,12 +11,43 @@ enum TokenKind {
     // End of file.
     EOF(""),
 
-    // Reserved words. 51 tokens, missing 30 tokens
+    // Reserved words.
+    /*
+     * 51 tokens:
+     * abstract continue for new switch
+     * assert default if package synchronized
+     * boolean do goto private this
+     * break double implements protected throw
+     * byte else import public throws
+     * case enum instanceof return transient
+     * catch extends int short try
+     * char final interface static void
+     * class finally long strictfp volatile
+     * const float native super while
+     * _ (underscore)
+     */
     ABSTRACT("abstract"), BOOLEAN("boolean"), CHAR("char"), CLASS("class"), ELSE("else"),
     EXTENDS("extends"), IF("if"), IMPORT("import"), INSTANCEOF("instanceof"), INT("int"),
     NEW("new"), PACKAGE("package"), PRIVATE("private"), PROTECTED("protected"),
     PUBLIC("public"), RETURN("return"), STATIC("static"), SUPER("super"), THIS("this"),
     VOID("void"), WHILE("while"),
+
+    /*
+     * missing 28* tokens: strictfp is obsolete, _ (underscore) for future use
+     * continue for switch assert default
+     * synchronized do goto break double
+     * implements throw byte throws case
+     * enum transient catch short try
+     * final interface finally long volatile
+     * const float native
+     */
+    // ADDED 28 KEYWORDS
+    CONTINUE("continue"), FOR("for"), SWITCH("switch"), ASSERT("assert"), DEFAULT("default"),
+    SYNCHRONIZED("synchronized"), DO("do"), GOTO("goto"), BREAK("break"), DOUBLE("double"),
+    IMPLEMENTS("implements"), THROW("throw"), BYTE("byte"), THROWS("throws"), CASE("case"),
+    ENUM("enum"), TRANSIENT("transient"), CATCH("catch"), SHORT("short"), TRY("try"),
+    FINAL("final"), INTERFACE("interface"), FINALLY("finally"), LONG("long"), VOLATILE("volatile"),
+    CONST("const"), FLOAT("float"), NATIVE("native"),
 
     // Operators.
     /*
@@ -25,14 +56,16 @@ enum TokenKind {
      * == >= <= != && || ++ --
      * + - * / & | ^ % << >> >>>
      * += -= *= /= &= |= ^= %= <<= >>= >>>=
+     */
+    ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
+    MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"), // L = Logical
+    /*
      * missing 26 tokens:
      * < ~ ? : ->
      * >= != ||
      * / & | ^ % << >> >>>
      * -= *= /= &= |= ^= %= <<= >>= >>>=
      */
-    ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
-    MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"), // L = Logical
     // ADDED 26 OPERATORS
     // TODO: Assign better names.
     LT("<"), BCOMP("~"), TERN_TRUE("?"), TERN_FALSE(":"),
