@@ -1,4 +1,4 @@
-// INVALID
+//invalid
 import java.lang.System;
 
 public class HelloWorld {
