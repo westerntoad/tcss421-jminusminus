@@ -11,8 +11,6 @@ for file in *.java; do
     numrun=$((numrun+1))
     echo "Testing $file"
     top=$(cat $file | head -n 1)
-    #valid=$(expr "$top" != "// INVALID")
-    #valid=$(echo "$top" | grep -e '// INVALID')
     valid=1
     if [[ "$top" =~ $tagre ]]; then
         valid=0
@@ -33,13 +31,26 @@ for file in *.java; do
         fi
     else
         # compilation succeeds
+        jvm=$(java ${file%.java} 2>&1 > /dev/null)
         if [ $valid -eq 1 ]; then
             # does not have tag indicating it should fail
-            numpassed=$((numpassed+1))
+            if [ -n "$jvm" ]; then
+                # jvm prints error
+                echo "$file encountered a runtime error. STDERR:"
+                echo "$jvm"
+                echo
+            else
+                numpassed=$((numpassed+1))
+            fi
         else
             # has tag indicating it should fail
-            echo "$file succeeded in compiling when tag indicates it should fail."
-            echo
+            if [ -n "$jvm" ]; then
+                # jvm prints error
+                numpassed=$((numpassed+1))
+            else
+                echo "$file succeeded in compiling when tag indicates it should fail."
+                echo
+            fi
         fi
         rm ${file%.java}'.class'
     fi
