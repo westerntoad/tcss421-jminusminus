@@ -73,6 +73,36 @@ class Scanner {
         reserved.put(VOID.image(), VOID);
         reserved.put(WHILE.image(), WHILE);
 
+        // Adding the new 28 reserved keywords
+        reserved.put(CONTINUE.image(), CONTINUE);
+        reserved.put(FOR.image(), FOR);
+        reserved.put(SWITCH.image(), SWITCH);
+        reserved.put(ASSERT.image(), ASSERT);
+        reserved.put(DEFAULT.image(), DEFAULT);
+        reserved.put(SYNCHRONIZED.image(), SYNCHRONIZED);
+        reserved.put(DO.image(), DO);
+        reserved.put(GOTO.image(), GOTO);
+        reserved.put(BREAK.image(), BREAK);
+        reserved.put(DOUBLE.image(), DOUBLE);
+        reserved.put(IMPLEMENTS.image(), IMPLEMENTS);
+        reserved.put(THROW.image(), THROW);
+        reserved.put(BYTE.image(), BYTE);
+        reserved.put(THROWS.image(), THROWS);
+        reserved.put(CASE.image(), CASE);
+        reserved.put(ENUM.image(), ENUM);
+        reserved.put(TRANSIENT.image(), TRANSIENT);
+        reserved.put(CATCH.image(), CATCH);
+        reserved.put(SHORT.image(), SHORT);
+        reserved.put(TRY.image(), TRY);
+        reserved.put(FINAL.image(), FINAL);
+        reserved.put(INTERFACE.image(), INTERFACE);
+        reserved.put(FINALLY.image(), FINALLY);
+        reserved.put(LONG.image(), LONG);
+        reserved.put(VOLATILE.image(), VOLATILE);
+        reserved.put(CONST.image(), CONST);
+        reserved.put(FLOAT.image(), FLOAT);
+        reserved.put(NATIVE.image(), NATIVE);
+
         // Prime the pump.
         nextCh();
     }
