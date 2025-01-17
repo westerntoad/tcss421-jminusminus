@@ -150,8 +150,13 @@ class Scanner {
                 nextCh();
                 return new TokenInfo(COMMA, line);
             case '.':
-                nextCh();
-                return new TokenInfo(DOT, line);
+                // nextCh();
+                buffer = new StringBuffer();
+                TokenInfo potentialFloable = floableLiteralSupport(buffer);
+                if (potentialFloable != null)
+                    return potentialFloable;
+                else
+                    return new TokenInfo(DOT, line);
             case '[':
                 nextCh();
                 return new TokenInfo(LBRACK, line);
@@ -352,6 +357,13 @@ class Scanner {
                 return new TokenInfo(STRING_LITERAL, buffer.toString(), line);
             case EOFCH:
                 return new TokenInfo(EOF, line);
+            // TODO: recognize and return all Java reserved words.
+            // TODO: recognize and return Java doubleprecision literals (returned as
+            // DOUBLE_LITERAL).
+            // TODO: recognize and return all other literals in Java, for example,
+            // FLOAT_LITERAL, LONG_LITERAL, etc
+            // TODO: Bonus, recognize and return all other representations of integers
+            // (hexadecimal, octal, etc.).
             case '0':
             case '1':
             case '2':
@@ -367,16 +379,17 @@ class Scanner {
                     buffer.append(ch);
                     nextCh();
                 }
-                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
-            default:
-                // TODO: recognize and return all Java reserved words.
-                // TODO: recognize and return Java doubleprecision literals (returned as
-                // DOUBLE_LITERAL).
-                // TODO: recognize and return all other literals in Java, for example,
-                // FLOAT_LITERAL, LONG_LITERAL, etc
-                // TODO: Bonus, recognize and return all other representations of integers
-                // (hexadecimal, octal, etc.).
-
+                // TODO: stronger checks
+                if (ch == 'd' || ch == 'D') {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                } else if (ch == 'f' || ch == 'F') {
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                } else if (ch == 'l' || ch == 'L') {
+                    return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+                } else {
+                    return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+                }
+            default: // for reserved keywords
                 if (isIdentifierStart(ch)) {
                     buffer = new StringBuffer();
                     while (isIdentifierPart(ch)) {
@@ -511,6 +524,51 @@ class Scanner {
         }
         reportScannerError("Malformed Multiline comment");
         return;
+    }
+
+    /*
+     * Returns float or double literals
+     * floats: 1e1f 2.f .3f 0f 3.14f 6.022137e+23f
+     * doubles: 1e1 2. .3 0.0 3.14 1e-9d 1e137
+     */
+    // TODO: Maybe check for e+, e-, e.
+    private TokenInfo floableLiteralSupport(StringBuffer buffer) {
+        int periodCount = 0;
+        if (ch == '.')
+            periodCount++; // point first i.e. .01
+        nextCh();
+        if (isDigit(ch)) {
+            buffer = new StringBuffer();
+            boolean precedingUnderscore = false;
+            while (true) {
+                if (ch == '.') {
+                    periodCount++;
+                    if (periodCount >= 2 || precedingUnderscore) {
+                        return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                    } else {
+                        buffer.append(ch);
+                    }
+                } else if ((ch == 'f' || ch == 'F') && !precedingUnderscore) {
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                } else if ((ch == 'd' || ch == 'D') && !precedingUnderscore) {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                } else if (isDigit(ch)) {
+                    buffer.append(ch);
+                    precedingUnderscore = false;
+                } else if (ch == '_') {
+                    buffer.append(ch);
+                    precedingUnderscore = true;
+                } else if (!isDigit(ch)) {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                }
+                nextCh();
+            }
+        }
+        return null;
+    }
+
+    private TokenInfo longSupport(StringBuffer buffer) {
+        return null;
     }
 }
 
