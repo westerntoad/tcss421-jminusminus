@@ -73,6 +73,36 @@ class Scanner {
         reserved.put(VOID.image(), VOID);
         reserved.put(WHILE.image(), WHILE);
 
+        // Adding the new 28 reserved keywords
+        reserved.put(CONTINUE.image(), CONTINUE);
+        reserved.put(FOR.image(), FOR);
+        reserved.put(SWITCH.image(), SWITCH);
+        reserved.put(ASSERT.image(), ASSERT);
+        reserved.put(DEFAULT.image(), DEFAULT);
+        reserved.put(SYNCHRONIZED.image(), SYNCHRONIZED);
+        reserved.put(DO.image(), DO);
+        reserved.put(GOTO.image(), GOTO);
+        reserved.put(BREAK.image(), BREAK);
+        reserved.put(DOUBLE.image(), DOUBLE);
+        reserved.put(IMPLEMENTS.image(), IMPLEMENTS);
+        reserved.put(THROW.image(), THROW);
+        reserved.put(BYTE.image(), BYTE);
+        reserved.put(THROWS.image(), THROWS);
+        reserved.put(CASE.image(), CASE);
+        reserved.put(ENUM.image(), ENUM);
+        reserved.put(TRANSIENT.image(), TRANSIENT);
+        reserved.put(CATCH.image(), CATCH);
+        reserved.put(SHORT.image(), SHORT);
+        reserved.put(TRY.image(), TRY);
+        reserved.put(FINAL.image(), FINAL);
+        reserved.put(INTERFACE.image(), INTERFACE);
+        reserved.put(FINALLY.image(), FINALLY);
+        reserved.put(LONG.image(), LONG);
+        reserved.put(VOLATILE.image(), VOLATILE);
+        reserved.put(CONST.image(), CONST);
+        reserved.put(FLOAT.image(), FLOAT);
+        reserved.put(NATIVE.image(), NATIVE);
+
         // Prime the pump.
         nextCh();
     }
@@ -89,28 +119,44 @@ class Scanner {
             while (isWhitespace(ch)) {
                 nextCh();
             }
+            // TODO: Scan (and ignore) Java multi-line comments.
             if (ch == '/') {
                 nextCh();
-                if (ch == '/') {
+                if (ch == '*') { // multi-line comment support
+                    multiLineSupport();
+                    while (ch != '\n' && ch != EOFCH) {
+                        nextCh();
+                    }
+                } else if (ch == '/') {
                     // CharReader maps all new lines to '\n'.
                     while (ch != '\n' && ch != EOFCH) {
                         nextCh();
                     }
-                } else {
-                    reportScannerError("Operator / is not supported in j--");
+                    // /, /=
+                } else if (ch == '=') { // /=
+                    nextCh();
+                    return new TokenInfo(DIV_ASSIGN, line);
+                } else { // /
+                    return new TokenInfo(DIV, line);
                 }
             } else {
                 moreWhiteSpace = false;
             }
         }
         line = input.line();
+        // TODO: recognize and return all Java operators that are not reserved words.
         switch (ch) {
             case ',':
                 nextCh();
                 return new TokenInfo(COMMA, line);
             case '.':
-                nextCh();
-                return new TokenInfo(DOT, line);
+                // nextCh();
+                buffer = new StringBuffer();
+                TokenInfo potentialFloable = floableLiteralSupport(buffer);
+                if (potentialFloable != null)
+                    return potentialFloable;
+                else
+                    return new TokenInfo(DOT, line);
             case '[':
                 nextCh();
                 return new TokenInfo(LBRACK, line);
@@ -132,10 +178,15 @@ class Scanner {
             case ';':
                 nextCh();
                 return new TokenInfo(SEMI, line);
-            case '*':
+            case '*': // *, *=
                 nextCh();
-                return new TokenInfo(STAR, line);
-            case '+':
+                if (ch == '=') { // *=
+                    nextCh();
+                    return new TokenInfo(MUL_ASSIGN, line);
+                } else { // *
+                    return new TokenInfo(STAR, line);
+                }
+            case '+': // +, ++, +=
                 nextCh();
                 if (ch == '=') {
                     nextCh();
@@ -146,45 +197,117 @@ class Scanner {
                 } else {
                     return new TokenInfo(PLUS, line);
                 }
-            case '-':
+            case '-': // -, --, -=, ->
                 nextCh();
-                if (ch == '-') {
+                if (ch == '-') { // --
                     nextCh();
                     return new TokenInfo(DEC, line);
-                } else {
+                } else if (ch == '=') { // -=
+                    nextCh();
+                    return new TokenInfo(MINUS_ASSIGN, line);
+                } else if (ch == '>') { // ->
+                    nextCh();
+                    return new TokenInfo(LAMBDA, line);
+                } else { // -
                     return new TokenInfo(MINUS, line);
                 }
-            case '=':
+            case '=': // =, ==
                 nextCh();
-                if (ch == '=') {
+                if (ch == '=') { // ==
                     nextCh();
                     return new TokenInfo(EQUAL, line);
-                } else {
+                } else { // =
                     return new TokenInfo(ASSIGN, line);
                 }
-            case '>':
+            case '>': // >, >>, >>>, >=, >>=
                 nextCh();
-                return new TokenInfo(GT, line);
-            case '<':
+                if (ch == '>') {
+                    nextCh();
+                    if (ch == '>') { // >>>
+                        nextCh();
+                        return new TokenInfo(BSSHIFTR, line);
+                    } else if (ch == '=') { // >>=
+                        nextCh();
+                        return new TokenInfo(BSHIFTR_ASSIGN, line);
+                    } else { // >>
+                        return new TokenInfo(BSHIFTR, line);
+                    }
+                } else if (ch == '=') { // >=
+                    nextCh();
+                    return new TokenInfo(GE, line);
+                } else { // >
+                    return new TokenInfo(GT, line);
+                }
+            case '<': // <, <<, <=, <<=
+                nextCh();
+                if (ch == '=') { // <=
+                    nextCh();
+                    return new TokenInfo(LE, line);
+                } else if (ch == '<') {
+                    nextCh();
+                    if (ch == '=') { // <<=
+                        nextCh();
+                        return new TokenInfo(BSHIFTL_ASSIGN, line);
+                    } else { // <<
+                        return new TokenInfo(BSHIFTL, line);
+                    }
+                } else { // <
+                    return new TokenInfo(LT, line);
+                }
+            case '!': // !, !=
+                nextCh();
+                if (ch == '=') { // !=
+                    nextCh();
+                    return new TokenInfo(NOT_EQUAL, line);
+                } else { // !
+                    return new TokenInfo(LNOT, line);
+                }
+            case '&': // &, &&, &=
+                nextCh();
+                if (ch == '&') { // &&
+                    nextCh();
+                    return new TokenInfo(LAND, line);
+                } else if (ch == '=') { // &=
+                    nextCh();
+                    return new TokenInfo(BAND_ASSIGN, line);
+                } else { // &
+                    return new TokenInfo(BAND, line);
+                }
+            case '~': // ~
+                nextCh();
+                return new TokenInfo(BCOMP, line);
+            case '?': // ?
+                nextCh();
+                return new TokenInfo(TERN_TRUE, line);
+            case ':': // :
+                nextCh();
+                return new TokenInfo(TERN_FALSE, line);
+            case '|': // |, |=, ||
+                nextCh();
+                if (ch == '=') { // |=
+                    nextCh();
+                    return new TokenInfo(BOR_ASSIGN, line);
+                } else if (ch == '|') { // ||
+                    nextCh();
+                    return new TokenInfo(LOR, line);
+                } else { // |
+                    return new TokenInfo(BOR, line);
+                }
+            case '%': // %, %=
+                nextCh();
+                if (ch == '=') { // %=
+                    nextCh();
+                    return new TokenInfo(MOD_ASSIGN, line);
+                } else { // %
+                    return new TokenInfo(MOD, line);
+                }
+            case '^': // ^, ^=
                 nextCh();
                 if (ch == '=') {
                     nextCh();
-                    return new TokenInfo(LE, line);
+                    return new TokenInfo(BXOR_ASSIGN, line);
                 } else {
-                    reportScannerError("Operator < is not supported in j--");
-                    return getNextToken();
-                }
-            case '!':
-                nextCh();
-                return new TokenInfo(LNOT, line);
-            case '&':
-                nextCh();
-                if (ch == '&') {
-                    nextCh();
-                    return new TokenInfo(LAND, line);
-                } else {
-                    reportScannerError("Operator & is not supported in j--");
-                    return getNextToken();
+                    return new TokenInfo(BXOR, line);
                 }
             case '\'':
                 buffer = new StringBuffer();
@@ -234,6 +357,13 @@ class Scanner {
                 return new TokenInfo(STRING_LITERAL, buffer.toString(), line);
             case EOFCH:
                 return new TokenInfo(EOF, line);
+            // TODO: recognize and return all Java reserved words.
+            // TODO: recognize and return Java doubleprecision literals (returned as
+            // DOUBLE_LITERAL).
+            // TODO: recognize and return all other literals in Java, for example,
+            // FLOAT_LITERAL, LONG_LITERAL, etc
+            // TODO: Bonus, recognize and return all other representations of integers
+            // (hexadecimal, octal, etc.).
             case '0':
             case '1':
             case '2':
@@ -249,8 +379,17 @@ class Scanner {
                     buffer.append(ch);
                     nextCh();
                 }
-                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
-            default:
+                // TODO: stronger checks
+                if (ch == 'd' || ch == 'D') {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                } else if (ch == 'f' || ch == 'F') {
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                } else if (ch == 'l' || ch == 'L') {
+                    return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+                } else {
+                    return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+                }
+            default: // for reserved keywords
                 if (isIdentifierStart(ch)) {
                     buffer = new StringBuffer();
                     while (isIdentifierPart(ch)) {
@@ -323,7 +462,9 @@ class Scanner {
         }
     }
 
-    // Advances ch to the next character from input, and updates the line number.
+    /**
+     * Advances ch to the next character from input, and updates the line number.
+     */
     private void nextCh() {
         line = input.line();
         try {
@@ -333,7 +474,8 @@ class Scanner {
         }
     }
 
-    // Reports a lexical error and records the fact that an error has occurred. This fact can be
+    // Reports a lexical error and records the fact that an error has occurred. This
+    // fact can be
     // ascertained from the Scanner by sending it an errorHasOccurred message.
     private void reportScannerError(String message, Object... args) {
         isInError = true;
@@ -342,7 +484,8 @@ class Scanner {
         System.err.println();
     }
 
-    // Returns true if the specified character is a digit (0-9), and false otherwise.
+    // Returns true if the specified character is a digit (0-9), and false
+    // otherwise.
     private boolean isDigit(char c) {
         return (c >= '0' && c <= '9');
     }
@@ -352,20 +495,86 @@ class Scanner {
         return (c == ' ' || c == '\t' || c == '\n' || c == '\f');
     }
 
-    // Returns true if the specified character can start an identifier name, and false otherwise.
+    // Returns true if the specified character can start an identifier name, and
+    // false otherwise.
     private boolean isIdentifierStart(char c) {
         return (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_' || c == '$');
     }
 
-    // Returns true if the specified character can be part of an identifier name, and false
+    // Returns true if the specified character can be part of an identifier name,
+    // and false
     // otherwise.
     private boolean isIdentifierPart(char c) {
         return (isIdentifierStart(c) || isDigit(c));
     }
+
+    /**
+     * Abraham, Corey, Jeremiah
+     * Find '* /' termination and
+     * Ignore rest
+     */
+    private void multiLineSupport() {
+        while (ch != EOFCH) {
+            nextCh();
+            if (ch == '*') {
+                nextCh();
+                if (ch == '/')
+                    return;
+            }
+        }
+        reportScannerError("Malformed Multiline comment");
+        return;
+    }
+
+    /*
+     * Returns float or double literals
+     * floats: 1e1f 2.f .3f 0f 3.14f 6.022137e+23f
+     * doubles: 1e1 2. .3 0.0 3.14 1e-9d 1e137
+     */
+    // TODO: Maybe check for e+, e-, e.
+    private TokenInfo floableLiteralSupport(StringBuffer buffer) {
+        int periodCount = 0;
+        if (ch == '.')
+            periodCount++; // point first i.e. .01
+        nextCh();
+        if (isDigit(ch)) {
+            buffer = new StringBuffer();
+            boolean precedingUnderscore = false;
+            while (true) {
+                if (ch == '.') {
+                    periodCount++;
+                    if (periodCount >= 2 || precedingUnderscore) {
+                        return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                    } else {
+                        buffer.append(ch);
+                    }
+                } else if ((ch == 'f' || ch == 'F') && !precedingUnderscore) {
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                } else if ((ch == 'd' || ch == 'D') && !precedingUnderscore) {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                } else if (isDigit(ch)) {
+                    buffer.append(ch);
+                    precedingUnderscore = false;
+                } else if (ch == '_') {
+                    buffer.append(ch);
+                    precedingUnderscore = true;
+                } else if (!isDigit(ch)) {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                }
+                nextCh();
+            }
+        }
+        return null;
+    }
+
+    private TokenInfo longSupport(StringBuffer buffer) {
+        return null;
+    }
 }
 
 /**
- * A buffered character reader, which abstracts out differences between platforms, mapping all new
+ * A buffered character reader, which abstracts out differences between
+ * platforms, mapping all new
  * lines to '\n', and also keeps track of line numbers.
  */
 class CharReader {
