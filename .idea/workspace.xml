@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/part1/MultilineComment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grammar" beforeDir="false" afterPath="$PROJECT_DIR$/grammar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JAssignment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JBinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JBinaryExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JBooleanBinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JBooleanBinaryExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JClassDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JClassDeclaration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JComparisonExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JComparisonExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JConstructorDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JConstructorDeclaration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JLiteralChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JLiteralChar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JLiteralInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JLiteralInt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JLiteralString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JLiteralString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JMethodDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JMethodDeclaration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JTypeDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JTypeDecl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JUnaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JUnaryExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/JWhileStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/JWhileStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Type.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jminusminus/j--.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/j--.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/j--.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/j--.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,28 +24,36 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="1WioJqpDF6mSNoLN7qdMmxO1tU5" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.SPIM.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "git-widget-placeholder": "abe",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/abraham/Documents/uwt-classes/TCSS421/tcss422-jminusminus/tests/part1"
+  }
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/part1" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tests/jvm" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Scan">
+  <component name="RunManager" selected="Application.SPIM">
     <configuration name="Analyze" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
       <module name="j--" />
@@ -189,6 +183,13 @@
       <item itemvalue="Application.Scan" />
     </list>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-11.0.22-corretto-11.0.22-4caba194b151-bfa3237e" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
@@ -206,11 +207,5 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.jj" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="571" y="30" width="845" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1611495685409">
-      <screen x="0" y="30" width="1920" height="1050" />
-    </state>
-    <state x="571" y="30" width="845" height="1050" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1611495685409" />
   </component>
 </project>
