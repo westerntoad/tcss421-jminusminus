@@ -1,5 +1,6 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham, Corey, Jeremiah
 package jminusminus;
 
 import java.io.FileNotFoundException;
@@ -223,9 +224,14 @@ class Scanner {
                 nextCh();
                 if (ch == '>') {
                     nextCh();
-                    if (ch == '>') { // >>>
+                    if (ch == '>') {
                         nextCh();
-                        return new TokenInfo(BSSHIFTR, line);
+                        if (ch == '=') { // >>>=
+                            nextCh();
+                            return new TokenInfo(BSSHIFTR_ASSIGN, line);
+                        } else { // >>>
+                            return new TokenInfo(BSSHIFTR, line);
+                        }
                     } else if (ch == '=') { // >>=
                         nextCh();
                         return new TokenInfo(BSHIFTR_ASSIGN, line);
@@ -509,7 +515,6 @@ class Scanner {
     }
 
     /**
-     * Abraham, Corey, Jeremiah
      * Find '* /' termination and
      * Ignore rest
      */
@@ -531,7 +536,7 @@ class Scanner {
      * floats: 1e1f 2.f .3f 0f 3.14f 6.022137e+23f
      * doubles: 1e1 2. .3 0.0 3.14 1e-9d 1e137
      */
-    // TODO: Maybe check for e+, e-, e.
+    // TODO: HAVE TO check for e+, e-, e.
     private TokenInfo floableLiteralSupport(StringBuffer buffer) {
         int periodCount = 0;
         if (ch == '.')
@@ -556,7 +561,7 @@ class Scanner {
                     buffer.append(ch);
                     precedingUnderscore = false;
                 } else if (ch == '_') {
-                    buffer.append(ch);
+                    // buffer.append(ch);
                     precedingUnderscore = true;
                 } else if (!isDigit(ch)) {
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
