@@ -1,3 +1,5 @@
+// INVALID
+
 public class NewLiteralsTest {
     public static void main(String[] args) {
         double i = 0.01d;

@@ -1,3 +1,5 @@
+// INVALID
+
 import java.lang.System;
 
 public class NewOperatorsTest {

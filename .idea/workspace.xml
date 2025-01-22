@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/part1/MultilineComment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/j--.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/j--.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/CharReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/CharReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/Scanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/Scanner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/TokenInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/TokenInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/TokenKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/TokenKind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/ParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/ParseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/MultiLineCommentsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/NewKeywordsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/NewLiteralsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/NewOperatorsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/MultilineComment.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +53,7 @@
   "keyToString": {
     "Application.SPIM.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "git-widget-placeholder": "abe",
+    "git-widget-placeholder": "mergin",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/abraham/Documents/uwt-classes/TCSS421/tcss422-jminusminus/tests/part1"
   }
