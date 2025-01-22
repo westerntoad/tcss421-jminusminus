@@ -33,7 +33,7 @@ enum TokenKind {
     VOID("void"), WHILE("while"),
 
     /*
-     * missing 28* tokens: strictfp is obsolete, _ (underscore) for future use
+     * missing 28* tokens: *strictfp is obsolete, _ (underscore) for future use
      * continue for switch assert default
      * synchronized do goto break double
      * implements throw byte throws case
