@@ -220,7 +220,7 @@ class Scanner {
                 } else { // =
                     return new TokenInfo(ASSIGN, line);
                 }
-            case '>': // >, >>, >>>, >=, >>=
+            case '>': // >, >>, >>>, >>>=, >=, >>=
                 nextCh();
                 if (ch == '>') {
                     nextCh();
