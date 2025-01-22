@@ -8,7 +8,7 @@ public class MultiLineCommentsTest {
 
         // Normal comment
         System.out.println("Single singleline comment: Passed");
-
+        
         /*
          * These
          * Are
@@ -36,5 +36,9 @@ public class MultiLineCommentsTest {
          * / Multiline
          */
         System.out.println("Funky Multiple Multilined comments: Passed");
+
+        /***/
+        System.out.println("Tricky Multilined comment: Passed");
+
     }
 }
