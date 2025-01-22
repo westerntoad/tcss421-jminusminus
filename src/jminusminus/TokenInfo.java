@@ -87,7 +87,6 @@ enum TokenKind {
     // Literals.
     CHAR_LITERAL("<CHAR_LITERAL>"), FALSE("false"), INT_LITERAL("<INT_LITERAL>"), NULL("null"),
     STRING_LITERAL("<STRING_LITERAL>"), TRUE("true"),
-
     /*
      * DecimalIntegerLiteral
      * HexIntegerLiteral
@@ -100,9 +99,7 @@ enum TokenKind {
      * 
      */
     // ADDED LITERALS
-    DOUBLE_LITERAL("<DOUBLE_LITERAL>"), FLOAT_LITERAL("<FLOAT_LITERAL>"), LONG_LITERAL("<LONG_LITERAL>"),
-    DECIMAL_INT_LITERAL("<DECIMAL_INT_LITERAL"), HEX_INT_LITERAL("<HEX_INT_LITERAL>"),
-    OCTAL_INT_LITERAL("<OCTAL_INT_LITERAL>"), BINARY_INT_LITERAL("<BINARY_INT_LITERAL>");
+    DOUBLE_LITERAL("<DOUBLE_LITERAL>"), FLOAT_LITERAL("<FLOAT_LITERAL>"), LONG_LITERAL("<LONG_LITERAL>");
 
     // The token kind's string representation.
     private String image;
