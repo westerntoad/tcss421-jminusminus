@@ -72,6 +72,7 @@ class Scanner {
         reserved.put(TRUE.image(), TRUE);
         reserved.put(VOID.image(), VOID);
         reserved.put(WHILE.image(), WHILE);
+        //TODO: 2.12 add reserved words to recognize reserved words
 
         // Prime the pump.
         nextCh();
@@ -97,12 +98,16 @@ class Scanner {
                         nextCh();
                     }
                 } else if (ch == '*') {
-                    //multi line comment
+                    nextCh();
+                    //multi-line comment (aka traditional)
                     // CharReader maps all new lines to "*/".
                     boolean flag = false;
                     while (!(flag && ch == '/') && ch != EOFCH) {
                         flag = (ch == '*');
                         nextCh();
+                    }
+                    if(ch == EOFCH) {
+                        reportScannerError("Traditional comment /* cannot be left unclosed");
                     }
                 } else {
                     reportScannerError("Operator / is not supported in j--");
@@ -112,6 +117,7 @@ class Scanner {
             }
         }
         line = input.line();
+        //TODO: 2.11 add operators
         switch (ch) {
             case ',':
                 nextCh();
@@ -142,6 +148,7 @@ class Scanner {
                 return new TokenInfo(SEMI, line);
             case '*':
                 nextCh();
+                //TODO: add if next == / return escape char [buffer append??]
                 return new TokenInfo(STAR, line);
             case '+':
                 nextCh();
@@ -242,6 +249,7 @@ class Scanner {
                 return new TokenInfo(STRING_LITERAL, buffer.toString(), line);
             case EOFCH:
                 return new TokenInfo(EOF, line);
+            //TODO:
             case '0':
             case '1':
             case '2':
