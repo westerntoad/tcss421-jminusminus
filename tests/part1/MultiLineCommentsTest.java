@@ -8,7 +8,7 @@ public class MultiLineCommentsTest {
 
         // Normal comment
         System.out.println("Single singleline comment: Passed");
-        
+
         /*
          * These
          * Are
@@ -21,12 +21,12 @@ public class MultiLineCommentsTest {
         System.out.println("Multiple * Multilined comments: Passed");
 
         /*
-         These
-         Are
-         Multiple
-         Lines
-         Without
-         stars
+         * These
+         * Are
+         * Multiple
+         * Lines
+         * Without
+         * stars
          */
         System.out.println("Multiple w/o * Multilined comments: Passed");
 
