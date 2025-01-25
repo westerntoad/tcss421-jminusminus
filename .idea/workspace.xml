@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/part1/InvalidLiterals.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/part1/ValidLiterals.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/part1/DoubleLiterals.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/part1/DoubleLiterals.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/part1/FloatLiterals.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/part1/FloatLiterals.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/part1/IntLiterals.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/part1/IntLiterals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/j--" beforeDir="false" afterPath="$PROJECT_DIR$/bin/j--" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/j--.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/j--.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/ParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/ParseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/DoubleLiterals.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/FloatLiterals.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/IntLiterals.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/LongLiterals.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,10 +41,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "4193e941"
+    "git-widget-placeholder": "jeremiah",
+    "last_opened_file_path": "/home/abraham/Documents/uwt-classes/TCSS421/tcss422-jminusminus/tests/part1"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/part1" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tests/jvm" />
     </key>
