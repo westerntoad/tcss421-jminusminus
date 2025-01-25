@@ -17,7 +17,6 @@ public class ValidLiterals {
         long long8 = 9223372036854775807L;
         long long10 = 314159265L;
 
-
         // Binary
         int binary1 = 0b0;
         int binary2 = 0b1;
@@ -56,7 +55,6 @@ public class ValidLiterals {
         long octalLong9 = 012345l;
         long octalLong10 = 05___55___55_5L;
         long octalLong11 = 000_000_000L;
-
 
         // Hexadecimal int
         int hexDecimal1 = 0x123456789abcdef;
@@ -105,7 +103,6 @@ public class ValidLiterals {
         float float18 = 1_2.3_4E+5f;
         float float19 = 1_2.3_4E-5f;
 
-
         // Hexadecimal float
         float hexFloat1 = 0x1.0p0f;
         float hexFloat2 = 0x1.8p1f;
@@ -114,7 +111,7 @@ public class ValidLiterals {
         float hexFloat5 = 0x1.0p-1f;
         float hexFloat6 = 0x1.0p-2f;
         float hexFloat7 = 0xff.ffp+1f;
-        float hexFloat8 = 0x.1p1;
+        float hexFloat8 = 0x.1p1f;
         float hexFloat16 = 0xff.1p1f;
 
         // Decimal double
