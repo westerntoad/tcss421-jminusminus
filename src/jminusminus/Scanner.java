@@ -716,9 +716,15 @@ class Scanner {
                     buffer.append(ch);
                     nextCh();
                 }
-                if (isFloatSuffix(ch))
+                if (isFloatSuffix(ch)) {
+                    buffer.append(ch);
+                    nextCh();
                     return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
-                else {
+                } else if (isDoubleSuffix(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                } else {
                     reportScannerError("OCTAL MISREPRESENETATION: 8 or 9 in octal literal.");
                     return null;
                 }
