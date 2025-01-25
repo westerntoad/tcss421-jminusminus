@@ -615,7 +615,6 @@ class Scanner {
 
             } else if (ch == 'e' || ch == 'E') {
                 scientificNotationOrBinaryExponentiation(buffer);
-
             } else if (ch == 'd' || ch == 'D') {
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
             } else if (ch == '.') {
