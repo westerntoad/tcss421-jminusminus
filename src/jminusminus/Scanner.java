@@ -428,7 +428,7 @@ class Scanner {
                         reportScannerError("Invalid OCTAL REPRESENTATION\nBuffer: " + buffer.toString());
                         return getNextToken();
                     }
-                } else if (endOfLiteral(ch)) { // just a 0
+                } else if (isEndOfLiteral(ch)) { // just a 0
                     return new TokenInfo(INT_LITERAL, buffer.toString(), line);
                 } else {
                     nextCh();
@@ -615,14 +615,16 @@ class Scanner {
 
             } else if (ch == 'e' || ch == 'E') {
                 scientificNotationOrBinaryExponentiation(buffer);
-            } else if (ch == 'd' || ch == 'D') {
+            } else if (isDoubleSuffix(ch)) {
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
             } else if (ch == '.') {
                 decimalFloubleLiteralAfterPeriod(buffer);
-            } else if (ch == 'f' || ch == 'F') {
+            } else if (isFloatSuffix(ch)) {
                 return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
-            } else if (ch == 'l' || ch == 'L') {
+            } else if (isLongSuffix(ch)) {
                 return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+            } else if (isEndOfLiteral(ch)) {
+                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
             } else {
                 return null;
             }
@@ -658,7 +660,7 @@ class Scanner {
                 reportScannerError("BINARY MISREPRESENETATION: '.' in binary literal.");
                 return null;
 
-            } else if (endOfLiteral(ch)) {
+            } else if (isEndOfLiteral(ch)) {
                 nextCh();
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
 
@@ -696,7 +698,7 @@ class Scanner {
                     nextCh();
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
-                } else if (endOfLiteral(ch)) {
+                } else if (isEndOfLiteral(ch)) {
                     nextCh();
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
@@ -722,7 +724,7 @@ class Scanner {
                 nextCh();
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
-            } else if (endOfLiteral(ch)) {
+            } else if (isEndOfLiteral(ch)) {
                 nextCh();
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
 
@@ -786,7 +788,7 @@ class Scanner {
                     nextCh();
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
-                } else if (endOfLiteral(ch)) {
+                } else if (isEndOfLiteral(ch)) {
                     nextCh();
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
@@ -798,7 +800,7 @@ class Scanner {
                     if (floubleCheck || !potentialFlouble)
                         return null; // We have a hex that has an invalid form of exponentiation
                 }
-            } else if (endOfLiteral(ch)) {
+            } else if (isEndOfLiteral(ch)) {
                 if (!floubleCheck && potentialFlouble) {
                     reportScannerError("HEX MISREPRESENTATION: '.' with no binary exponentation (p)/(P).");
                     return null; // we have a hex that has a . but no exponentiation i.e. 0xA.A;
@@ -840,7 +842,7 @@ class Scanner {
                 buffer.append(ch);
                 scientificNotationOrBinaryExponentiation(buffer);
 
-            } else if (endOfLiteral(ch)) {
+            } else if (isEndOfLiteral(ch)) {
                 nextCh();
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
@@ -1000,7 +1002,7 @@ class Scanner {
     /**
      * Return true if current character is whitespace ' ' or semicolon ';'
      */
-    private boolean endOfLiteral(char c) {
+    private boolean isEndOfLiteral(char c) {
         return isWhitespace(c) || isSemiColon(c);
     }
 }
