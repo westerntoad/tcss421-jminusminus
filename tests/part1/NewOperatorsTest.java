@@ -3,8 +3,17 @@ import java.lang.System;
 public class NewOperatorsTest {
     public static void main(String[] args) {
         // Demonstrating the 26 new operators
+        /*
+         * missing 26 tokens:
+         * < ~ ? : ->
+         * >= != ||
+         * / & | ^ % << >> >>>
+         * -= *= /= &= |= ^= %= <<= >>= >>>=
+         */
 
-        int a = 10, b = 20;
+
+        int a = 10;
+        int b = 20;
         boolean result;
 
         // LT

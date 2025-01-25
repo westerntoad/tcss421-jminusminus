@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="" />
+    <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/j--.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/j--.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/ParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/ParseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/NewOperatorsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/part1/NewOperatorsTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

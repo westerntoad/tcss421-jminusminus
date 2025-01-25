@@ -68,7 +68,6 @@ enum TokenKind {
      * -= *= /= &= |= ^= %= <<= >>= >>>=
      */
     // ADDED 26 OPERATORS
-    // TODO: Assign better names.
     LT("<"), BCOMP("~"), TERN_TRUE("?"), TERN_FALSE(":"),
     LAMBDA("->"), GE(">="), NOT_EQUAL("!="), LOR("||"),
     DIV("/"), BAND("&"), BOR("|"), BXOR("^"), MOD("%"),
