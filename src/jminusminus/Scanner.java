@@ -428,6 +428,14 @@ class Scanner {
                         reportScannerError("Invalid OCTAL REPRESENTATION\nBuffer: " + buffer.toString());
                         return getNextToken();
                     }
+                } else if (isDecimal(ch) && !isOctal(ch)) {
+                    TokenInfo octal = octalRepresentation(buffer);
+                    if (octal != null)
+                        return octal;
+                    else {
+                        reportScannerError("Invalid OCTAL REPRESENTATION\nBuffer: " + buffer.toString());
+                        return getNextToken();
+                    }
                 } else {
                     return new TokenInfo(INT_LITERAL, buffer.toString(), line);
                 }
