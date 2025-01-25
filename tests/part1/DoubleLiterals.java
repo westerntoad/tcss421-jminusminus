@@ -34,39 +34,5 @@ public class DoubleLiterals {
         double hexDouble5 = 0x1.0p0;
         double hexDouble6 = 0x1.8p1;
 
-        // Print all values to verify correctness
-        // System.out.println("Decimal doubles:");
-        // System.out.println(decimal1);
-        // System.out.println(decimal2);
-        // System.out.println(decimal3);
-        // System.out.println(decimal4);
-        // System.out.println(decimal5);
-        // System.out.println(decimal6);
-        // System.out.println(decimal7);
-
-        // System.out.println("Decimal doubles with underscores:");
-        // System.out.println(decimalWithUnderscores1);
-        // System.out.println(decimalWithUnderscores2);
-        // System.out.println(decimalWithUnderscores3);
-        // System.out.println(decimalWithUnderscores4);
-        // System.out.println(decimalWithUnderscores5);
-        // System.out.println(decimalWithUnderscores6);
-
-        // System.out.println("Decimal doubles with underscores and exponents:");
-        // System.out.println(decimalWithUnderscoresAndExponents1);
-        // System.out.println(decimalWithUnderscoresAndExponents2);
-        // System.out.println(decimalWithUnderscoresAndExponents3);
-        // System.out.println(decimalWithUnderscoresAndExponents4);
-        // System.out.println(decimalWithUnderscoresAndExponents5);
-        // System.out.println(decimalWithUnderscoresAndExponents6);
-
-        // System.out.println("Hexadecimal doubles:");
-        // System.out.println(hexDouble1);
-        // System.out.println(hexDouble2);
-        // System.out.println(hexDouble3);
-        // System.out.println(hexDouble4);
-        // System.out.println(hexDouble5);
-        // System.out.println(hexDouble6);
-
     }
 }

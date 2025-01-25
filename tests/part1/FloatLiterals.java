@@ -1,6 +1,24 @@
 public class FloatLiterals {
     public static void main(String[] args) {
 
+        // valid float
+        float float1 = 0f;
+        float float2 = 001f;
+        float float3 = 00031.4e+1f;
+        float float4 = 00031e+1f;
+
+        // invalid float
+//        float invalidFloat1 = 0013e+1f.5;
+
+        // valid hexadecimal float
+        float hexFloat1 = 0x1.0p0f;
+        float hexFloat2 = 0x1.8p1f;
+        float hexFloat3 = 0x1.fp3f;
+        float hexFloat4 = 0x1a.00p11f;
+        float hexFloat5 = 0x1.0p-1f;
+        float hexFloat6 = 0x1.0p-2f;
+        float hexFloat7 = 0xff.ffp+1f;
+
         // Decimal float values
         float decimal1 = 0.01f;
         float decimal2 = .0e+1f;
@@ -27,45 +45,6 @@ public class FloatLiterals {
         float decimalWithUnderscoresAndExponents6 = 1_2.3_4E-5f;
 
         // Hexadecimal floats
-        float hexFloat1 = 0x1.0p0f;
-        float hexFloat2 = 0x1.8p1f;
-        float hexFloat3 = 0x1.fp3f;
-        float hexFloat4 = 0x1a.00p11f;
-        float hexFloat5 = 0x1.0p-1f;
-        float hexFloat6 = 0x1.0p-2f;
 
-        // Print all values to verify correctness
-        // System.out.println("Decimal floats:");
-        // System.out.println(decimal1);
-        // System.out.println(decimal2);
-        // System.out.println(decimal3);
-        // System.out.println(decimal4);
-        // System.out.println(decimal5);
-        // System.out.println(decimal6);
-        // System.out.println(decimal7);
-
-        // System.out.println("Decimal floats with underscores:");
-        // System.out.println(decimalWithUnderscores1);
-        // System.out.println(decimalWithUnderscores2);
-        // System.out.println(decimalWithUnderscores3);
-        // System.out.println(decimalWithUnderscores4);
-        // System.out.println(decimalWithUnderscores5);
-        // System.out.println(decimalWithUnderscores6);
-
-        // System.out.println("Decimal floats with underscores and exponents:");
-        // System.out.println(decimalWithUnderscoresAndExponents1);
-        // System.out.println(decimalWithUnderscoresAndExponents2);
-        // System.out.println(decimalWithUnderscoresAndExponents3);
-        // System.out.println(decimalWithUnderscoresAndExponents4);
-        // System.out.println(decimalWithUnderscoresAndExponents5);
-        // System.out.println(decimalWithUnderscoresAndExponents6);
-
-        // System.out.println("Hexadecimal floats:");
-        // System.out.println(hexFloat1);
-        // System.out.println(hexFloat2);
-        // System.out.println(hexFloat3);
-        // System.out.println(hexFloat4);
-        // System.out.println(hexFloat5);
-        // System.out.println(hexFloat6);
     }
 }
