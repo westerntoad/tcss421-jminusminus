@@ -598,6 +598,33 @@ class Scanner {
     }
 
     /**
+     * Determines if the decimal value is a Int, Long, Float, or Double literal.
+     */
+    private TokenInfo decimalRepresentation(StringBuffer buffer) {
+        buffer.append(ch);
+        nextCh();
+        while (true) {
+            if (isDecimal(ch)) {
+                buffer.append(ch);
+                nextCh();
+            } else if (isUnderscore(ch)) {
+                scanUnderscoreAndBinary(buffer);
+
+            } else if (ch == 'd' || ch == 'D') {
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+            } else if (ch == '.') {
+                decimalFloubleLiteralAfterPeriod(buffer);
+            } else if (ch == 'f' || ch == 'F') {
+                return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+            } else if (ch == 'l' || ch == 'L') {
+                return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
      * Determines if the binary value is a Int or Long literal.
      */
     private TokenInfo binaryRepresentation(StringBuffer buffer) {
@@ -609,9 +636,11 @@ class Scanner {
                 illegalUnderscore = false;
                 buffer.append(ch);
                 nextCh();
+
             } else if (isUnderscore(ch) && illegalUnderscore) {
                 reportScannerError("Illegal Underscore after b/B");
                 return null; // i.e. binary 0b_1 or 0b____1
+
             } else if (isUnderscore(ch) && !illegalUnderscore) {
                 scanUnderscoreAndBinary(buffer);
 
@@ -619,12 +648,15 @@ class Scanner {
                 buffer.append(ch);
                 nextCh();
                 return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+
             } else if (ch == '.') {
                 reportScannerError("BINARY MISREPRESENETATION: '.' in binary literal.");
                 return null;
+
             } else if (endOfLiteral(ch)) {
                 nextCh();
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+
             } else {
                 return null; // We encounter malformed Binary i.e. 0b or 0b!
             }
@@ -702,24 +734,6 @@ class Scanner {
                 }
             } else {
                 return null; // We encounter malformed Octal i.e. 0f or 0thisisillegal
-            }
-        }
-    }
-
-    private TokenInfo decimalRepresentation(StringBuffer buffer) {
-        buffer.append(ch);
-        nextCh();
-        while (true) {
-            if (ch == 'd' || ch == 'D') {
-                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
-            } else if (ch == '.') {
-                decimalFloubleLiteralAfterPeriod(buffer);
-            } else if (ch == 'f' || ch == 'F') {
-                return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
-            } else if (ch == 'l' || ch == 'L') {
-                return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
-            } else {
-                return null;
             }
         }
     }

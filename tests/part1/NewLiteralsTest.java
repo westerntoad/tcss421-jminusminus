@@ -25,6 +25,7 @@ public class NewLiteralsTest {
         float hexFloat2 = 0x1.1111111p1f;
         float hexFloat3 = 0x1p0f;
         float hexFloat4 = 0x0111fff;
+        float binFloat1 = 0b0;
 
         // Decimal double values
         double decimal1 = 0.01d;

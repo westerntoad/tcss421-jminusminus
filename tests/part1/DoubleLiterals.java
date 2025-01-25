@@ -8,7 +8,7 @@ public class DoubleLiterals {
         double decimal4 = 123.456;
         double decimal5 = 789.0123d;
         double decimal6 = 1000.;
-        double decimal7 = 1.;
+        double decimal7 = 11e2f;
 
         // Decimal doubles with underscores
         double decimalWithUnderscores1 = 3_3__2.0;
@@ -16,7 +16,8 @@ public class DoubleLiterals {
         double decimalWithUnderscores3 = 2___2.0__012_______2d;
         double decimalWithUnderscores4 = .0_1;
         double decimalWithUnderscores5 = 1_234.567_89;
-        double decimalWithUnderscores6 = 0.000_001;
+        double decimalWithUnderscores6 = 10.000_001;
+        double decimalWithUnderscores7 = 101.e1;
 
         // Decimal doubles with underscores and exponents
         double decimalWithUnderscoresAndExponents1 = 1_2.3_4e+5;

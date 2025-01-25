@@ -8,7 +8,8 @@ public class FloatLiterals {
         float decimal4 = 123.456f;
         float decimal5 = 789.0123f;
         float decimal6 = 1000.f;
-        float decimal7 = 1.f;
+        float decimal7 = 001120001f;
+        float decimal8 = 0xff.1p1f;
 
         // Decimal floats with underscores
         float decimalWithUnderscores1 = 3_3__2.0f;
