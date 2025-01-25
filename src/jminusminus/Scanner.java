@@ -775,8 +775,6 @@ class Scanner {
                     nextCh();
                     return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
                 } else {
-                    if (floubleCheck || !potentialFlouble)
-                        return null; // We have a hex that has an invalid form of exponentiation
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
                 }
