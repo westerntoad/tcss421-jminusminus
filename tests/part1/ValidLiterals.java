@@ -102,6 +102,9 @@ public class ValidLiterals {
         float float17 = 1_2.3_4e-1_6f;
         float float18 = 1_2.3_4E+5f;
         float float19 = 1_2.3_4E-5f;
+        float float20 = 0008f;
+        float float21 = 01f;
+        float float22 = 01234591f;
 
         // Hexadecimal float
         float hexFloat1 = 0x1.0p0f;
@@ -135,6 +138,8 @@ public class ValidLiterals {
         double double18 = 1_2.3_4e-5_6;
         double double19 = 1_2.3_4E+5;
         double double20 = 1_2.3_4E-5;
+        double double21 = 001d;
+        double double21 = 082391d;
 
         // Hexadecimal double
         double hexDouble1 = 0xAp-5;
