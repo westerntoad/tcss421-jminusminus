@@ -608,7 +608,13 @@ class Scanner {
                 buffer.append(ch);
                 nextCh();
             } else if (isUnderscore(ch)) {
-                scanUnderscoreAndBinary(buffer);
+                scanUnderscoreAndDecimal(buffer);
+
+            } else if (ch == '.') {
+                decimalFloubleLiteralAfterPeriod(buffer);
+
+            } else if (ch == 'e' || ch == 'E') {
+                scientificNotationOrBinaryExponentiation(buffer);
 
             } else if (ch == 'd' || ch == 'D') {
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
