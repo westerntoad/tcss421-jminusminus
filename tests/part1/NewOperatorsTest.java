@@ -9,24 +9,20 @@ public class NewOperatorsTest {
 
         // LT
         result = a < b;
-        System.out.println("a < b: " + result);
 
         // BCOMP
-        System.out.println("~a: " + ~a);
+        a = ~a;
 
         // TERN_TRUE and TERN_FALSE
         int max = (a > b) ? a : b;
-        System.out.println("Max of a and b: " + max);
 
-        // TODO: LAMBDA
+        // LAMBDA
         Runnable lambda = () -> System.out.println("Lambda executed");
         // GE
         result = a >= b;
-        System.out.println("a >= b: " + result);
 
         // NOT_EQUAL
         result = a != b;
-        System.out.println("a != b: " + result);
 
         // LOR
         result = (a < b) || (a > b);
