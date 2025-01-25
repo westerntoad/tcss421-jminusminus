@@ -1,6 +1,6 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
-// Modified 2025 - Abraham, Corey, Jeremiah
+// Modified 2025 - Abraham, Jeremiah
 package jminusminus;
 
 /**
