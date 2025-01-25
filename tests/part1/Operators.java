@@ -1,6 +1,6 @@
 import java.lang.System;
 
-public class NewOperatorsTest {
+public class Operators {
     public static void main(String[] args) {
         // Demonstrating the 26 new operators
         /*
@@ -14,8 +14,7 @@ public class NewOperatorsTest {
         int a = 10;
         int b = 20;
         boolean result;
-        int a = 0;
-        int b = 0;
+
         // EQ
         result = a == b;
 
