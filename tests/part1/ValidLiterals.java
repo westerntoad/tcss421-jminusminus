@@ -1,6 +1,7 @@
 public class ValidLiterals {
     public static void main(String[] args) {
         // Decimal int
+        int decimal2 = 0181;
         int decimal1 = 0;
         int decimal2 = 10;
         int decimal3 = 123456789;
