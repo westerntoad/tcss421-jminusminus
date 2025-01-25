@@ -396,7 +396,13 @@ class Scanner {
                         }
                     case 'b': // binary
                     case 'B':
-                        TokenInfo binary;
+                        TokenInfo binary = binaryRepresentation(buffer);
+                        if (binary != null)
+                            return binary;
+                        else {
+                            reportScannerError("Invalid BINARY REPRESENTATION\nBuffer: " + buffer.toString());
+                            return getNextToken();
+                        }
                     case 'l':
                     case 'L':
                         buffer.append(ch);
@@ -413,10 +419,21 @@ class Scanner {
                         nextCh();
                         return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
                     default:
-                        nextCh();
-                        return getNextToken();
                 }
-                // octal
+                if (isOctal(ch)) {
+                    TokenInfo octal = octalRepresentation(buffer);
+                    if (octal != null)
+                        return octal;
+                    else {
+                        reportScannerError("Invalid OCTAL REPRESENTATION\nBuffer: " + buffer.toString());
+                        return getNextToken();
+                    }
+                } else if (endOfLiteral(ch)) { // just a 0
+                    return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+                } else {
+                    nextCh();
+                    return getNextToken();
+                }
             case '1':
             case '2':
             case '3':
@@ -427,25 +444,12 @@ class Scanner {
             case '8':
             case '9':
                 buffer = new StringBuffer();
-                while (isDigit(ch)) {
-                    buffer.append(ch);
-                    nextCh();
-                    if (isUnderscore(ch)) {
-                        scanUnderscoreAndDecimal(buffer);
-                    }
-                }
-                if (ch == '.') {
-
-                }
-                // TODO: stronger checks
-                if (ch == 'd' || ch == 'D') {
-                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
-                } else if (ch == 'f' || ch == 'F') {
-                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
-                } else if (ch == 'l' || ch == 'L') {
-                    return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
-                } else {
-                    return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+                TokenInfo decimal = decimalRepresentation(buffer);
+                if (decimal != null)
+                    return decimal;
+                else {
+                    reportScannerError("Invalid DECIMAL REPRESENTATION\nBuffer: " + buffer.toString());
+                    return getNextToken();
                 }
             default: // for reserved keywords
                 if (isIdentifierStart(ch)) {
@@ -594,6 +598,133 @@ class Scanner {
     }
 
     /**
+     * Determines if the binary value is a Int or Long literal.
+     */
+    private TokenInfo binaryRepresentation(StringBuffer buffer) {
+        buffer.append(ch); // capture 'b'/'B'
+        nextCh();
+        boolean illegalUnderscore = true;
+        while (true) {
+            if (isBinary(ch)) {
+                illegalUnderscore = false;
+                buffer.append(ch);
+                nextCh();
+            } else if (isUnderscore(ch) && illegalUnderscore) {
+                reportScannerError("Illegal Underscore after b/B");
+                return null; // i.e. binary 0b_1 or 0b____1
+            } else if (isUnderscore(ch) && !illegalUnderscore) {
+                scanUnderscoreAndBinary(buffer);
+
+            } else if (isLongSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
+                return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+            } else if (ch == '.') {
+                reportScannerError("BINARY MISREPRESENETATION: '.' in binary literal.");
+                return null;
+            } else if (endOfLiteral(ch)) {
+                nextCh();
+                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+            } else {
+                return null; // We encounter malformed Binary i.e. 0b or 0b!
+            }
+        }
+    }
+
+    /**
+     * Determines if the octal value is a Int or Long literal.
+     */
+    private TokenInfo octalRepresentation(StringBuffer buffer) {
+        buffer.append(ch); // capture 0-7 after 0 i.e 01 or 07
+        nextCh();
+        while (true) {
+            if (isOctal(ch)) {
+                buffer.append(ch);
+                nextCh();
+            } else if (isUnderscore(ch)) {
+                scanUnderscoreAndOctal(buffer);
+
+            } else if (ch == '.') { // Potentially a float/double...
+                TokenInfo potentialFlouble = decimalFloubleLiteralAfterPeriod(buffer);
+                if (potentialFlouble != null)
+                    return potentialFlouble;
+                reportScannerError("OCTAL MISREPRESENETATION: '.' in octal literal.");
+                return null;
+            } else if ((ch == 'e' || ch == 'E')) {
+                // e or E indicates Float or Double Literals
+                buffer.append(ch);
+                scientificNotationOrBinaryExponentiation(buffer);
+                if (isDoubleSuffix(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+
+                } else if (endOfLiteral(ch)) {
+                    nextCh();
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+
+                } else if (isFloatSuffix(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                } else {
+                    return null; // We have an octal that has an invalid form of scientific notation
+                }
+            } else if (isLongSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
+                return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+
+            } else if (isFloatSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
+                return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+
+            } else if (isDoubleSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+
+            } else if (endOfLiteral(ch)) {
+                nextCh();
+                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+
+            } else if (isDecimal(ch) && !isOctal(ch)) { // This is potentially a float if 'f' suffix
+                while (isDecimal(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                }
+                if (isFloatSuffix(ch))
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                else {
+                    reportScannerError("OCTAL MISREPRESENETATION: 8 or 9 in octal literal.");
+                    return null;
+                }
+            } else {
+                return null; // We encounter malformed Octal i.e. 0f or 0thisisillegal
+            }
+        }
+    }
+
+    private TokenInfo decimalRepresentation(StringBuffer buffer) {
+        buffer.append(ch);
+        nextCh();
+        while (true) {
+            if (ch == 'd' || ch == 'D') {
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+            } else if (ch == '.') {
+                decimalFloubleLiteralAfterPeriod(buffer);
+            } else if (ch == 'f' || ch == 'F') {
+                return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+            } else if (ch == 'l' || ch == 'L') {
+                return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
      * Determines if the hex value is a Int, Long, Double, or Float literal.
      */
     private TokenInfo hexRepresentation(StringBuffer buffer) {
@@ -609,7 +740,7 @@ class Scanner {
                 nextCh();
 
             } else if (isUnderscore(ch) && illegalUnderscore) {
-                reportScannerError("Illegal Underscore after X");
+                reportScannerError("Illegal Underscore after x/X");
                 return null; // i.e. hex 0x_A or 0x____A
             } else if (isUnderscore(ch) && !illegalUnderscore) {
                 scanUnderscoreAndHex(buffer);
@@ -636,7 +767,7 @@ class Scanner {
                     nextCh();
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
-                } else if (isWhitespace(ch) || isSemiColon(ch)) {
+                } else if (endOfLiteral(ch)) {
                     nextCh();
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
@@ -648,7 +779,7 @@ class Scanner {
                     if (floubleCheck || !potentialFlouble)
                         return null; // We have a hex that has an invalid form of exponentiation
                 }
-            } else if (isWhitespace(ch) || isSemiColon(ch)) {
+            } else if (endOfLiteral(ch)) {
                 if (!floubleCheck && potentialFlouble) {
                     reportScannerError("HEX MISREPRESENTATION: '.' with no binary exponentation (p)/(P).");
                     return null; // we have a hex that has a . but no exponentiation i.e. 0xA.A;
@@ -656,20 +787,18 @@ class Scanner {
                 nextCh();
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
             } else {
-                return null; // We encounter malformed Hex i.e. 0x! or 0xThisshouldn'thappen
+                return null; // We encounter malformed Hex i.e. 0x& or 0xThisshouldn'thappen
             }
         }
     }
 
-    /*
-     * Returns float or double literals after periods
+    /**
+     * Returns float or double literals ONLY AFTER PERIODS i.e.
      * floats: .1e1f .0f .3f .0f .14f .022137e+23f
      * doubles: .1e1 .2 .3 .0 .14 .1e-9d .1e137
-     * floats: 1e1f 2.f .3f 0f 3.14f 6.022137e+23f
-     * doubles: 1e1 2. .3 0.0 3.14 1e-9d 1e137
      */
     private TokenInfo decimalFloubleLiteralAfterPeriod(StringBuffer buffer) {
-        buffer.append(ch);
+        buffer.append(ch); // append period
         nextCh();
         while (true) {
             if (isDecimal(ch)) {
@@ -683,10 +812,6 @@ class Scanner {
                 nextCh();
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
-            } else if (isWhitespace(ch) || isSemiColon(ch)) {
-                nextCh();
-                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
-
             } else if (isFloatSuffix(ch)) {
                 buffer.append(ch);
                 nextCh();
@@ -695,6 +820,10 @@ class Scanner {
             } else if (ch == 'e' || ch == 'E') {
                 buffer.append(ch);
                 scientificNotationOrBinaryExponentiation(buffer);
+
+            } else if (endOfLiteral(ch)) {
+                nextCh();
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
 
             } else {
                 break;
@@ -847,6 +976,13 @@ class Scanner {
 
     private boolean isLongSuffix(char c) {
         return c == 'l' || c == 'L';
+    }
+
+    /**
+     * Return true if current character is whitespace ' ' or semicolon ';'
+     */
+    private boolean endOfLiteral(char c) {
+        return isWhitespace(c) || isSemiColon(c);
     }
 }
 
