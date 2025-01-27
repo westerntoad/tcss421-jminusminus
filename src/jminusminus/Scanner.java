@@ -155,24 +155,12 @@ class Scanner {
                 return new TokenInfo(COMMA, line);
             case '.':
                 nextCh();
-                switch( ch) {
-                    case '0':
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
-                    case '5':
-                    case '6':
-                    case '7':
-                    case '8':
-                    case '9':
-                        buffer = new StringBuffer();
-                        buffer.append(ch);
-                        nextCh();
-                        return numberAfterPeriod(buffer);
-                    default:
-                        return new TokenInfo(DOT, line);
+                if(isDigit(ch)) {
+                    buffer = new StringBuffer();
+                    buffer.append('.');
+                    return numberAfterPeriod(buffer);
                 }
+                return new TokenInfo(DOT, line);
             case '[':
                 nextCh();
                 return new TokenInfo(LBRACK, line);
@@ -443,20 +431,18 @@ class Scanner {
                 buffer = new StringBuffer();
                 buffer.append(ch);
                 nextCh();
-                //ifIs0 check type -> next = b,x,1-7
+                //TODO ifIs0 check type(bin/hex/octal -> next = b,x,1-7
                 isDigitOrUnderscore(buffer);
-                double num = 54.45d;
                 switch (ch) {
                     case '.':
+                        buffer.append(ch);
+                        nextCh();
                         return numberAfterPeriod(buffer);
                     case 'e':
                     case 'E':
                         buffer.append(ch);
                         nextCh();
-                        if(sciNotation(buffer).equals(float.class)) {
-                            return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
-                        }
-                        return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                        return sciNotation(buffer);
                     case 'd':
                     case 'D':
                         buffer.append(ch);
@@ -476,12 +462,11 @@ class Scanner {
                         return new TokenInfo(INT_LITERAL, buffer.toString(), line);
                 }
 
-                //TODO 2.13 double if == '.' return double_literal
                 /*
                 . prefix, middle, suffix - at least one digit
                 _ middle
                 e
-                f, F, d, D suffix
+                f, F, d, D, l, L suffix
                 e, E middle - + or - optional after eE
                  */
                 //Also, add similiar is Digit check after '.'
@@ -591,10 +576,7 @@ class Scanner {
             reportScannerError("Malformed floating point literal");
             //TODO determine what to return after error? or handled by default
         }
-        do {
-            buffer.append(ch);
-            nextCh();
-        } while (isDigit(ch));
+        isDigitOrUnderscore(buffer);
         if(ch == 'f' || ch == 'F') {
             buffer.append(ch);
             nextCh();
@@ -618,9 +600,10 @@ class Scanner {
         }
     }
 
+    /*
+     * Calling method's responsibility to add '.' to buffer and call next char
+     */
     private TokenInfo numberAfterPeriod(final StringBuffer buffer) {
-        buffer.append(ch);
-        nextCh();
         //can follow with
         // digits, e(+-), d, epsilon
         //can't lead with _
