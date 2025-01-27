@@ -487,7 +487,7 @@ class Scanner {
                         nextCh();
                         return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
                     default:
-                        if(leadingZeroFlag) {
+                        if(leadingZeroFlag && !buffer.toString().equals("0")) {
                             reportScannerError("Decimal int literals cannot begin with a 0");
                         }
                         return new TokenInfo(INT_LITERAL, buffer.toString(), line);
