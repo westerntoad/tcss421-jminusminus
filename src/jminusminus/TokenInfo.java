@@ -11,15 +11,44 @@ enum TokenKind {
     EOF(""),
 
     // Reserved words.
+    /* Java recognizes the following reserved words:
+    abstract   continue   for          new         switch
+    assert     default    if           package     synchronized
+    boolean    do         goto         private     this
+    break      double     implements   protected   throw
+    byte       else       import       public      throws
+    case       enum       instanceof   return      transient
+    catch      extends    int          short       try
+    char       final      interface    static      void
+    class      finally    long         strictfp    volatile
+    const      float      native       super       while
+    _ (underscore)
+     */
     ABSTRACT("abstract"), BOOLEAN("boolean"), CHAR("char"), CLASS("class"), ELSE("else"),
     EXTENDS("extends"), IF("if"), IMPORT("import"), INSTANCEOF("instanceof"), INT("int"),
     NEW("new"), PACKAGE("package"), PRIVATE("private"), PROTECTED("protected"),
     PUBLIC("public"), RETURN("return"), STATIC("static"), SUPER("super"), THIS("this"),
     VOID("void"), WHILE("while"),
+    ASSERT("assert"), BREAK("break"), BYTE("byte"), CASE("case"), CATCH("catch"),
+    CONST("const"), CONTINUE("continue"), DEFAULT("default"), DO("do"), DOUBLE("double"),
+    ENUM("enum"), FINAL("final"), FINALLY("finally"), FLOAT("float"), FOR("for"), GOTO("goto"),
+    IMPLEMENTS("implements"), INTERFACE("interface"), LONG("long"), NATIVE("native"), SHORT("short"),
+    STRICTFP("strictfp"), SWITCH("switch"), SYNCHRONIZED("synchronized"), THROW("throw"),
+    THROWS("throws"), TRANSIENT("transient"), TRY("try"), VOLATILE("VOLATILE"), UNDERSCORE("_"),
 
     // Operators.
+    /* Java recognizes the following operators:
+    =   >   <   !   ~   ?   :   ->
+    ==  >=  <=  !=  &&  ||  ++  --
+    +   -   *   /   &   |   ^   %   <<   >>   >>>
+    +=  -=  *=  /=  &=  |=  ^=  %=  <<=  >>=  >>>=
+     */
     ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
     MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"),
+    LT("<"), TILDE("~"), TERNARY("?"), COLON(":"), LAMBDA("->"), GE(">="), NE("!="), LOR("||"),
+    DIVIDE("/"), BAND("&"), BOR("|"), BXOR("^"), MOD("%"), LSHIFT("<<"), RSHIFT(">>"), URSHIFT(">>>"),
+    MINUS_ASSIGN("-="), STAR_ASSIGN("*="), DIVIDE_ASSIGN("/="), BAND_ASSIGN("&="), BOR_ASSIGN("|="), BXOR_ASSIGN("^="),
+    MOD_ASSIGN("%="), LSHIFT_ASSIGN("<<="), RSHIFT_ASSIGN(">>="), URSHIFT_ASSIGN(">>>="),
 
     // Separators.
     COMMA(","), DOT("."), LBRACK("["), LCURLY("{"), LPAREN("("), RBRACK("]"), RCURLY("}"),
@@ -30,7 +59,19 @@ enum TokenKind {
 
     // Literals.
     CHAR_LITERAL("<CHAR_LITERAL>"), FALSE("false"), INT_LITERAL("<INT_LITERAL>"), NULL("null"),
-    STRING_LITERAL("<STRING_LITERAL>"), TRUE("true");
+    STRING_LITERAL("<STRING_LITERAL>"), TRUE("true"),
+    LONG_LITERAL("<LONG_LITERAL"), DOUBLE_LITERAL("<DOUBLE_LITERAL>"), FLOAT_LITERAL("<FLOAT_LITERAL>"),
+    TEXT_BLOCK("<TEXT_BLOCK>");
+    /*
+    IntegerLiteral -
+FloatingPointLiteral - dec, hex
+BooleanLiteral
+CharacterLiteral
+StringLiteral
+TextBlock
+NullLiteral
+     */
+    //TODO remove this comment ^
 
     // The token kind's string representation.
     private String image;
