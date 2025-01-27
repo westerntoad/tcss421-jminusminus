@@ -12,6 +12,8 @@ import static jminusminus.TokenKind.*;
 
 /**
  * A lexical analyzer for j--, that has no backtracking mechanism.
+ * @version 2.1
+ * @author Corey Young
  */
 class Scanner {
     // End of file character.

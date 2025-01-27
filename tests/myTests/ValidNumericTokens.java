@@ -1,4 +1,4 @@
-/*
+/**
  * Test class. The purpose of this file is to verify that the compiler
  * recognizes valid numeric tokens. Because of this, the file looks like gibberish
  * since all it is is declaration and reassignment of variables.
@@ -8,6 +8,8 @@
  *
  * If permission errors occur run:
  * chmod +x bin/j--
+ * @version 1.0
+ * @author Corey Young
  */
 public class ValidNumericTokens {
     public static void main(String[] theArgs) {

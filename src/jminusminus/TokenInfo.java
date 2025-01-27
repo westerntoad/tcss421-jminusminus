@@ -5,6 +5,8 @@ package jminusminus;
 /**
  * An enum of token kinds. Each entry in this enum represents the kind of a token along with its
  * image (string representation).
+ * @version 2.1
+ * @author Corey Young
  */
 enum TokenKind {
     // End of file.
