@@ -433,8 +433,31 @@ class Scanner {
             case '9':
                 buffer = new StringBuffer();
                 buffer.append(ch);
+                boolean leadingZeroFlag = ch == '0';
                 nextCh();
-                //TODO ifIs0 check type(bin/hex/octal -> next = b,x,1-7
+                if(leadingZeroFlag) {
+                    switch (ch) {
+                        case 'b':
+                            buffer.append(ch);
+                            reportScannerError("Binary literals are not yet handled by j--");
+                            nextCh();
+                        case 'x':
+                            buffer.append(ch);
+                            reportScannerError("Hexadecimal literals are not yet handled by j--");
+                            nextCh();
+                        case '0':
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                            buffer.append(ch);
+                            reportScannerError("Octal literals are not yet handled by j--");
+                            nextCh();
+                    }
+                }
                 isDigitOrUnderscore(buffer);
                 switch (ch) {
                     case '.':
@@ -462,6 +485,9 @@ class Scanner {
                         nextCh();
                         return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
                     default:
+                        if(leadingZeroFlag) {
+                            reportScannerError("Decimal int literals cannot begin with a 0");
+                        }
                         return new TokenInfo(INT_LITERAL, buffer.toString(), line);
                 }
 
