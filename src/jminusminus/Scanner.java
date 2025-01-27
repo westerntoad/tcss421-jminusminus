@@ -574,7 +574,6 @@ class Scanner {
         if(!isDigit(ch)) {
             //needs at least one digit after e or e-/e+
             reportScannerError("Malformed floating point literal");
-            //TODO determine what to return after error? or handled by default
         }
         isDigitOrUnderscore(buffer);
         if(ch == 'f' || ch == 'F') {
