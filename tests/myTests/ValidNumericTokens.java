@@ -1,16 +1,15 @@
 /*
  * Test class. The purpose of this file is to verify that the compiler
- * recognizes valid numeric tokens and some other tokens. Because of this,
- * the file looks like gibberish since all it is is declaration and reassinment
- * of variables. NOTE: this only consists of valid tokens, does not test cases that
- * should fail.
+ * recognizes valid numeric tokens. Because of this, the file looks like gibberish
+ * since all it is is declaration and reassignment of variables.
+ * NOTE: this only consists of valid tokens, does not test cases that should fail.
  * To test this file, run the command:
- * bin/j-- -t tests/myTests/ValidTokens.java | grep LITERAL
+ * bin/j-- -t tests/myTests/ValidNumericTokens.java | grep LITERAL
  *
  * If permission errors occur run:
  * chmod +x bin/j--
  */
-public class ValidTokens {
+public class ValidNumericTokens {
     public static void main(String[] theArgs) {
         intTesting();
         doublesTesting();

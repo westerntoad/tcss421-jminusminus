@@ -138,6 +138,9 @@ class Scanner {
                     } while (!(flag && ch == '/') && ch != EOFCH);
                     if(ch == EOFCH) {
                         reportScannerError("Traditional comment /* cannot be left unclosed */");
+                    } else {
+                        //handle closing /
+                        nextCh();
                     }
                 } else if (ch == '=') {
                     return new TokenInfo(DIVIDE_ASSIGN, line);
