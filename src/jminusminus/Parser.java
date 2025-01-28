@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
+
 package jminusminus;
 
 import java.util.ArrayList;
@@ -7,8 +9,10 @@ import java.util.ArrayList;
 import static jminusminus.TokenKind.*;
 
 /**
- * A recursive descent parser that, given a lexical analyzer (a LookaheadScanner), parses a j--
- * compilation unit (program file), taking tokens from the LookaheadScanner, and produces an
+ * A recursive descent parser that, given a lexical analyzer (a
+ * LookaheadScanner), parses a j--
+ * compilation unit (program file), taking tokens from the LookaheadScanner, and
+ * produces an
  * abstract syntax tree (AST) for it.
  */
 public class Parser {
@@ -551,11 +555,15 @@ public class Parser {
         return basicType();
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     /**
      * Parses and returns a basic type.
      *
      * <pre>
-     *   basicType ::= BOOLEAN | CHAR | INT
+     *   basicType ::= BOOLEAN | CHAR | INT | LONG | FLOAT | DOUBLE
      * </pre>
      *
      * @return a basic type.
@@ -567,6 +575,12 @@ public class Parser {
             return Type.CHAR;
         } else if (have(INT)) {
             return Type.INT;
+        } else if (have(LONG)) {
+            return Type.LONG;
+        } else if (have(FLOAT)) {
+            return Type.FLOAT;
+        } else if (have(DOUBLE)) {
+            return Type.DOUBLE;
         } else {
             reportParserError("Type sought where %s found", scanner.token().image());
             return Type.ANY;
@@ -1018,11 +1032,15 @@ public class Parser {
         return new JNewArrayOp(line, type, dimensions);
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     /**
      * Parses a literal and returns an AST for it.
      *
      * <pre>
-     *   literal ::= CHAR_LITERAL | FALSE | INT_LITERAL | NULL | STRING_LITERAL | TRUE
+     *   literal ::= CHAR_LITERAL | FALSE | INT_LITERAL | NULL | STRING_LITERAL | TRUE | LONG_LITERAL | FLOAT_LITERAL | DOUBLE_LITERAL
      * </pre>
      *
      * @return an AST for a literal.
@@ -1041,6 +1059,12 @@ public class Parser {
             return new JLiteralString(line, scanner.previousToken().image());
         } else if (have(TRUE)) {
             return new JLiteralBoolean(line, scanner.previousToken().image());
+        } else if (have(LONG_LITERAL)) {
+            return new JLiteralLong(line, scanner.previousToken().image());
+        } else if (have(FLOAT_LITERAL)) {
+            return new JLiteralFloat(line, scanner.previousToken().image());
+        } else if (have(DOUBLE_LITERAL)) {
+            return new JLiteralDouble(line, scanner.previousToken().image());
         } else {
             reportParserError("Literal sought where %s found", scanner.token().image());
             return new JWildExpression(line);
@@ -1056,7 +1080,8 @@ public class Parser {
         return (sought == scanner.token().kind());
     }
 
-    // If the current token equals sought, scans it and returns true. Otherwise, returns false
+    // If the current token equals sought, scans it and returns true. Otherwise,
+    // returns false
     // without scanning the token.
     private boolean have(TokenKind sought) {
         if (see(sought)) {
@@ -1067,12 +1092,18 @@ public class Parser {
         }
     }
 
-    // Attempts to match a token we're looking for with the current input token. On success,
-    // scans the token and goes into a "Recovered" state. On failure, what happens next depends
-    // on whether or not the parser is currently in a "Recovered" state: if so, it reports the
-    // error and goes into an "Unrecovered" state; if not, it repeatedly scans tokens until it
-    // finds the one it is looking for (or EOF) and then returns to a "Recovered" state. This
-    // gives us a kind of poor man's syntactic error recovery, a strategy due to David Turner and
+    // Attempts to match a token we're looking for with the current input token. On
+    // success,
+    // scans the token and goes into a "Recovered" state. On failure, what happens
+    // next depends
+    // on whether or not the parser is currently in a "Recovered" state: if so, it
+    // reports the
+    // error and goes into an "Unrecovered" state; if not, it repeatedly scans
+    // tokens until it
+    // finds the one it is looking for (or EOF) and then returns to a "Recovered"
+    // state. This
+    // gives us a kind of poor man's syntactic error recovery, a strategy due to
+    // David Turner and
     // Ron Morrison.
     private void mustBe(TokenKind sought) {
         if (scanner.token().kind() == sought) {
@@ -1114,7 +1145,8 @@ public class Parser {
     // Lookahead Methods
     //////////////////////////////////////////////////
 
-    // Returns true if we are looking at an IDENTIFIER followed by a LPAREN, and false otherwise.
+    // Returns true if we are looking at an IDENTIFIER followed by a LPAREN, and
+    // false otherwise.
     private boolean seeIdentLParen() {
         scanner.recordPosition();
         boolean result = have(IDENTIFIER) && see(LPAREN);
@@ -1122,7 +1154,8 @@ public class Parser {
         return result;
     }
 
-    // Returns true if we are looking at a cast (basic or reference), and false otherwise.
+    // Returns true if we are looking at a cast (basic or reference), and false
+    // otherwise.
     private boolean seeCast() {
         scanner.recordPosition();
         if (!have(LPAREN)) {
@@ -1160,7 +1193,8 @@ public class Parser {
         return true;
     }
 
-    // Returns true if we are looking at a local variable declaration, and false otherwise.
+    // Returns true if we are looking at a local variable declaration, and false
+    // otherwise.
     private boolean seeLocalVariableDeclaration() {
         scanner.recordPosition();
         if (have(IDENTIFIER)) {
@@ -1197,18 +1231,26 @@ public class Parser {
         return true;
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     // Returns true if we are looking at a basic type, and false otherwise.
     private boolean seeBasicType() {
-        return (see(BOOLEAN) || see(CHAR) || see(INT));
+        return (see(BOOLEAN) || see(CHAR) || see(INT) || see(LONG) || see(FLOAT) || see(DOUBLE));
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     // Returns true if we are looking at a reference type, and false otherwise.
     private boolean seeReferenceType() {
         if (see(IDENTIFIER)) {
             return true;
         } else {
             scanner.recordPosition();
-            if (have(BOOLEAN) || have(CHAR) || have(INT)) {
+            if (have(BOOLEAN) || have(CHAR) || have(INT) || have(LONG) || have(FLOAT) || have(DOUBLE)) {
                 if (have(LBRACK) && see(RBRACK)) {
                     scanner.returnToPosition();
                     return true;
