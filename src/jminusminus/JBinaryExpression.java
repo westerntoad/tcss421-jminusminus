@@ -1,11 +1,14 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
 
 /**
- * This abstract base class is the AST node for a binary expression --- an expression with a binary
+ * This abstract base class is the AST node for a binary expression --- an
+ * expression with a binary
  * operator and two operands: lhs and rhs.
  */
 abstract class JBinaryExpression extends JExpression {
@@ -27,7 +30,8 @@ abstract class JBinaryExpression extends JExpression {
     /**
      * Constructs an AST node for a binary expression.
      *
-     * @param line     line in which the binary expression occurs in the source file.
+     * @param line     line in which the binary expression occurs in the source
+     *                 file.
      * @param operator the binary operator.
      * @param lhs      the lhs operand.
      * @param rhs      the rhs operand.
@@ -63,7 +67,8 @@ class JMultiplyOp extends JBinaryExpression {
     /**
      * Constructs an AST for a multiplication expression.
      *
-     * @param line line in which the multiplication expression occurs in the source file.
+     * @param line line in which the multiplication expression occurs in the source
+     *             file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */
@@ -94,7 +99,8 @@ class JMultiplyOp extends JBinaryExpression {
 }
 
 /**
- * The AST node for a plus (+) expression. In j--, as in Java, + is overloaded to denote addition
+ * The AST node for a plus (+) expression. In j--, as in Java, + is overloaded
+ * to denote addition
  * for numbers and concatenation for Strings.
  */
 class JPlusOp extends JBinaryExpression {
@@ -136,6 +142,8 @@ class JPlusOp extends JBinaryExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a subtraction (-) expression.
  */
@@ -143,7 +151,8 @@ class JSubtractOp extends JBinaryExpression {
     /**
      * Constructs an AST node for a subtraction expression.
      *
-     * @param line line in which the subtraction expression occurs in the source file.
+     * @param line line in which the subtraction expression occurs in the source
+     *             file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */
@@ -173,6 +182,8 @@ class JSubtractOp extends JBinaryExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a division (/) expression.
  */
@@ -204,6 +215,8 @@ class JDivideOp extends JBinaryExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.`
 /**
  * The AST node for a remainder (%) expression.
  */
@@ -235,6 +248,8 @@ class JRemainderOp extends JBinaryExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an inclusive or (|) expression.
  */
@@ -242,7 +257,8 @@ class JOrOp extends JBinaryExpression {
     /**
      * Constructs an AST node for an inclusive or expression.
      *
-     * @param line line in which the inclusive or expression occurs in the source file.
+     * @param line line in which the inclusive or expression occurs in the source
+     *             file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */
@@ -266,6 +282,8 @@ class JOrOp extends JBinaryExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an exclusive or (^) expression.
  */
@@ -273,7 +291,8 @@ class JXorOp extends JBinaryExpression {
     /**
      * Constructs an AST node for an exclusive or expression.
      *
-     * @param line line in which the exclusive or expression occurs in the source file.
+     * @param line line in which the exclusive or expression occurs in the source
+     *             file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */
@@ -335,7 +354,8 @@ class JALeftShiftOp extends JBinaryExpression {
     /**
      * Constructs an AST node for an arithmetic left shift expression.
      *
-     * @param line line in which the arithmetic left shift expression occurs in the source file.
+     * @param line line in which the arithmetic left shift expression occurs in the
+     *             source file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */
@@ -366,7 +386,8 @@ class JARightShiftOp extends JBinaryExpression {
     /**
      * Constructs an AST node for an arithmetic right shift expression.
      *
-     * @param line line in which the arithmetic right shift expression occurs in the source file.
+     * @param line line in which the arithmetic right shift expression occurs in the
+     *             source file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */
@@ -397,7 +418,8 @@ class JLRightShiftOp extends JBinaryExpression {
     /**
      * Constructs an AST node for a logical right shift expression.
      *
-     * @param line line in which the logical right shift expression occurs in the source file.
+     * @param line line in which the logical right shift expression occurs in the
+     *             source file.
      * @param lhs  the lhs operand.
      * @param rhs  the rhs operand.
      */

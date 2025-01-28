@@ -1,11 +1,13 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
 
 /**
- * This abstract base class is the AST node for an unary expression --- an expression with a
+ * This abstract base class is the AST node for an unary expression --- an
+ * expression with a
  * single operand.
  */
 abstract class JUnaryExpression extends JExpression {
@@ -46,6 +48,8 @@ abstract class JUnaryExpression extends JExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a logical NOT (!) expression.
  */
@@ -53,7 +57,8 @@ class JLogicalNotOp extends JUnaryExpression {
     /**
      * Constructs an AST for a logical NOT expression.
      *
-     * @param line line in which the logical NOT expression occurs in the source file.
+     * @param line line in which the logical NOT expression occurs in the source
+     *             file.
      * @param arg  the operand.
      */
     public JLogicalNotOp(int line, JExpression arg) {
@@ -92,6 +97,8 @@ class JLogicalNotOp extends JUnaryExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a unary negation (-) expression.
  */
@@ -99,7 +106,8 @@ class JNegateOp extends JUnaryExpression {
     /**
      * Constructs an AST node for a negation expression.
      *
-     * @param line    line in which the negation expression occurs in the source file.
+     * @param line    line in which the negation expression occurs in the source
+     *                file.
      * @param operand the operand.
      */
     public JNegateOp(int line, JExpression operand) {
@@ -244,7 +252,8 @@ class JUnaryPlusOp extends JUnaryExpression {
     /**
      * Constructs an AST node for a unary plus expression.
      *
-     * @param line    line in which the unary plus expression occurs in the source file.
+     * @param line    line in which the unary plus expression occurs in the source
+     *                file.
      * @param operand the operand.
      */
     public JUnaryPlusOp(int line, JExpression operand) {
@@ -274,7 +283,8 @@ class JComplementOp extends JUnaryExpression {
     /**
      * Constructs an AST node for a unary complement expression.
      *
-     * @param line    line in which the unary complement expression occurs in the source file.
+     * @param line    line in which the unary complement expression occurs in the
+     *                source file.
      * @param operand the operand.
      */
     public JComplementOp(int line, JExpression operand) {

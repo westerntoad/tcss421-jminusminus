@@ -658,12 +658,16 @@ public class Parser {
         return assignmentExpression();
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
+    // Exercise 3.24. Modify the Parser to parse and return nodes for conditional
+    // expressions, for example, (a > b) ? a : b.
     /**
      * Parses an assignment expression and returns an AST for it.
      *
      * <pre>
      *   assignmentExpression ::= conditionalAndExpression
-     *                                [ ( ASSIGN | PLUS_ASSIGN ) assignmentExpression ]
+     *                                [ ( ASSIGN | PLUS_ASSIGN | MINUS_ASSIGN | MUL_ASSIGN | DIV_ASSIGN | BAND_ASSIGN | BOR_ASSIGN | BXOR_ASSIGN | MOD_ASSIGN | BSHIFTL_ASSIGN | BSHIFTR_ASSIGN | BSSHIFTR_ASSIGN ) assignmentExpression ]
      * </pre>
      *
      * @return an AST for an assignment expression.
@@ -671,10 +675,30 @@ public class Parser {
     private JExpression assignmentExpression() {
         int line = scanner.token().line();
         JExpression lhs = conditionalAndExpression();
-        if (have(ASSIGN)) {
+        if (have(ASSIGN)) { // =
             return new JAssignOp(line, lhs, assignmentExpression());
-        } else if (have(PLUS_ASSIGN)) {
+        } else if (have(PLUS_ASSIGN)) { // +=
             return new JPlusAssignOp(line, lhs, assignmentExpression());
+        } else if (have(MINUS_ASSIGN)) { // -=
+            return new JMinusAssignOp(line, lhs, assignmentExpression());
+        } else if (have(MUL_ASSIGN)) { // *=
+            return new JStarAssignOp(line, lhs, assignmentExpression());
+        } else if (have(DIV_ASSIGN)) { // /=
+            return new JDivAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BAND_ASSIGN)) { // &=
+            return new JAndAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BOR_ASSIGN)) { // |=
+            return new JOrAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BXOR_ASSIGN)) { // ^=
+            return new JXorAssignOp(line, lhs, assignmentExpression());
+        } else if (have(MOD_ASSIGN)) { // %=
+            return new JRemAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BSHIFTL_ASSIGN)) { // <<=
+            return new JALeftShiftAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BSHIFTR_ASSIGN)) { // >>=
+            return new JARightShiftAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BSSHIFTR_ASSIGN)) { // >>>=
+            return new JLRightShiftAssignOp(line, lhs, assignmentExpression());
         } else {
             return lhs;
         }
@@ -726,11 +750,15 @@ public class Parser {
         return lhs;
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
+    // Exercise 3.24. Modify the Parser to parse and return nodes for conditional
+    // expressions, for example, (a > b) ? a : b.
     /**
      * Parses a relational expression and returns an AST for it.
      *
      * <pre>
-     *   relationalExpression ::= additiveExpression [ ( GT | LE ) additiveExpression
+     *   relationalExpression ::= additiveExpression [ ( GT | LE | LT | GE ) additiveExpression
      *                                               | INSTANCEOF referenceType ]
      * </pre>
      *
@@ -739,10 +767,14 @@ public class Parser {
     private JExpression relationalExpression() {
         int line = scanner.token().line();
         JExpression lhs = additiveExpression();
-        if (have(GT)) {
+        if (have(GT)) { // >
             return new JGreaterThanOp(line, lhs, additiveExpression());
-        } else if (have(LE)) {
+        } else if (have(LE)) { // <=
             return new JLessEqualOp(line, lhs, additiveExpression());
+        } else if (have(LT)) { // <
+            return new JLessThanOp(line, lhs, additiveExpression());
+        } else if (have(GE)) { // >=
+            return new JGreaterEqualOp(line, lhs, additiveExpression());
         } else if (have(INSTANCEOF)) {
             return new JInstanceOfOp(line, lhs, referenceType());
         } else {
@@ -764,9 +796,9 @@ public class Parser {
         boolean more = true;
         JExpression lhs = multiplicativeExpression();
         while (more) {
-            if (have(MINUS)) {
+            if (have(MINUS)) { // -
                 lhs = new JSubtractOp(line, lhs, multiplicativeExpression());
-            } else if (have(PLUS)) {
+            } else if (have(PLUS)) { // +
                 lhs = new JPlusOp(line, lhs, multiplicativeExpression());
             } else {
                 more = false;
@@ -789,7 +821,7 @@ public class Parser {
         boolean more = true;
         JExpression lhs = unaryExpression();
         while (more) {
-            if (have(STAR)) {
+            if (have(STAR)) { // *
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
             } else {
                 more = false;
@@ -798,12 +830,18 @@ public class Parser {
         return lhs;
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
     /**
      * Parses an unary expression and returns an AST for it.
      *
      * <pre>
      *   unaryExpression ::= INC unaryExpression
+     *                     | PLUS  unaryExpression
+     *                     | DEC   unaryExpression
      *                     | MINUS unaryExpression
+     *                     | BCOMP unaryExpression
+     *                     | LNOT  unaryExpression
      *                     | simpleUnaryExpression
      * </pre>
      *
@@ -811,10 +849,18 @@ public class Parser {
      */
     private JExpression unaryExpression() {
         int line = scanner.token().line();
-        if (have(INC)) {
+        if (have(INC)) { // ++
             return new JPreIncrementOp(line, unaryExpression());
-        } else if (have(MINUS)) {
+        } else if (have(PLUS)) { // +
+            return new JUnaryPlusOp(line, unaryExpression());
+        } else if (have(DEC)) { // --
+            return new JPreDecrementOp(line, unaryExpression());
+        } else if (have(MINUS)) { // -
             return new JNegateOp(line, unaryExpression());
+        } else if (have(BCOMP)) { // ~
+            return new JComplementOp(line, unaryExpression());
+        } else if (have(LNOT)) { // !
+            return new JLogicalNotOp(line, unaryExpression());
         } else {
             return simpleUnaryExpression();
         }
@@ -848,6 +894,8 @@ public class Parser {
         }
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
     /**
      * Parses a postfix expression and returns an AST for it.
      *
@@ -865,6 +913,9 @@ public class Parser {
         }
         while (have(DEC)) {
             primaryExpr = new JPostDecrementOp(line, primaryExpr);
+        }
+        while (have(INC)) {
+            primaryExpr = new JPostIncrementOp(line, primaryExpr);
         }
         return primaryExpr;
     }

@@ -58,8 +58,30 @@ enum TokenKind {
      * + - * / & | ^ % << >> >>>
      * += -= *= /= &= |= ^= %= <<= >>= >>>=
      */
-    ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
-    MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"), // L = Logical
+    /** = */
+    ASSIGN("="),
+    /** -- */
+    DEC("--"),
+    /** == */
+    EQUAL("=="),
+    /** '>' */
+    GT(">"),
+    /** ++ */
+    INC("++"),
+    /** && */
+    LAND("&&"),
+    /** <= */
+    LE("<="),
+    /** ! */
+    LNOT("!"),
+    /** - */
+    MINUS("-"),
+    /** + */
+    PLUS("+"),
+    /** += */
+    PLUS_ASSIGN("+="),
+    /** * */
+    STAR("*"),
     /*
      * missing 26 tokens:
      * < ~ ? : ->
@@ -68,13 +90,57 @@ enum TokenKind {
      * -= *= /= &= |= ^= %= <<= >>= >>>=
      */
     // ADDED 26 OPERATORS
-    LT("<"), BCOMP("~"), TERN_TRUE("?"), TERN_FALSE(":"),
-    LAMBDA("->"), GE(">="), NOT_EQUAL("!="), LOR("||"),
-    DIV("/"), BAND("&"), BOR("|"), BXOR("^"), MOD("%"),
-    BSHIFTL("<<"), BSHIFTR(">>"), BSSHIFTR(">>>"),
-    MINUS_ASSIGN("-="), MUL_ASSIGN("*="), DIV_ASSIGN("/="),
-    BAND_ASSIGN("&="), BOR_ASSIGN("|="), BXOR_ASSIGN("^="),
-    MOD_ASSIGN("%="), BSHIFTL_ASSIGN("<<="), BSHIFTR_ASSIGN(">>="),
+    /** < */
+    LT("<"),
+    /** ~ */
+    BCOMP("~"),
+    /** ? */
+    TERN_TRUE("?"),
+    /** : */
+    TERN_FALSE(":"),
+    /** -> */
+    LAMBDA("->"),
+    /** '>=' */
+    GE(">="),
+    /** != */
+    NOT_EQUAL("!="),
+    /** || */
+    LOR("||"),
+    /** / */
+    DIV("/"),
+    /** & */
+    BAND("&"),
+    /** | */
+    BOR("|"),
+    /** ^ */
+    BXOR("^"),
+    /** % */
+    MOD("%"),
+    /** << */
+    BSHIFTL("<<"),
+    /** >> */
+    BSHIFTR(">>"),
+    /** >>> */
+    BSSHIFTR(">>>"),
+    /** -= */
+    MINUS_ASSIGN("-="),
+    /** *= */
+    MUL_ASSIGN("*="),
+    /** /= */
+    DIV_ASSIGN("/="),
+    /** &= */
+    BAND_ASSIGN("&="),
+    /** |= */
+    BOR_ASSIGN("|="),
+    /** ^= */
+    BXOR_ASSIGN("^="),
+    /** %= */
+    MOD_ASSIGN("%="),
+    /** '<<=' */
+    BSHIFTL_ASSIGN("<<="),
+    /** '>>=' */
+    BSHIFTR_ASSIGN(">>="),
+    /** '>>>=' */
     BSSHIFTR_ASSIGN(">>>="),
 
     // Separators. 12 Tokens, missing 3 tokens: '...', '@', '::'
