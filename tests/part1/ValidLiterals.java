@@ -1,7 +1,6 @@
 public class ValidLiterals {
     public static void main(String[] args) {
         // Decimal int
-        int decimal2 = 0181;
         int decimal1 = 0;
         int decimal2 = 10;
         int decimal3 = 123456789;
@@ -140,7 +139,6 @@ public class ValidLiterals {
         double double19 = 1_2.3_4E+5;
         double double20 = 1_2.3_4E-5;
         double double21 = 001d;
-        double double21 = 082391d;
 
         // Hexadecimal double
         double hexDouble1 = 0xAp-5;
