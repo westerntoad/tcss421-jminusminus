@@ -616,14 +616,12 @@ class Scanner {
                 scanUnderscoreAndDecimal(buffer);
 
             } else if (ch == '.') {
-                decimalFloubleLiteralAfterPeriod(buffer);
+                return decimalFloubleLiteralAfterPeriod(buffer);
 
             } else if (ch == 'e' || ch == 'E') {
                 scientificNotationOrBinaryExponentiation(buffer);
             } else if (isDoubleSuffix(ch)) {
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
-            } else if (ch == '.') {
-                decimalFloubleLiteralAfterPeriod(buffer);
             } else if (isFloatSuffix(ch)) {
                 return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
             } else if (isLongSuffix(ch)) {
