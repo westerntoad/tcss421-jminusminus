@@ -619,12 +619,19 @@ class Scanner {
                 return decimalFloubleLiteralAfterPeriod(buffer);
 
             } else if (ch == 'e' || ch == 'E') {
+                buffer.append(ch);
                 scientificNotationOrBinaryExponentiation(buffer);
             } else if (isDoubleSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
             } else if (isFloatSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
                 return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
             } else if (isLongSuffix(ch)) {
+                buffer.append(ch);
+                nextCh();
                 return new TokenInfo(LONG_LITERAL, buffer.toString(), line);
             } else {
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
@@ -735,7 +742,7 @@ class Scanner {
                     return null;
                 }
             } else {
-                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
             }
         }
     }
