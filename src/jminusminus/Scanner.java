@@ -621,6 +621,17 @@ class Scanner {
             } else if (ch == 'e' || ch == 'E') {
                 buffer.append(ch);
                 scientificNotationOrBinaryExponentiation(buffer);
+                if (isDoubleSuffix(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                } else if (isFloatSuffix(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                    return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
+                } else {
+                    return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                }
             } else if (isDoubleSuffix(ch)) {
                 buffer.append(ch);
                 nextCh();
@@ -755,7 +766,6 @@ class Scanner {
         nextCh();
         boolean illegalUnderscore = true;
         boolean potentialFlouble = false;
-        boolean floubleCheck = false;
         while (true) {
             if (isHex(ch)) {
                 illegalUnderscore = false;
@@ -779,10 +789,6 @@ class Scanner {
                 nextCh();
             } else if ((ch == 'p' || ch == 'P')) {
                 // p or P indicates Float or Double Literals
-                if (potentialFlouble)
-                    floubleCheck = true;
-                else
-                    floubleCheck = false;
                 buffer.append(ch);
                 scientificNotationOrBinaryExponentiation(buffer);
                 if (isDoubleSuffix(ch)) {
@@ -795,10 +801,9 @@ class Scanner {
                     return new TokenInfo(FLOAT_LITERAL, buffer.toString(), line);
                 } else {
                     return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
-
                 }
             } else {
-                if (!floubleCheck && potentialFlouble) {
+                if (potentialFlouble) {
                     reportScannerError("HEX MISREPRESENTATION: '.' with no binary exponentation (p)/(P).");
                     return null; // we have a hex that has a . but no exponentiation i.e. 0xA.A;
                 }
