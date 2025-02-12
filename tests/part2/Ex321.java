@@ -2,7 +2,7 @@ public class Ex321 {
     public static void main(String[] args) {
         // Decimal float
         float float1 = 0.01f;
-        /*float float2 = .0e+1f;
+        float float2 = .0e+1f;
         float float3 = .1f;
         float float4 = 123.456f;
         float float5 = 789.0123f;
@@ -64,6 +64,6 @@ public class Ex321 {
         double hexDouble3 = 0x1.fp3;
         double hexDouble4 = 0x1a.00p11;
         double hexDouble5 = 0x1.0p0;
-        double hexDouble6 = 0x1.8p1;*/
+        double hexDouble6 = 0x1.8p1;
     }
 }
