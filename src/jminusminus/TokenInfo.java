@@ -1,5 +1,6 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham, Jeremiah
 package jminusminus;
 
 /**
@@ -33,7 +34,7 @@ enum TokenKind {
     VOID("void"), WHILE("while"),
 
     /*
-     * missing 28* tokens: strictfp is obsolete, _ (underscore) for future use
+     * missing 28* tokens: *strictfp is obsolete, _ (underscore) for future use
      * continue for switch assert default
      * synchronized do goto break double
      * implements throw byte throws case
@@ -57,8 +58,30 @@ enum TokenKind {
      * + - * / & | ^ % << >> >>>
      * += -= *= /= &= |= ^= %= <<= >>= >>>=
      */
-    ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), INC("++"), LAND("&&"), LE("<="), LNOT("!"),
-    MINUS("-"), PLUS("+"), PLUS_ASSIGN("+="), STAR("*"), // L = Logical
+    /** = */
+    ASSIGN("="),
+    /** -- */
+    DEC("--"),
+    /** == */
+    EQUAL("=="),
+    /** '>' */
+    GT(">"),
+    /** ++ */
+    INC("++"),
+    /** && */
+    LAND("&&"),
+    /** <= */
+    LE("<="),
+    /** ! */
+    LNOT("!"),
+    /** - */
+    MINUS("-"),
+    /** + */
+    PLUS("+"),
+    /** += */
+    PLUS_ASSIGN("+="),
+    /** * */
+    STAR("*"),
     /*
      * missing 26 tokens:
      * < ~ ? : ->
@@ -67,14 +90,57 @@ enum TokenKind {
      * -= *= /= &= |= ^= %= <<= >>= >>>=
      */
     // ADDED 26 OPERATORS
-    // TODO: Assign better names.
-    LT("<"), BCOMP("~"), TERN_TRUE("?"), TERN_FALSE(":"),
-    LAMBDA("->"), GE(">="), NOT_EQUAL("!="), LOR("||"),
-    DIV("/"), BAND("&"), BOR("|"), BXOR("^"), MOD("%"),
-    BSHIFTL("<<"), BSHIFTR(">>"), BSSHIFTR(">>>"),
-    MINUS_ASSIGN("-="), MUL_ASSIGN("*="), DIV_ASSIGN("/="),
-    BAND_ASSIGN("&="), BOR_ASSIGN("|="), BXOR_ASSIGN("^="),
-    MOD_ASSIGN("%="), BSHIFTL_ASSIGN("<<="), BSHIFTR_ASSIGN(">>="),
+    /** < */
+    LT("<"),
+    /** ~ */
+    BCOMP("~"),
+    /** ? */
+    TERN_TRUE("?"),
+    /** : */
+    TERN_FALSE(":"),
+    /** -> */
+    LAMBDA("->"),
+    /** '>=' */
+    GE(">="),
+    /** != */
+    NOT_EQUAL("!="),
+    /** || */
+    LOR("||"),
+    /** / */
+    DIV("/"),
+    /** & */
+    BAND("&"),
+    /** | */
+    BOR("|"),
+    /** ^ */
+    BXOR("^"),
+    /** % */
+    MOD("%"),
+    /** << */
+    BSHIFTL("<<"),
+    /** >> */
+    BSHIFTR(">>"),
+    /** >>> */
+    BSSHIFTR(">>>"),
+    /** -= */
+    MINUS_ASSIGN("-="),
+    /** *= */
+    MUL_ASSIGN("*="),
+    /** /= */
+    DIV_ASSIGN("/="),
+    /** &= */
+    BAND_ASSIGN("&="),
+    /** |= */
+    BOR_ASSIGN("|="),
+    /** ^= */
+    BXOR_ASSIGN("^="),
+    /** %= */
+    MOD_ASSIGN("%="),
+    /** '<<=' */
+    BSHIFTL_ASSIGN("<<="),
+    /** '>>=' */
+    BSHIFTR_ASSIGN(">>="),
+    /** '>>>=' */
     BSSHIFTR_ASSIGN(">>>="),
 
     // Separators. 12 Tokens, missing 3 tokens: '...', '@', '::'
@@ -87,7 +153,6 @@ enum TokenKind {
     // Literals.
     CHAR_LITERAL("<CHAR_LITERAL>"), FALSE("false"), INT_LITERAL("<INT_LITERAL>"), NULL("null"),
     STRING_LITERAL("<STRING_LITERAL>"), TRUE("true"),
-
     /*
      * DecimalIntegerLiteral
      * HexIntegerLiteral
@@ -100,9 +165,7 @@ enum TokenKind {
      * 
      */
     // ADDED LITERALS
-    DOUBLE_LITERAL("<DOUBLE_LITERAL>"), FLOAT_LITERAL("<FLOAT_LITERAL>"), LONG_LITERAL("<LONG_LITERAL>"),
-    DECIMAL_INT_LITERAL("<DECIMAL_INT_LITERAL"), HEX_INT_LITERAL("<HEX_INT_LITERAL>"),
-    OCTAL_INT_LITERAL("<OCTAL_INT_LITERAL>"), BINARY_INT_LITERAL("<BINARY_INT_LITERAL>");
+    DOUBLE_LITERAL("<DOUBLE_LITERAL>"), FLOAT_LITERAL("<FLOAT_LITERAL>"), LONG_LITERAL("<LONG_LITERAL>");
 
     // The token kind's string representation.
     private String image;

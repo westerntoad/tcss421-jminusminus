@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
@@ -11,7 +13,8 @@ abstract class JAssignment extends JBinaryExpression {
     /**
      * Constructs an AST node for an assignment operation.
      *
-     * @param line     line in which the assignment operation occurs in the source file.
+     * @param line     line in which the assignment operation occurs in the source
+     *                 file.
      * @param operator the assignment operator.
      * @param lhs      the lhs operand.
      * @param rhs      the rhs operand.
@@ -129,6 +132,8 @@ class JPlusAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a minus-assign (-=) operation.
  */
@@ -160,6 +165,8 @@ class JMinusAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a star-assign (*=) operation.
  */
@@ -191,6 +198,8 @@ class JStarAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a div-assign (/=) operation.
  */
@@ -222,6 +231,8 @@ class JDivAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a rem-assign (%=) operation.
  */
@@ -253,6 +264,8 @@ class JRemAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an or-assign (|=) operation.
  */
@@ -284,6 +297,8 @@ class JOrAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an and-assign (&amp;=) operation.
  */
@@ -315,6 +330,8 @@ class JAndAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an xor-assign (^=) operation.
  */
@@ -346,6 +363,8 @@ class JXorAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an arithmetic-left-shift-assign (&lt;&lt;=) operation.
  */
@@ -377,6 +396,8 @@ class JALeftShiftAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an arithmetic-right-shift-assign (&gt;&gt;=) operation.
  */
@@ -408,6 +429,8 @@ class JARightShiftAssignOp extends JAssignment {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for an logical-right-shift-assign (&gt;&gt;&gt;=) operation.
  */

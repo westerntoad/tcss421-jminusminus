@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
@@ -40,7 +42,8 @@ class JGreaterThanOp extends JComparisonExpression {
     /**
      * Constructs an AST node for a greater-than expression.
      *
-     * @param line line in which the greater-than expression occurs in the source file.
+     * @param line line in which the greater-than expression occurs in the source
+     *             file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */
@@ -66,7 +69,8 @@ class JLessEqualOp extends JComparisonExpression {
     /**
      * Constructs an AST node for a less-than-or-equal-to expression.
      *
-     * @param line line in which the less-than-or-equal-to expression occurs in the source file.
+     * @param line line in which the less-than-or-equal-to expression occurs in the
+     *             source file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */
@@ -84,6 +88,8 @@ class JLessEqualOp extends JComparisonExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a greater-than-or-equal-to (&gt;=) expression.
  */
@@ -92,7 +98,8 @@ class JGreaterEqualOp extends JComparisonExpression {
     /**
      * Constructs an AST node for a greater-than-or-equal-to expression.
      *
-     * @param line line in which the greater-than-or-equal-to expression occurs in the source file.
+     * @param line line in which the greater-than-or-equal-to expression occurs in
+     *             the source file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */
@@ -108,6 +115,8 @@ class JGreaterEqualOp extends JComparisonExpression {
     }
 }
 
+// TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+// additional operators that are defined in Java but not yet in j--.
 /**
  * The AST node for a less-than (&lt;) expression.
  */

@@ -7,6 +7,7 @@
     <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/j--.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/j--.jar" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/out/jminusminus/CharReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/CharReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/jminusminus/Scanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/Scanner.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/jminusminus/TokenInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/TokenInfo.class" afterDir="false" />
@@ -21,6 +22,9 @@
       <change beforePath="$PROJECT_DIR$/tests/jvm/NewLiteralsTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/jvm/NewOperatorsTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/part1/MultilineComment.java" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/tests/part1/ValidLiterals.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/part1/ValidLiterals.java" afterDir="false" />
+>>>>>>> jeremiah
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +53,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.SPIM.executor": "Run",
@@ -60,6 +65,17 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;git-widget-placeholder&quot;: &quot;jeremiah&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/abraham/Documents/uwt-classes/TCSS421/tcss422-jminusminus/lib&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
+>>>>>>> jeremiah
       <recent name="$PROJECT_DIR$/tests/part1" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

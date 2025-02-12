@@ -21,12 +21,12 @@ public class MultiLineCommentsTest {
         System.out.println("Multiple * Multilined comments: Passed");
 
         /*
-         These
-         Are
-         Multiple
-         Lines
-         Without
-         stars
+         * These
+         * Are
+         * Multiple
+         * Lines
+         * Without
+         * stars
          */
         System.out.println("Multiple w/o * Multilined comments: Passed");
 
@@ -36,5 +36,9 @@ public class MultiLineCommentsTest {
          * / Multiline
          */
         System.out.println("Funky Multiple Multilined comments: Passed");
+
+        /***/
+        System.out.println("Tricky Multilined comment: Passed");
+
     }
 }

@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
+
 package jminusminus;
 
 import java.lang.reflect.Array;
@@ -10,15 +12,21 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
- * A class for representing j-- types. All types are represented underneath (in the classRep
- * field) by Java objects of type Class. These objects represent types in Java, so this should
+ * A class for representing j-- types. All types are represented underneath (in
+ * the classRep
+ * field) by Java objects of type Class. These objects represent types in Java,
+ * so this should
  * ease our interfacing with existing Java classes.
  * <p>
- * Class types (reference types that are represented by the identifiers introduced in class
- * declarations) are represented using TypeName. So for now, every TypeName represents a class.
- * In the future, TypeName could be extended to represent interfaces or enumerations.
+ * Class types (reference types that are represented by the identifiers
+ * introduced in class
+ * declarations) are represented using TypeName. So for now, every TypeName
+ * represents a class.
+ * In the future, TypeName could be extended to represent interfaces or
+ * enumerations.
  * <p>
- * IdentifierTypes must be "resolved" at some point, so that all Types having the same name refer
+ * IdentifierTypes must be "resolved" at some point, so that all Types having
+ * the same name refer
  * to the same Type object. The resolve() method does this.
  */
 class Type {
@@ -48,6 +56,13 @@ class Type {
      */
     public final static Type LONG = typeFor(long.class);
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    /**
+     * The float type. Abraham and Jeremiah.
+     */
+    public final static Type FLOAT = typeFor(float.class);
+
     /**
      * The double type.
      */
@@ -72,6 +87,13 @@ class Type {
      * The java.lang.Long type.
      */
     public final static Type BOXED_LONG = typeFor(java.lang.Long.class);
+
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    /**
+     * The float type. Abraham and Jeremiah.
+     */
+    public final static Type BOXED_FLOAT = typeFor(java.lang.Float.class);
 
     /**
      * The java.lang.Double type.
@@ -116,7 +138,8 @@ class Type {
     }
 
     /**
-     * Constructs and returns a representation for a type from its (Java) class representation,
+     * Constructs and returns a representation for a type from its (Java) class
+     * representation,
      * making sure there is a unique representation for each unique type.
      *
      * @param classRep the Java class representation.
@@ -148,10 +171,12 @@ class Type {
     }
 
     /**
-     * Returns true if this type has the same descriptor as other, and false otherwise.
+     * Returns true if this type has the same descriptor as other, and false
+     * otherwise.
      *
      * @param other the other type.
-     * @return true if this type has the same descriptor as other, and false otherwise.
+     * @return true if this type has the same descriptor as other, and false
+     *         otherwise.
      */
     public boolean equals(Type other) {
         return this.toDescriptor().equals(other.toDescriptor());
@@ -181,8 +206,7 @@ class Type {
      * @return this type's super type, or null.
      */
     public Type superClass() {
-        return classRep == null || classRep.getSuperclass() == null ? null :
-                typeFor(classRep.getSuperclass());
+        return classRep == null || classRep.getSuperclass() == null ? null : typeFor(classRep.getSuperclass());
     }
 
     /**
@@ -245,8 +269,8 @@ class Type {
      * <p>
      * It has abstract methods if:
      * <ol>
-     *   <li>Any method declared in the class is abstract or
-     *   <li>its superclass has an abstract method which is not overridden here.
+     * <li>Any method declared in the class is abstract or
+     * <li>its superclass has an abstract method which is not overridden here.
      * </ol>
      *
      * @return a list of this class' abstract methods.
@@ -298,7 +322,8 @@ class Type {
     }
 
     /**
-     * An assertion that this type matches one of the specified types. If there is no match, an
+     * An assertion that this type matches one of the specified types. If there is
+     * no match, an
      * error is reported.
      *
      * @param line          the line near which the mismatch occurs.
@@ -319,7 +344,8 @@ class Type {
     }
 
     /**
-     * An assertion that this type matches the specified type. If there is no match, an error is
+     * An assertion that this type matches the specified type. If there is no match,
+     * an error is
      * reported.
      *
      * @param line         the line near which the mismatch occurs.
@@ -395,8 +421,7 @@ class Type {
      * @return the JVM representation of this type's name.
      */
     public String jvmName() {
-        return this.isArray() || this.isPrimitive() ?
-                this.toDescriptor() : classRep.getName().replace('.', '/');
+        return this.isArray() || this.isPrimitive() ? this.toDescriptor() : classRep.getName().replace('.', '/');
     }
 
     /**
@@ -410,7 +435,8 @@ class Type {
     }
 
     /**
-     * Returns a string representation for a type being appended to a StringBuffer (for the + and
+     * Returns a string representation for a type being appended to a StringBuffer
+     * (for the + and
      * += operations over strings).
      *
      * @return a string representation for a type being appended to a StringBuffer.
@@ -420,11 +446,13 @@ class Type {
     }
 
     /**
-     * Finds and returns a method in this type having the given name and argument types, or null.
+     * Finds and returns a method in this type having the given name and argument
+     * types, or null.
      *
      * @param name     the method name.
      * @param argTypes the argument types.
-     * @return a method in this type having the given name and argument types, or null.
+     * @return a method in this type having the given name and argument types, or
+     *         null.
      */
     public Method methodFor(String name, Type[] argTypes) {
         Class[] classes = new Class[argTypes.length];
@@ -449,7 +477,8 @@ class Type {
     }
 
     /**
-     * Finds and returns a constructor in this type having the given argument types, or null.
+     * Finds and returns a constructor in this type having the given argument types,
+     * or null.
      *
      * @param argTypes the argument types.
      * @return a constructor in this type having the given argument types, or null.
@@ -534,7 +563,7 @@ class Type {
             if (classRep.getPackage().getName().equals(
                     member.declaringType().classRep.getPackage().getName())
                     || typeFor(member.getClass().getDeclaringClass())
-                    .isJavaAssignableFrom(this)) {
+                            .isJavaAssignableFrom(this)) {
                 return true;
             } else {
                 JAST.compilationUnit.reportSemanticError(line,
@@ -564,11 +593,13 @@ class Type {
     }
 
     /**
-     * Returns true if the target type is accessible from this type, and false otherwise.
+     * Returns true if the target type is accessible from this type, and false
+     * otherwise.
      *
      * @param line       line in which the access occurs.
      * @param targetType the type being accessed.
-     * @return true if the target type is accessible from this type, and false otherwise.
+     * @return true if the target type is accessible from this type, and false
+     *         otherwise.
      */
     public boolean checkAccess(int line, Type targetType) {
         if (targetType.isPrimitive()) {
@@ -581,14 +612,16 @@ class Type {
     }
 
     /**
-     * Returns true if the referenced type is accessible from the referencing type, and false
+     * Returns true if the referenced type is accessible from the referencing type,
+     * and false
      * otherwise.
      *
      * @param line            the line in which the access occurs.
      * @param referencingType the type attempting the access.
      * @param type            the type that we want to access.
-     * @return true if the referenced type is accessible from the referencing type, and false
-     * otherwise.
+     * @return true if the referenced type is accessible from the referencing type,
+     *         and false
+     *         otherwise.
      */
     public static boolean checkAccess(int line, Class referencingType, Class type) {
         java.lang.Package p1 = referencingType.getPackage();
@@ -632,7 +665,8 @@ class Type {
         return signature;
     }
 
-    // Constructs a representation for a type from its Java (Class) representation. Use typeFor()
+    // Constructs a representation for a type from its Java (Class) representation.
+    // Use typeFor()
     // that maps types having like classReps to like Types.
     private Type(Class<?> classRep) {
         this.classRep = classRep;
@@ -640,14 +674,15 @@ class Type {
 
     // Returns the JVM descriptor of a type's class representation.
     private static String descriptorFor(Class<?> classRep) {
-        return classRep == null ? "V" : classRep == void.class ? "V"
-                : classRep.isArray() ? "[" + descriptorFor(classRep.getComponentType())
-                : classRep.isPrimitive() ? (classRep == int.class ? "I"
-                : classRep == char.class ? "C"
-                : classRep == boolean.class ? "Z"
-                : classRep == double.class ? "D"
-                : classRep == long.class ? "J" : "?")
-                : "L" + classRep.getName().replace('.', '/') + ";";
+        return classRep == null ? "V"
+                : classRep == void.class ? "V"
+                        : classRep.isArray() ? "[" + descriptorFor(classRep.getComponentType())
+                                : classRep.isPrimitive() ? (classRep == int.class ? "I"
+                                        : classRep == char.class ? "C"
+                                                : classRep == boolean.class ? "Z"
+                                                        : classRep == double.class ? "D"
+                                                                : classRep == long.class ? "J" : "?")
+                                        : "L" + classRep.getName().replace('.', '/') + ";";
     }
 
     // Returns the Java (and so j--) denotation for the specified type.
@@ -657,7 +692,8 @@ class Type {
 }
 
 /**
- * A representation of any reference type that can be denoted as a (possibly qualified) identifier.
+ * A representation of any reference type that can be denoted as a (possibly
+ * qualified) identifier.
  */
 class TypeName extends Type {
     // The line in which the identifier occurs in the source file.
@@ -734,8 +770,10 @@ class TypeName extends Type {
 }
 
 /**
- * A representation of an array type. It is built by the Parser to stand in for a Type until the
- * analyze() phase, at which point it is resolved to an actual Type object (having a Class that
+ * A representation of an array type. It is built by the Parser to stand in for
+ * a Type until the
+ * analyze() phase, at which point it is resolved to an actual Type object
+ * (having a Class that
  * identifies it).
  */
 class ArrayTypeName extends Type {

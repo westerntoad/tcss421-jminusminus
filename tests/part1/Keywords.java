@@ -1,6 +1,6 @@
 // INVALID
 
-public class NewKeywordsTest {
+public class Keywords {
     public static void main(String[] args) {
         // Using each of the 28 new keywords in separate statements
         continue;

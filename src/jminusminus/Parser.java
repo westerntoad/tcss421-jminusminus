@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham and Jeremiah
+
 package jminusminus;
 
 import java.util.ArrayList;
@@ -7,8 +9,10 @@ import java.util.ArrayList;
 import static jminusminus.TokenKind.*;
 
 /**
- * A recursive descent parser that, given a lexical analyzer (a LookaheadScanner), parses a j--
- * compilation unit (program file), taking tokens from the LookaheadScanner, and produces an
+ * A recursive descent parser that, given a lexical analyzer (a
+ * LookaheadScanner), parses a j--
+ * compilation unit (program file), taking tokens from the LookaheadScanner, and
+ * produces an
  * abstract syntax tree (AST) for it.
  */
 public class Parser {
@@ -551,11 +555,15 @@ public class Parser {
         return basicType();
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     /**
      * Parses and returns a basic type.
      *
      * <pre>
-     *   basicType ::= BOOLEAN | CHAR | INT
+     *   basicType ::= BOOLEAN | CHAR | INT | LONG | FLOAT | DOUBLE
      * </pre>
      *
      * @return a basic type.
@@ -567,6 +575,12 @@ public class Parser {
             return Type.CHAR;
         } else if (have(INT)) {
             return Type.INT;
+        } else if (have(LONG)) {
+            return Type.LONG;
+        } else if (have(FLOAT)) {
+            return Type.FLOAT;
+        } else if (have(DOUBLE)) {
+            return Type.DOUBLE;
         } else {
             reportParserError("Type sought where %s found", scanner.token().image());
             return Type.ANY;
@@ -644,12 +658,16 @@ public class Parser {
         return assignmentExpression();
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
+    // Exercise 3.24. Modify the Parser to parse and return nodes for conditional
+    // expressions, for example, (a > b) ? a : b.
     /**
      * Parses an assignment expression and returns an AST for it.
      *
      * <pre>
      *   assignmentExpression ::= conditionalAndExpression
-     *                                [ ( ASSIGN | PLUS_ASSIGN ) assignmentExpression ]
+     *                                [ ( ASSIGN | PLUS_ASSIGN | MINUS_ASSIGN | MUL_ASSIGN | DIV_ASSIGN | BAND_ASSIGN | BOR_ASSIGN | BXOR_ASSIGN | MOD_ASSIGN | BSHIFTL_ASSIGN | BSHIFTR_ASSIGN | BSSHIFTR_ASSIGN ) assignmentExpression ]
      * </pre>
      *
      * @return an AST for an assignment expression.
@@ -657,10 +675,30 @@ public class Parser {
     private JExpression assignmentExpression() {
         int line = scanner.token().line();
         JExpression lhs = conditionalAndExpression();
-        if (have(ASSIGN)) {
+        if (have(ASSIGN)) { // =
             return new JAssignOp(line, lhs, assignmentExpression());
-        } else if (have(PLUS_ASSIGN)) {
+        } else if (have(PLUS_ASSIGN)) { // +=
             return new JPlusAssignOp(line, lhs, assignmentExpression());
+        } else if (have(MINUS_ASSIGN)) { // -=
+            return new JMinusAssignOp(line, lhs, assignmentExpression());
+        } else if (have(MUL_ASSIGN)) { // *=
+            return new JStarAssignOp(line, lhs, assignmentExpression());
+        } else if (have(DIV_ASSIGN)) { // /=
+            return new JDivAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BAND_ASSIGN)) { // &=
+            return new JAndAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BOR_ASSIGN)) { // |=
+            return new JOrAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BXOR_ASSIGN)) { // ^=
+            return new JXorAssignOp(line, lhs, assignmentExpression());
+        } else if (have(MOD_ASSIGN)) { // %=
+            return new JRemAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BSHIFTL_ASSIGN)) { // <<=
+            return new JALeftShiftAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BSHIFTR_ASSIGN)) { // >>=
+            return new JARightShiftAssignOp(line, lhs, assignmentExpression());
+        } else if (have(BSSHIFTR_ASSIGN)) { // >>>=
+            return new JLRightShiftAssignOp(line, lhs, assignmentExpression());
         } else {
             return lhs;
         }
@@ -712,11 +750,15 @@ public class Parser {
         return lhs;
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
+    // Exercise 3.24. Modify the Parser to parse and return nodes for conditional
+    // expressions, for example, (a > b) ? a : b.
     /**
      * Parses a relational expression and returns an AST for it.
      *
      * <pre>
-     *   relationalExpression ::= additiveExpression [ ( GT | LE ) additiveExpression
+     *   relationalExpression ::= additiveExpression [ ( GT | LE | LT | GE ) additiveExpression
      *                                               | INSTANCEOF referenceType ]
      * </pre>
      *
@@ -725,10 +767,14 @@ public class Parser {
     private JExpression relationalExpression() {
         int line = scanner.token().line();
         JExpression lhs = additiveExpression();
-        if (have(GT)) {
+        if (have(GT)) { // >
             return new JGreaterThanOp(line, lhs, additiveExpression());
-        } else if (have(LE)) {
+        } else if (have(LE)) { // <=
             return new JLessEqualOp(line, lhs, additiveExpression());
+        } else if (have(LT)) { // <
+            return new JLessThanOp(line, lhs, additiveExpression());
+        } else if (have(GE)) { // >=
+            return new JGreaterEqualOp(line, lhs, additiveExpression());
         } else if (have(INSTANCEOF)) {
             return new JInstanceOfOp(line, lhs, referenceType());
         } else {
@@ -750,9 +796,9 @@ public class Parser {
         boolean more = true;
         JExpression lhs = multiplicativeExpression();
         while (more) {
-            if (have(MINUS)) {
+            if (have(MINUS)) { // -
                 lhs = new JSubtractOp(line, lhs, multiplicativeExpression());
-            } else if (have(PLUS)) {
+            } else if (have(PLUS)) { // +
                 lhs = new JPlusOp(line, lhs, multiplicativeExpression());
             } else {
                 more = false;
@@ -775,7 +821,7 @@ public class Parser {
         boolean more = true;
         JExpression lhs = unaryExpression();
         while (more) {
-            if (have(STAR)) {
+            if (have(STAR)) { // *
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
             } else {
                 more = false;
@@ -784,12 +830,18 @@ public class Parser {
         return lhs;
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
     /**
      * Parses an unary expression and returns an AST for it.
      *
      * <pre>
      *   unaryExpression ::= INC unaryExpression
+     *                     | PLUS  unaryExpression
+     *                     | DEC   unaryExpression
      *                     | MINUS unaryExpression
+     *                     | BCOMP unaryExpression
+     *                     | LNOT  unaryExpression
      *                     | simpleUnaryExpression
      * </pre>
      *
@@ -797,10 +849,18 @@ public class Parser {
      */
     private JExpression unaryExpression() {
         int line = scanner.token().line();
-        if (have(INC)) {
+        if (have(INC)) { // ++
             return new JPreIncrementOp(line, unaryExpression());
-        } else if (have(MINUS)) {
+        } else if (have(PLUS)) { // +
+            return new JUnaryPlusOp(line, unaryExpression());
+        } else if (have(DEC)) { // --
+            return new JPreDecrementOp(line, unaryExpression());
+        } else if (have(MINUS)) { // -
             return new JNegateOp(line, unaryExpression());
+        } else if (have(BCOMP)) { // ~
+            return new JComplementOp(line, unaryExpression());
+        } else if (have(LNOT)) { // !
+            return new JLogicalNotOp(line, unaryExpression());
         } else {
             return simpleUnaryExpression();
         }
@@ -834,6 +894,8 @@ public class Parser {
         }
     }
 
+    // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
+    // additional operators that are defined in Java but not yet in j--.
     /**
      * Parses a postfix expression and returns an AST for it.
      *
@@ -851,6 +913,9 @@ public class Parser {
         }
         while (have(DEC)) {
             primaryExpr = new JPostDecrementOp(line, primaryExpr);
+        }
+        while (have(INC)) {
+            primaryExpr = new JPostIncrementOp(line, primaryExpr);
         }
         return primaryExpr;
     }
@@ -1018,11 +1083,15 @@ public class Parser {
         return new JNewArrayOp(line, type, dimensions);
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     /**
      * Parses a literal and returns an AST for it.
      *
      * <pre>
-     *   literal ::= CHAR_LITERAL | FALSE | INT_LITERAL | NULL | STRING_LITERAL | TRUE
+     *   literal ::= CHAR_LITERAL | FALSE | INT_LITERAL | NULL | STRING_LITERAL | TRUE | LONG_LITERAL | FLOAT_LITERAL | DOUBLE_LITERAL
      * </pre>
      *
      * @return an AST for a literal.
@@ -1041,6 +1110,12 @@ public class Parser {
             return new JLiteralString(line, scanner.previousToken().image());
         } else if (have(TRUE)) {
             return new JLiteralBoolean(line, scanner.previousToken().image());
+        } else if (have(LONG_LITERAL)) {
+            return new JLiteralLong(line, scanner.previousToken().image());
+        } else if (have(FLOAT_LITERAL)) {
+            return new JLiteralFloat(line, scanner.previousToken().image());
+        } else if (have(DOUBLE_LITERAL)) {
+            return new JLiteralDouble(line, scanner.previousToken().image());
         } else {
             reportParserError("Literal sought where %s found", scanner.token().image());
             return new JWildExpression(line);
@@ -1056,7 +1131,8 @@ public class Parser {
         return (sought == scanner.token().kind());
     }
 
-    // If the current token equals sought, scans it and returns true. Otherwise, returns false
+    // If the current token equals sought, scans it and returns true. Otherwise,
+    // returns false
     // without scanning the token.
     private boolean have(TokenKind sought) {
         if (see(sought)) {
@@ -1067,12 +1143,18 @@ public class Parser {
         }
     }
 
-    // Attempts to match a token we're looking for with the current input token. On success,
-    // scans the token and goes into a "Recovered" state. On failure, what happens next depends
-    // on whether or not the parser is currently in a "Recovered" state: if so, it reports the
-    // error and goes into an "Unrecovered" state; if not, it repeatedly scans tokens until it
-    // finds the one it is looking for (or EOF) and then returns to a "Recovered" state. This
-    // gives us a kind of poor man's syntactic error recovery, a strategy due to David Turner and
+    // Attempts to match a token we're looking for with the current input token. On
+    // success,
+    // scans the token and goes into a "Recovered" state. On failure, what happens
+    // next depends
+    // on whether or not the parser is currently in a "Recovered" state: if so, it
+    // reports the
+    // error and goes into an "Unrecovered" state; if not, it repeatedly scans
+    // tokens until it
+    // finds the one it is looking for (or EOF) and then returns to a "Recovered"
+    // state. This
+    // gives us a kind of poor man's syntactic error recovery, a strategy due to
+    // David Turner and
     // Ron Morrison.
     private void mustBe(TokenKind sought) {
         if (scanner.token().kind() == sought) {
@@ -1114,7 +1196,8 @@ public class Parser {
     // Lookahead Methods
     //////////////////////////////////////////////////
 
-    // Returns true if we are looking at an IDENTIFIER followed by a LPAREN, and false otherwise.
+    // Returns true if we are looking at an IDENTIFIER followed by a LPAREN, and
+    // false otherwise.
     private boolean seeIdentLParen() {
         scanner.recordPosition();
         boolean result = have(IDENTIFIER) && see(LPAREN);
@@ -1122,7 +1205,8 @@ public class Parser {
         return result;
     }
 
-    // Returns true if we are looking at a cast (basic or reference), and false otherwise.
+    // Returns true if we are looking at a cast (basic or reference), and false
+    // otherwise.
     private boolean seeCast() {
         scanner.recordPosition();
         if (!have(LPAREN)) {
@@ -1160,7 +1244,8 @@ public class Parser {
         return true;
     }
 
-    // Returns true if we are looking at a local variable declaration, and false otherwise.
+    // Returns true if we are looking at a local variable declaration, and false
+    // otherwise.
     private boolean seeLocalVariableDeclaration() {
         scanner.recordPosition();
         if (have(IDENTIFIER)) {
@@ -1197,18 +1282,26 @@ public class Parser {
         return true;
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     // Returns true if we are looking at a basic type, and false otherwise.
     private boolean seeBasicType() {
-        return (see(BOOLEAN) || see(CHAR) || see(INT));
+        return (see(BOOLEAN) || see(CHAR) || see(INT) || see(LONG) || see(FLOAT) || see(DOUBLE));
     }
 
+    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
+    // double literal and the float literal.
+    // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
+    // literal.
     // Returns true if we are looking at a reference type, and false otherwise.
     private boolean seeReferenceType() {
         if (see(IDENTIFIER)) {
             return true;
         } else {
             scanner.recordPosition();
-            if (have(BOOLEAN) || have(CHAR) || have(INT)) {
+            if (have(BOOLEAN) || have(CHAR) || have(INT) || have(LONG) || have(FLOAT) || have(DOUBLE)) {
                 if (have(LBRACK) && see(RBRACK)) {
                     scanner.returnToPosition();
                     return true;
