@@ -361,8 +361,7 @@ public class Parser {
             mustBe(SEMI);
             JStatement update = statementExpression();
             mustBe(RPAREN);
-            JStatement body = block();
-            return new JForStatement(line, init, condition, update, body);
+            return new JForStatement(line, init, condition, update, statement());
             /*System.err.println("For loop");
             if (have(TERN_FALSE)) {
                 System.err.println("Enhanced for loop");
