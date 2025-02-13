@@ -845,7 +845,7 @@ public class Parser {
     private JExpression multiplicativeExpression() {
         int line = scanner.token().line();
         boolean more = true;
-        JExpression lhs = unaryExpression();
+        JExpression lhs = ternaryExpression();
         while (more) {
             if (have(STAR)) { // *
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
@@ -860,7 +860,7 @@ public class Parser {
         return lhs;
     }
 
-    private JExpression unaryExpression() {
+    private JExpression ternaryExpression() {
         int line = scanner.token().line();
         boolean more = true;
         JExpression lhs = unaryExpression();
@@ -869,6 +869,8 @@ public class Parser {
                 // TODO
             }
         }
+
+        return lhs;
     }
     
     // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the

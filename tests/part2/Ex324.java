@@ -7,5 +7,9 @@ public class Ex324 {
         String out = a ? "Working properly." : "Not working properly.";
 
         System.out.println(out);
+
+        if (a ? true : false) {
+            System.out.println("yes");
+        }
     }
 }
