@@ -27,3 +27,4 @@ replay_pid*
 out/
 #ignore stupid jar now
 *.jar
+*.class
