@@ -357,7 +357,14 @@ public class Parser {
         } else if (have(FOR)) {
             mustBe(LPAREN);
             JStatement init = blockStatement();
-            System.err.println("For loop");
+            mustBe(SEMI);
+            JExpression condition = expression();
+            mustBe(SEMI);
+            JStatement update = blockStatement();
+            mustBe(RPAREN);
+            JStatement body = block();
+            return new JForStatement(line, init, condition, update, body);
+            /*System.err.println("For loop");
             if (have(TERN_FALSE)) {
                 System.err.println("Enhanced for loop");
                 // enhanced for-loop
@@ -380,7 +387,7 @@ public class Parser {
             } else {
                 // TODO gracefully exit & detect error?
                 return null;
-            }
+            }*/
         } else if (have(WHILE)) {
             JExpression test = parExpression();
             JStatement statement = statement();
