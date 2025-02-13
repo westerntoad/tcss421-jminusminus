@@ -2,7 +2,7 @@ import java.lang.System;
 
 public class Ex324 {
     public static void main(String[] args) {
-        int a = true;
+        boolean a = true;
 
         String out = a ? "Working properly." : "Not working properly.";
 

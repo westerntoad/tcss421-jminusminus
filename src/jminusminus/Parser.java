@@ -860,6 +860,16 @@ public class Parser {
         return lhs;
     }
 
+    private JExpression unaryExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = unaryExpression();
+        while (more) {
+            if (have(TERN_TRUE)) {
+                // TODO
+            }
+        }
+    }
     
     // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
     // additional operators that are defined in Java but not yet in j--.
