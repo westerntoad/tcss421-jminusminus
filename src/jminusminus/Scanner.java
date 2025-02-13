@@ -843,7 +843,7 @@ class Scanner {
                 scientificNotationOrBinaryExponentiation(buffer);
 
             } else {
-                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+                return null;
             }
         }
     }

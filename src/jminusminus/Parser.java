@@ -720,6 +720,10 @@ public class Parser {
         while (more) {
             if (have(LAND)) {
                 lhs = new JLogicalAndOp(line, lhs, equalityExpression());
+            } else if (have(LOR)) {
+                lhs = new JLogicalOrOp(line, lhs, equalityExpression());
+                // not sure if this accounts for logical precedence
+                // TODO fix
             } else {
                 more = false;
             }
@@ -743,6 +747,8 @@ public class Parser {
         while (more) {
             if (have(EQUAL)) {
                 lhs = new JEqualOp(line, lhs, relationalExpression());
+            } else if (have(NOT_EQUAL)) {
+                lhs = new JNotEqualOp(line, lhs, relationalExpression());
             } else {
                 more = false;
             }
@@ -766,21 +772,41 @@ public class Parser {
      */
     private JExpression relationalExpression() {
         int line = scanner.token().line();
-        JExpression lhs = additiveExpression();
+        JExpression lhs = bitShiftExpression();
         if (have(GT)) { // >
-            return new JGreaterThanOp(line, lhs, additiveExpression());
+            return new JGreaterThanOp(line, lhs, bitShiftExpression());
         } else if (have(LE)) { // <=
-            return new JLessEqualOp(line, lhs, additiveExpression());
+            return new JLessEqualOp(line, lhs, bitShiftExpression());
         } else if (have(LT)) { // <
-            return new JLessThanOp(line, lhs, additiveExpression());
+            return new JLessThanOp(line, lhs, bitShiftExpression());
         } else if (have(GE)) { // >=
-            return new JGreaterEqualOp(line, lhs, additiveExpression());
+            return new JGreaterEqualOp(line, lhs, bitShiftExpression());
         } else if (have(INSTANCEOF)) {
             return new JInstanceOfOp(line, lhs, referenceType());
         } else {
             return lhs;
         }
     }
+
+    private JExpression bitShiftExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = additiveExpression();
+        while (more) {
+            if (have(BSHIFTL)) {
+                lhs = new JALeftShiftOp(line, lhs, additiveExpression());
+            } else if (have(BSHIFTR)) {
+                lhs = new JARightShiftOp(line, lhs, additiveExpression());
+            } else if (have(BSSHIFTR)) {
+                lhs = new JLRightShiftOp(line, lhs, additiveExpression());
+            } else {
+                more = false;
+            }
+        }
+
+        return lhs;
+    }
+
 
     /**
      * Parses an additive expression and returns an AST for it.
@@ -823,6 +849,10 @@ public class Parser {
         while (more) {
             if (have(STAR)) { // *
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
+            } else if (have(DIV)) { // /
+                lhs = new JDivideOp(line, lhs, unaryExpression());
+            } else if (have(MOD)) { // %
+                lhs = new JRemainderOp(line, lhs, unaryExpression());
             } else {
                 more = false;
             }
@@ -830,6 +860,7 @@ public class Parser {
         return lhs;
     }
 
+    
     // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
     // additional operators that are defined in Java but not yet in j--.
     /**

@@ -90,12 +90,6 @@ public class Ex323 {
         // BCOMP
         a = ~a;
 
-        // TERN_TRUE and TERN_FALSE
-        int max = (a > b) ? a : b;
-
-        // LAMBDA
-        Runnable lambda = () -> System.out.println("Lambda executed");
-
         // GE
         result = a >= b;
 
