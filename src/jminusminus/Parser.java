@@ -356,18 +356,14 @@ public class Parser {
             return new JEmptyStatement(line);
         } else if (have(FOR)) {
             ArrayList<JStatement> init = new ArrayList<JStatement>();
-            mustBe(LPAREN);
-            while (!see(SEMI) && !see(EOF)) {
-                init.add(blockStatement());
-            }
-            mustBe(SEMI);
-            JExpression condition = parExpression();
             ArrayList<JStatement> update = new ArrayList<JStatement>();
+            mustBe(LPAREN);
+            init.add(blockStatement());
             mustBe(SEMI);
-            while (!see(SEMI) && !see(EOF)) {
-                init.add(blockStatement());
-            }
-            mustBe(RCURLY);
+            JExpression condition = expression();
+            mustBe(SEMI);
+            update.add(blockStatement());
+            mustBe(RPAREN);
             JStatement body = block();
             return new JForStatement(line, init, condition, update, body);
         } else if (have(WHILE)) {
