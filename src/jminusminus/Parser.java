@@ -357,10 +357,9 @@ public class Parser {
         } else if (have(FOR)) {
             mustBe(LPAREN);
             JStatement init = blockStatement();
-            mustBe(SEMI);
             JExpression condition = expression();
             mustBe(SEMI);
-            JStatement update = blockStatement();
+            JStatement update = statementExpression();
             mustBe(RPAREN);
             JStatement body = block();
             return new JForStatement(line, init, condition, update, body);
