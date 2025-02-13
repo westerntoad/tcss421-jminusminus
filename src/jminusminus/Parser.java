@@ -354,6 +354,22 @@ public class Parser {
             }
         } else if (have(SEMI)) {
             return new JEmptyStatement(line);
+        } else if (have(FOR)) {
+            ArrayList<JStatement> init = new ArrayList<JStatement>();
+            mustBe(LPAREN);
+            while (!see(SEMI) && !see(EOF)) {
+                init.add(blockStatement());
+            }
+            mustBe(SEMI);
+            JExpression condition = parExpression();
+            ArrayList<JStatement> update = new ArrayList<JStatement>();
+            mustBe(SEMI);
+            while (!see(SEMI) && !see(EOF)) {
+                init.add(blockStatement());
+            }
+            mustBe(RCURLY);
+            JStatement body = block();
+            return new JForStatement(line, init, condition, update, body);
         } else if (have(WHILE)) {
             JExpression test = parExpression();
             JStatement statement = statement();
@@ -724,7 +740,6 @@ public class Parser {
         return lhs;
     }
 
-
     /**
      * Parses a conditional-and expression and returns an AST for it.
      *
@@ -828,7 +843,6 @@ public class Parser {
         return lhs;
     }
 
-
     /**
      * Parses an additive expression and returns an AST for it.
      *
@@ -881,7 +895,6 @@ public class Parser {
         return lhs;
     }
 
-        
     // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
     // additional operators that are defined in Java but not yet in j--.
     /**
