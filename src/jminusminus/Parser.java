@@ -355,17 +355,32 @@ public class Parser {
         } else if (have(SEMI)) {
             return new JEmptyStatement(line);
         } else if (have(FOR)) {
-            ArrayList<JStatement> init = new ArrayList<JStatement>();
-            ArrayList<JStatement> update = new ArrayList<JStatement>();
             mustBe(LPAREN);
-            init.add(blockStatement());
-            mustBe(SEMI);
-            JExpression condition = expression();
-            mustBe(SEMI);
-            update.add(blockStatement());
-            mustBe(RPAREN);
-            JStatement body = block();
-            return new JForStatement(line, init, condition, update, body);
+            JStatement init = blockStatement();
+            System.err.println("For loop");
+            if (have(TERN_FALSE)) {
+                System.err.println("Enhanced for loop");
+                // enhanced for-loop
+                
+                JExpression collection = expression();
+                mustBe(RPAREN);
+
+                return new JEnhancedForStatement(line, init, collection, block());
+            } else if (have(SEMI)) {
+                System.err.println("Normal for loop");
+                // normal for loop
+                
+                JExpression condition = expression();
+                mustBe(SEMI);
+                JStatement update = blockStatement();
+                mustBe(RPAREN);
+                JStatement body = block();
+
+                return new JForStatement(line, init, condition, update, body);
+            } else {
+                // TODO gracefully exit & detect error?
+                return null;
+            }
         } else if (have(WHILE)) {
             JExpression test = parExpression();
             JStatement statement = statement();
