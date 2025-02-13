@@ -821,13 +821,15 @@ class Scanner {
     private TokenInfo decimalFloubleLiteralAfterPeriod(StringBuffer buffer) {
         buffer.append(ch); // append period
         nextCh();
+        boolean anythingHappened = false;
         while (true) {
             if (isDecimal(ch)) {
                 buffer.append(ch);
                 nextCh();
+                anythingHappened = true;
             } else if (isUnderscore(ch)) {
                 scanUnderscoreAndDecimal(buffer);
-
+                anythingHappened = true;
             } else if (isDoubleSuffix(ch)) {
                 buffer.append(ch);
                 nextCh();
@@ -840,8 +842,11 @@ class Scanner {
 
             } else if (ch == 'e' || ch == 'E') {
                 buffer.append(ch);
+                anythingHappened = true;
                 scientificNotationOrBinaryExponentiation(buffer);
 
+            } else if (!anythingHappened && buffer.length() == 1) {
+                return null;
             } else {
                 return null;
             }
