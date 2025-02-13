@@ -2,14 +2,9 @@ import java.lang.System;
 
 public class Ex324 {
     public static void main(String[] args) {
-        boolean a = true;
+        int a = 5;
+        int b = 7;
 
-        String out = a ? "Working properly." : "Not working properly.";
-
-        System.out.println(out);
-
-        if (a ? true : false) {
-            System.out.println("yes");
-        }
+        int c = (a > b) ? a : b;
     }
 }

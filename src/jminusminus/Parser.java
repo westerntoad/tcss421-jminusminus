@@ -674,7 +674,7 @@ public class Parser {
      */
     private JExpression assignmentExpression() {
         int line = scanner.token().line();
-        JExpression lhs = conditionalAndExpression();
+        JExpression lhs = ternaryExpression();
         if (have(ASSIGN)) { // =
             return new JAssignOp(line, lhs, assignmentExpression());
         } else if (have(PLUS_ASSIGN)) { // +=
@@ -703,6 +703,27 @@ public class Parser {
             return lhs;
         }
     }
+
+    private JExpression ternaryExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = conditionalAndExpression();
+        while (more) {
+            if (have(TERN_TRUE)) {
+                JExpression middle = conditionalAndExpression();
+                if (have(TERN_FALSE)) {
+                    lhs = new JTernaryExpression(line, lhs, middle, conditionalAndExpression());
+                } else {
+                    more = false;
+                }
+            } else {
+                more = false;
+            }
+        }
+
+        return lhs;
+    }
+
 
     /**
      * Parses a conditional-and expression and returns an AST for it.
@@ -845,7 +866,7 @@ public class Parser {
     private JExpression multiplicativeExpression() {
         int line = scanner.token().line();
         boolean more = true;
-        JExpression lhs = ternaryExpression();
+        JExpression lhs = unaryExpression();
         while (more) {
             if (have(STAR)) { // *
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
@@ -860,19 +881,7 @@ public class Parser {
         return lhs;
     }
 
-    private JExpression ternaryExpression() {
-        int line = scanner.token().line();
-        boolean more = true;
-        JExpression lhs = unaryExpression();
-        while (more) {
-            if (have(TERN_TRUE)) {
-                // TODO
-            }
-        }
-
-        return lhs;
-    }
-    
+        
     // TODO: Exercise 3.23. Modify the Parser to parse and return nodes for all the
     // additional operators that are defined in Java but not yet in j--.
     /**
