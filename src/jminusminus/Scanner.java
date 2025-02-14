@@ -285,10 +285,10 @@ class Scanner {
                 return new TokenInfo(BCOMP, line);
             case '?': // ?
                 nextCh();
-                return new TokenInfo(TERN_TRUE, line);
+                return new TokenInfo(QMARK, line);
             case ':': // :
                 nextCh();
-                return new TokenInfo(TERN_FALSE, line);
+                return new TokenInfo(COLON, line);
             case '|': // |, |=, ||
                 nextCh();
                 if (ch == '=') { // |=

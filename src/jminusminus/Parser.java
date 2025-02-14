@@ -363,16 +363,16 @@ public class Parser {
             ArrayList<JStatement> init = new ArrayList<>();
             init.add(new JVariableDeclaration(line, vdecls));
             // DANGER
-            if (have(TERN_FALSE)) {
+            if (have(COLON)) {
                 // enhanced for-loop
-                
+
                 JExpression collection = expression();
                 mustBe(RPAREN);
 
                 return new JEnhancedForStatement(line, init.get(0), collection, block());
             } else if (have(SEMI)) {
                 // normal for loop
-                
+
                 JExpression condition = expression();
                 mustBe(SEMI);
                 ArrayList<JStatement> update = new ArrayList<>();
@@ -740,9 +740,9 @@ public class Parser {
         boolean more = true;
         JExpression lhs = conditionalAndExpression();
         while (more) {
-            if (have(TERN_TRUE)) {
+            if (have(QMARK)) {
                 JExpression middle = conditionalAndExpression();
-                if (have(TERN_FALSE)) {
+                if (have(COLON)) {
                     lhs = new JTernaryExpression(line, lhs, middle, conditionalAndExpression());
                 } else {
                     more = false;
@@ -786,7 +786,7 @@ public class Parser {
         int line = scanner.token().line();
         boolean more = true;
         JExpression lhs = bitXorExpression();
-        while(more) {
+        while (more) {
             if (have(BOR)) {
                 lhs = new JOrOp(line, lhs, bitXorExpression());
             } else {
@@ -800,7 +800,7 @@ public class Parser {
         int line = scanner.token().line();
         boolean more = true;
         JExpression lhs = bitAndExpression();
-        while(more) {
+        while (more) {
             if (have(BXOR)) {
                 lhs = new JOrOp(line, lhs, bitAndExpression());
             } else {
@@ -814,7 +814,7 @@ public class Parser {
         int line = scanner.token().line();
         boolean more = true;
         JExpression lhs = equalityExpression();
-        while(more) {
+        while (more) {
             if (have(BAND)) {
                 lhs = new JOrOp(line, lhs, equalityExpression());
             } else {

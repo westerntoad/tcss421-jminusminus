@@ -95,9 +95,9 @@ enum TokenKind {
     /** ~ */
     BCOMP("~"),
     /** ? */
-    TERN_TRUE("?"),
+    QMARK("?"),
     /** : */
-    TERN_FALSE(":"),
+    COLON(":"),
     /** -> */
     LAMBDA("->"),
     /** '>=' */
