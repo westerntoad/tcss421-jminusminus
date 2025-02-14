@@ -848,7 +848,7 @@ class Scanner {
             } else if (!anythingHappened && buffer.length() == 1) {
                 return null;
             } else {
-                return null;
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
             }
         }
     }

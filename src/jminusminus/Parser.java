@@ -664,8 +664,6 @@ public class Parser {
         return basicType();
     }
 
-    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
-    // double literal and the float literal.
     // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
     // literal.
     /**
@@ -1294,8 +1292,6 @@ public class Parser {
         return new JNewArrayOp(line, type, dimensions);
     }
 
-    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
-    // double literal and the float literal.
     // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
     // literal.
     /**
@@ -1493,8 +1489,6 @@ public class Parser {
         return true;
     }
 
-    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
-    // double literal and the float literal.
     // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
     // literal.
     // Returns true if we are looking at a basic type, and false otherwise.
@@ -1502,8 +1496,6 @@ public class Parser {
         return (see(BOOLEAN) || see(CHAR) || see(INT) || see(LONG) || see(FLOAT) || see(DOUBLE));
     }
 
-    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
-    // double literal and the float literal.
     // TODO: Exercise 3.22. Modify the Parser to parse and return nodes for the long
     // literal.
     // Returns true if we are looking at a reference type, and false otherwise.

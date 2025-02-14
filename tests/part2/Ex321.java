@@ -1,3 +1,5 @@
+import java.lang.System;
+
 public class Ex321 {
     public static void main(String[] args) {
         // Decimal float
@@ -57,6 +59,7 @@ public class Ex321 {
         double double19 = 1_2.3_4E+5;
         double double20 = 1_2.3_4E-5;
         double double21 = 001d;
+        double double22 = 2.;
 
         // Hexadecimal double
         double hexDouble1 = 0xAp-5;
