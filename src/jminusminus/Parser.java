@@ -432,6 +432,33 @@ public class Parser {
             }
             mustBe(RCURLY);
             return new JSwitchStatement(line, condition, stmtGroup);
+            // TODO: Exercise 3.27. Modify the Parser to parse and return nodes for the
+            // try-catch-finally
+            // statement
+        } else if (have(TRY)) {
+            boolean noCatch = true;
+            JBlock tryBlock = null;
+            ArrayList<JFormalParameter> parameters = null;
+            ArrayList<JBlock> catchBlocks = null;
+            JBlock finallyBlock = null;
+            tryBlock = block();
+            if (have(CATCH)) {
+                noCatch = false;
+                mustBe(LPAREN);
+                parameters = new ArrayList<>();
+                parameters.add(formalParameter());
+                mustBe(RPAREN);
+                catchBlocks = new ArrayList<>();
+                catchBlocks.add(block());
+                if (have(FINALLY)) {
+                    finallyBlock = block();
+                }
+            }
+            if (noCatch) {
+                mustBe(FINALLY);
+                finallyBlock = block();
+            }
+            return new JTryStatement(line, tryBlock, parameters, catchBlocks, finallyBlock);
         } else if (have(WHILE)) {
             JExpression test = parExpression();
             JStatement statement = statement();
