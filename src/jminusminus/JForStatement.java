@@ -1,7 +1,5 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
-// Edited by Abraham & Jeremiah
-
 package jminusminus;
 
 import java.util.ArrayList;
@@ -13,13 +11,13 @@ import static jminusminus.CLConstants.*;
  */
 class JForStatement extends JStatement {
     // Initialization.
-    private JStatement init;
+    private ArrayList<JStatement> init;
 
     // Test expression
     private JExpression condition;
 
     // Update.
-    private JStatement update;
+    private ArrayList<JStatement> update;
 
     // The body.
     private JStatement body;
@@ -33,7 +31,8 @@ class JForStatement extends JStatement {
      * @param update    the update.
      * @param body      the body.
      */
-    public JForStatement(int line, JStatement init, JExpression condition, JStatement update, JStatement body) {
+    public JForStatement(int line, ArrayList<JStatement> init, JExpression condition,
+                         ArrayList<JStatement> update, JStatement body) {
         super(line);
         this.init = init;
         this.condition = condition;
@@ -65,7 +64,9 @@ class JForStatement extends JStatement {
         if (init != null) {
             JSONElement e1 = new JSONElement();
             e.addChild("Init", e1);
-            init.toJSON(e1);
+            for (JStatement stmt : init) {
+                stmt.toJSON(e1);
+            }
         }
         if (condition != null) {
             JSONElement e1 = new JSONElement();
@@ -75,7 +76,9 @@ class JForStatement extends JStatement {
         if (update != null) {
             JSONElement e1 = new JSONElement();
             e.addChild("Update", e1);
-            update.toJSON(e1);
+            for (JStatement stmt : update) {
+                stmt.toJSON(e1);
+            }
         }
         if (body != null) {
             JSONElement e1 = new JSONElement();

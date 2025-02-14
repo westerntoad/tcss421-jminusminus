@@ -360,7 +360,8 @@ public class Parser {
             // CURRENTLY ONLY ACCOUNT FOR VARIABLE DECLARATIONS
             Type type = type();
             ArrayList<JVariableDeclarator> vdecls = variableDeclarators(type);
-            JStatement init = new JVariableDeclaration(line, vdecls);
+            ArrayList<JStatement> init = new ArrayList<>();
+            init.add(new JVariableDeclaration(line, vdecls));
             // DANGER
             if (have(TERN_FALSE)) {
                 // enhanced for-loop
@@ -368,13 +369,14 @@ public class Parser {
                 JExpression collection = expression();
                 mustBe(RPAREN);
 
-                return new JEnhancedForStatement(line, init, collection, block());
+                return new JEnhancedForStatement(line, init.get(0), collection, block());
             } else if (have(SEMI)) {
                 // normal for loop
                 
                 JExpression condition = expression();
                 mustBe(SEMI);
-                JStatement update = statementExpression();
+                ArrayList<JStatement> update = new ArrayList<>();
+                update.add(statementExpression());
                 mustBe(RPAREN);
                 JStatement body = block();
 
