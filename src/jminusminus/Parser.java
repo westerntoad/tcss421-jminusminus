@@ -767,18 +767,61 @@ public class Parser {
     private JExpression conditionalAndExpression() {
         int line = scanner.token().line();
         boolean more = true;
-        JExpression lhs = equalityExpression();
+        JExpression lhs = bitOrExpression();
         while (more) {
             if (have(LAND)) {
-                lhs = new JLogicalAndOp(line, lhs, equalityExpression());
+                lhs = new JLogicalAndOp(line, lhs, bitOrExpression());
             } else if (have(LOR)) {
-                lhs = new JLogicalOrOp(line, lhs, equalityExpression());
+                lhs = new JLogicalOrOp(line, lhs, bitOrExpression());
                 // not sure if this accounts for logical precedence
                 // TODO fix
             } else {
                 more = false;
             }
         }
+        return lhs;
+    }
+
+    private JExpression bitOrExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = bitXorExpression();
+        while(more) {
+            if (have(BOR)) {
+                lhs = new JOrOp(line, lhs, bitXorExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
+    private JExpression bitXorExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = bitAndExpression();
+        while(more) {
+            if (have(BXOR)) {
+                lhs = new JOrOp(line, lhs, bitAndExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
+    private JExpression bitAndExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = equalityExpression();
+        while(more) {
+            if (have(BAND)) {
+                lhs = new JOrOp(line, lhs, equalityExpression());
+            } else {
+                more = false;
+            }
+        }
+
         return lhs;
     }
 

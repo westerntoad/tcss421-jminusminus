@@ -54,6 +54,10 @@ public class Ex323 {
         // BSSHIFTR
         int unsignedRightShift = a >>> 2;
 
+        int bor = a | b;
+        int xor = a ^ b;
+        int and = a & b;
+
         // MINUS_ASSIGN
         a -= b;
 
