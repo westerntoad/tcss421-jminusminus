@@ -352,6 +352,14 @@ public class Parser {
                 mustBe(SEMI);
                 return new JReturnStatement(line, expr);
             }
+            // Abraham & Jeremiah, add break
+        } else if (have(BREAK)) {
+            if (have(SEMI))
+                return new JBreakStatement(line);
+            // DANGER
+            // TODO: TODON'T
+            else
+                return null;
         } else if (have(SEMI)) {
             return new JEmptyStatement(line);
         } else if (have(FOR)) {
@@ -385,6 +393,33 @@ public class Parser {
                 // TODO gracefully exit & detect error?
                 return null;
             }
+            // TODO: Exercise 3.26. Modify the Parser to parse and return nodes for the
+            // switch-statement.
+        } else if (have(SWITCH)) {
+            JExpression condition = parExpression();
+            ArrayList<SwitchStatementGroup> stmtGroup = new ArrayList<>();
+            ArrayList<JExpression> switchLabels;
+            ArrayList<JStatement> block;
+
+            mustBe(LCURLY);
+            while (!see(RCURLY) && !see(EOF)) {
+                switchLabels = new ArrayList<>();
+                block = new ArrayList<>();
+
+                if (have(CASE)) {
+                    switchLabels.add(literal());
+                    mustBe(COLON);
+                } else if (have(DEFAULT)) {
+                    switchLabels.add(null);
+                    mustBe(COLON);
+                }
+                while (!see(CASE) && !see(DEFAULT) && !see(RCURLY) && !see(EOF)) {
+                    block.add(statement());
+                }
+                stmtGroup.add(new SwitchStatementGroup(switchLabels, block));
+            }
+            mustBe(RCURLY);
+            return new JSwitchStatement(line, condition, stmtGroup);
         } else if (have(WHILE)) {
             JExpression test = parExpression();
             JStatement statement = statement();
