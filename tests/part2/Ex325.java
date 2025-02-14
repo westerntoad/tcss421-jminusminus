@@ -6,9 +6,10 @@ public class Ex325 {
             // nothin
         }
 
-        /*int[] arr = { 1, 2, 3, 4, 5 };
+        //int[] arr = { 1, 2, 3, 4, 5 };
         for (int num : arr) {
-            System.out.println("Enhanced for-loop printing: " + num);
-        }*/
+            //System.out.println("Enhanced for-loop printing: " + num);
+            // nothin
+        }
     }
 }

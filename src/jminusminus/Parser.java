@@ -356,15 +356,13 @@ public class Parser {
             return new JEmptyStatement(line);
         } else if (have(FOR)) {
             mustBe(LPAREN);
-            JStatement init = blockStatement();
-            JExpression condition = expression();
-            mustBe(SEMI);
-            JStatement update = statementExpression();
-            mustBe(RPAREN);
-            return new JForStatement(line, init, condition, update, statement());
-            /*System.err.println("For loop");
+            // DANGER
+            // CURRENTLY ONLY ACCOUNT FOR VARIABLE DECLARATIONS
+            Type type = type();
+            ArrayList<JVariableDeclarator> vdecls = variableDeclarators(type);
+            JStatement init = new JVariableDeclaration(line, vdecls);
+            // DANGER
             if (have(TERN_FALSE)) {
-                System.err.println("Enhanced for loop");
                 // enhanced for-loop
                 
                 JExpression collection = expression();
@@ -372,12 +370,11 @@ public class Parser {
 
                 return new JEnhancedForStatement(line, init, collection, block());
             } else if (have(SEMI)) {
-                System.err.println("Normal for loop");
                 // normal for loop
                 
                 JExpression condition = expression();
                 mustBe(SEMI);
-                JStatement update = blockStatement();
+                JStatement update = statementExpression();
                 mustBe(RPAREN);
                 JStatement body = block();
 
@@ -385,7 +382,7 @@ public class Parser {
             } else {
                 // TODO gracefully exit & detect error?
                 return null;
-            }*/
+            }
         } else if (have(WHILE)) {
             JExpression test = parExpression();
             JStatement statement = statement();
