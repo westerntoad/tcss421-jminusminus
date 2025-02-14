@@ -738,12 +738,12 @@ public class Parser {
     private JExpression ternaryExpression() {
         int line = scanner.token().line();
         boolean more = true;
-        JExpression lhs = conditionalAndExpression();
+        JExpression lhs = conditionalOrExpression();
         while (more) {
             if (have(TERN_TRUE)) {
-                JExpression middle = conditionalAndExpression();
+                JExpression middle = conditionalOrExpression();
                 if (have(TERN_FALSE)) {
-                    lhs = new JTernaryExpression(line, lhs, middle, conditionalAndExpression());
+                    lhs = new JTernaryExpression(line, lhs, middle, conditionalOrExpression());
                 } else {
                     more = false;
                 }
@@ -754,6 +754,21 @@ public class Parser {
 
         return lhs;
     }
+    
+    private JExpression conditionalOrExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = conditionalAndExpression();
+        while (more) {
+            if (have(LOR)) {
+                lhs = new JLogicalOrOp(line, lhs, conditionalAndExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
 
     /**
      * Parses a conditional-and expression and returns an AST for it.
@@ -771,10 +786,6 @@ public class Parser {
         while (more) {
             if (have(LAND)) {
                 lhs = new JLogicalAndOp(line, lhs, bitOrExpression());
-            } else if (have(LOR)) {
-                lhs = new JLogicalOrOp(line, lhs, bitOrExpression());
-                // not sure if this accounts for logical precedence
-                // TODO fix
             } else {
                 more = false;
             }
@@ -782,6 +793,7 @@ public class Parser {
         return lhs;
     }
 
+    
     private JExpression bitOrExpression() {
         int line = scanner.token().line();
         boolean more = true;
@@ -802,7 +814,7 @@ public class Parser {
         JExpression lhs = bitAndExpression();
         while(more) {
             if (have(BXOR)) {
-                lhs = new JOrOp(line, lhs, bitAndExpression());
+                lhs = new JXorOp(line, lhs, bitAndExpression());
             } else {
                 more = false;
             }
@@ -816,7 +828,7 @@ public class Parser {
         JExpression lhs = equalityExpression();
         while(more) {
             if (have(BAND)) {
-                lhs = new JOrOp(line, lhs, equalityExpression());
+                lhs = new JAndOp(line, lhs, equalityExpression());
             } else {
                 more = false;
             }
