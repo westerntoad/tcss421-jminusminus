@@ -56,8 +56,6 @@ class Type {
      */
     public final static Type LONG = typeFor(long.class);
 
-    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
-    // double literal and the float literal.
     /**
      * The float type. Abraham and Jeremiah.
      */
@@ -88,8 +86,6 @@ class Type {
      */
     public final static Type BOXED_LONG = typeFor(java.lang.Long.class);
 
-    // TODO: Exercise 3.21. Modify the Parser to parse and return nodes for the
-    // double literal and the float literal.
     /**
      * The float type. Abraham and Jeremiah.
      */
