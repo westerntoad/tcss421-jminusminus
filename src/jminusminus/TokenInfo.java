@@ -5,7 +5,7 @@ package jminusminus;
 /**
  * An enum of token kinds. Each entry in this enum represents the kind of a token along with its
  * image (string representation).
- * @version 2.1
+ * @version 2.2
  * @author Corey Young
  */
 enum TokenKind {
@@ -24,7 +24,7 @@ enum TokenKind {
     char       final      interface    static      void
     class      finally    long         strictfp    volatile
     const      float      native       super       while
-    _ (underscore)
+    _ (underscore)        until
      */
     ABSTRACT("abstract"), BOOLEAN("boolean"), CHAR("char"), CLASS("class"), ELSE("else"),
     EXTENDS("extends"), IF("if"), IMPORT("import"), INSTANCEOF("instanceof"), INT("int"),
@@ -37,6 +37,7 @@ enum TokenKind {
     IMPLEMENTS("implements"), INTERFACE("interface"), LONG("long"), NATIVE("native"), SHORT("short"),
     STRICTFP("strictfp"), SWITCH("switch"), SYNCHRONIZED("synchronized"), THROW("throw"),
     THROWS("throws"), TRANSIENT("transient"), TRY("try"), VOLATILE("VOLATILE"), UNDERSCORE("_"),
+    UNTIL("until"),
 
     // Operators.
     /* Java recognizes the following operators:

@@ -10,6 +10,8 @@ import static jminusminus.TokenKind.*;
  * A recursive descent parser that, given a lexical analyzer (a LookaheadScanner), parses a j--
  * compilation unit (program file), taking tokens from the LookaheadScanner, and produces an
  * abstract syntax tree (AST) for it.
+ * @author Corey Young
+ * @version 2.0
  */
 public class Parser {
     // The lexical analyzer with which tokens are scanned.
@@ -252,14 +254,18 @@ public class Parser {
             memberDecl = new JConstructorDeclaration(line, mods, name, params, null, body);
         } else {
             Type type = null;
+            ArrayList<TypeName> exceptions = null;
             if (have(VOID)) {
                 // A void method.
                 type = Type.VOID;
                 mustBe(IDENTIFIER);
                 String name = scanner.previousToken().image();
                 ArrayList<JFormalParameter> params = formalParameters();
+                if (have(THROWS)) {
+                    exceptions = exceptionTypes();
+                }
                 JBlock body = have(SEMI) ? null : block();
-                memberDecl = new JMethodDeclaration(line, mods, name, type, params, null, body);
+                memberDecl = new JMethodDeclaration(line, mods, name, type, params, exceptions, body);
             } else {
                 type = type();
                 if (seeIdentLParen()) {
@@ -267,8 +273,11 @@ public class Parser {
                     mustBe(IDENTIFIER);
                     String name = scanner.previousToken().image();
                     ArrayList<JFormalParameter> params = formalParameters();
+                    if (have(THROWS)) {
+                        exceptions = exceptionTypes();
+                    }
                     JBlock body = have(SEMI) ? null : block();
-                    memberDecl = new JMethodDeclaration(line, mods, name, type, params, null, body);
+                    memberDecl = new JMethodDeclaration(line, mods, name, type, params, exceptions, body);
                 } else {
                     // A field.
                     memberDecl = new JFieldDeclaration(line, mods, variableDeclarators(type));
@@ -277,6 +286,28 @@ public class Parser {
             }
         }
         return memberDecl;
+    }
+
+    /**
+     * Parses a caseBlock and returns an AST for it.
+     *
+     * <pre>
+     *   caseBlock ::= CASE COLON { blockStatement }
+     * </pre>
+     *
+     * @return an AST for a caseBlock.
+     */
+    private JBlock caseBlock() {
+        int line = scanner.token().line();
+        ArrayList<JStatement> statements = new ArrayList<JStatement>();
+        mustBe(COLON);
+        while (!see(CASE) && !see(DEFAULT) && !see(EOF)) {
+            statements.add(blockStatement());
+        }
+        if (see(DEFAULT)) {
+            statements.add(blockStatement());
+        }
+        return new JBlock(line, statements);
     }
 
     /**
@@ -354,12 +385,114 @@ public class Parser {
             JExpression test = parExpression();
             JStatement statement = statement();
             return new JWhileStatement(line, test, statement);
+        } else if (have(DO)) {
+            JStatement statement = statement();
+            mustBe(UNTIL);
+            JExpression test = parExpression();
+            mustBe(SEMI);
+            return new JDoStatement(line, statement, test);
+        } else if (have(FOR)) {
+            mustBe(LPAREN);
+            ArrayList<JStatement> init = new ArrayList<>();
+            Type type = type();
+            ArrayList<JVariableDeclarator> variables = variableDeclarators(type);
+            init.add(new JVariableDeclaration(line, variables));
+
+            if (have(SEMI)) {
+                //regular for loop
+                JExpression condition = expression();
+                mustBe(SEMI);
+                ArrayList<JStatement> update = new ArrayList<>();
+                update.add(statementExpression());
+                mustBe(RPAREN);
+                JStatement body = block();
+                return new JForStatement(line, init, condition, update, body);
+            } else if (have(COLON)) {
+                //enhanced for loop
+                JExpression source = expression();
+                mustBe(RPAREN);
+                JStatement body = block();
+                if (variables.size() != 1) {
+                    reportParserError("Enhanced For Loop has incorrect number of elements in variable side.");
+                }
+                return new JEnhancedForStatement(line, init.get(0), source, body);
+            }
+            reportParserError("For loop is neither regular nor enhanced.");
+            return null;
+        } else if (have(SWITCH)) {
+            mustBe(LPAREN);
+            JExpression condition = expression();
+            mustBe(RPAREN);
+            mustBe(LCURLY);
+            ArrayList<SwitchStatementGroup> stmtGroup = new ArrayList<>();
+            boolean more = true;
+            ArrayList<JExpression> switchLabels = new ArrayList<>();
+            ArrayList<JStatement> blocks = new ArrayList<>();
+            while (more) {
+                if (have(CASE)) {
+                    switchLabels.add(expression());
+                    blocks.add(caseBlock());
+                } else {
+                    more = false;
+                }
+            }
+            stmtGroup.add(new SwitchStatementGroup(switchLabels, blocks));
+            return new JSwitchStatement(line, condition, stmtGroup);
+        } else if (have(TRY)) {
+            JBlock tryBlock = block();
+            ArrayList<JFormalParameter> parameters = new ArrayList<>();
+            ArrayList<JBlock> catchBlocks = new ArrayList<>();
+            JBlock finallyBlock = null;
+            while (have(CATCH)) {
+                catchBlocks.add(block());
+            }
+            if (have(FINALLY)) {
+                finallyBlock = block();
+            }
+            return new JTryStatement(line, tryBlock, parameters, catchBlocks, finallyBlock);
+        } else if (have(THROW)) {
+            JExpression expression = expression();
+            mustBe(SEMI);
+            return new JThrowStatement(line, expression);
         } else {
             // Must be a statementExpression.
             JStatement statement = statementExpression();
             mustBe(SEMI);
             return statement;
         }
+    }
+
+    /**
+     * Parses and returns a list of formal parameters.
+     *
+     * <pre>
+     *   exceptionTypes ::= IDENTIFIER { COMMA IDENTIFIER }
+     * </pre>
+     *
+     * @return a list of formal parameters.
+     */
+    private ArrayList<TypeName> exceptionTypes() {
+        ArrayList<TypeName> exceptions = new ArrayList<TypeName>();
+        do {
+            exceptions.add(exceptionType());
+        } while (have(COMMA));
+        return exceptions;
+    }
+
+    /**
+     * Parses an exception and returns an AST for it.
+     *
+     * <pre>
+     *   exceptionType ::= IDENTIFIER
+     * </pre>
+     *
+     * @return an AST for an exception.
+     */
+    private TypeName exceptionType() {
+        int line = scanner.token().line();
+        mustBe(IDENTIFIER);
+        String name = scanner.previousToken().image();
+        return new TypeName(line, name);
     }
 
     /**
@@ -555,7 +688,7 @@ public class Parser {
      * Parses and returns a basic type.
      *
      * <pre>
-     *   basicType ::= BOOLEAN | CHAR | INT
+     *   basicType ::= BOOLEAN | CHAR | INT | LONG | FLOAT | DOUBLE | SHORT | BYTE
      * </pre>
      *
      * @return a basic type.
@@ -567,6 +700,16 @@ public class Parser {
             return Type.CHAR;
         } else if (have(INT)) {
             return Type.INT;
+        } else if (have(LONG)) {
+            return Type.LONG;
+        } else if (have(FLOAT)) {
+            return Type.FLOAT;
+        } else if (have(DOUBLE)) {
+            return Type.DOUBLE;
+        } else if (have(SHORT)) {
+            return Type.SHORT;
+        } else if (have(BYTE)) {
+            return Type.BYTE;
         } else {
             reportParserError("Type sought where %s found", scanner.token().image());
             return Type.ANY;
@@ -645,11 +788,37 @@ public class Parser {
     }
 
     /**
+     * Parses a lambda expression and returns an AST for it.
+     *
+     * <pre>
+     *   lambdaExpression ::= equalityExpression { LAMBDA equalityExpression }
+     * </pre>
+     *
+     * @return an AST for a lambda expression.
+     */
+    private JExpression lambdaExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = equalityExpression();
+        while (more) {
+            if (have(LAMBDA)) {
+                //todo implement JLambdaExpression class
+                //lhs = new JLambdaExpression(line, lhs, equalityExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
+    /**
      * Parses an assignment expression and returns an AST for it.
      *
      * <pre>
      *   assignmentExpression ::= conditionalAndExpression
-     *                                [ ( ASSIGN | PLUS_ASSIGN ) assignmentExpression ]
+     *                                [ ( ASSIGN | PLUS_ASSIGN | MINUS_ASSIGN | STAR_ASSIGN
+     *                                | DIVIDE_ASSIGN | BAND_ASSIGN | BOR_ASSIGN | BXOR_ASSIGN
+     *                                | MOD_ASSIGN | LSHIFT_ASSIGN | RSHIFT_ASSIGN | URSHIFT_ASSIGN ) assignmentExpression ]
      * </pre>
      *
      * @return an AST for an assignment expression.
@@ -661,6 +830,26 @@ public class Parser {
             return new JAssignOp(line, lhs, assignmentExpression());
         } else if (have(PLUS_ASSIGN)) {
             return new JPlusAssignOp(line, lhs, assignmentExpression());
+        } else if(have(MINUS_ASSIGN)) {
+            return new JMinusAssignOp(line, lhs, assignmentExpression());
+        } else if(have(STAR_ASSIGN)) {
+            return new JStarAssignOp(line, lhs, assignmentExpression());
+        } else if(have(DIVIDE_ASSIGN)) {
+            return new JDivAssignOp(line, lhs, assignmentExpression());
+        } else if(have(BAND_ASSIGN)) {
+            return new JAndAssignOp(line, lhs, assignmentExpression());
+        } else if(have(BOR_ASSIGN)) {
+            return new JOrAssignOp(line, lhs, assignmentExpression());
+        } else if(have(BXOR_ASSIGN)) {
+            return new JXorAssignOp(line, lhs, assignmentExpression());
+        } else if(have(MOD_ASSIGN)) {
+            return new JRemAssignOp(line, lhs, assignmentExpression());
+        } else if(have(LSHIFT_ASSIGN)) {
+            return new JALeftShiftAssignOp(line, lhs, assignmentExpression());
+        } else if(have(RSHIFT_ASSIGN)) {
+            return new JARightShiftAssignOp(line, lhs, assignmentExpression());
+        } else if(have(URSHIFT_ASSIGN)) {
+            return new JLRightShiftAssignOp(line, lhs, assignmentExpression());
         } else {
             return lhs;
         }
@@ -690,10 +879,55 @@ public class Parser {
     }
 
     /**
+     * Parses a conditional-or expression and returns an AST for it.
+     *
+     * <pre>
+     *   conditionalOrExpression ::= equalityExpression { LOR equalityExpression }
+     * </pre>
+     *
+     * @return an AST for a conditional-or expression.
+     */
+    private JExpression conditionalOrExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = equalityExpression();
+        while (more) {
+            if (have(LOR)) {
+                lhs = new JLogicalOrOp(line, lhs, equalityExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
+    /**
+     * Parses a ternary expression and returns an AST for it.
+     *
+     * <pre>
+     *   ternaryExpression ::= equalityExpression [ TERNARY expression COLON expression ]
+     * </pre>
+     *
+     * @return an AST for a ternary expression.
+     */
+    private JExpression ternaryExpression() {
+        int line = scanner.token().line();
+        JExpression lhs = equalityExpression();
+        if (have(TERNARY)) {
+            JExpression thanExpression = expression();
+            if(have(COLON)) {
+                JExpression elseExpression = expression();
+                lhs = new JConditionalExpression(line, lhs, thanExpression, elseExpression);
+            }
+        }
+        return lhs;
+    }
+
+    /**
      * Parses an equality expression and returns an AST for it.
      *
      * <pre>
-     *   equalityExpression ::= relationalExpression { EQUAL relationalExpression }
+     *   equalityExpression ::= relationalExpression { ( EQUAL | NE ) relationalExpression }
      * </pre>
      *
      * @return an AST for an equality expression.
@@ -705,6 +939,8 @@ public class Parser {
         while (more) {
             if (have(EQUAL)) {
                 lhs = new JEqualOp(line, lhs, relationalExpression());
+            } else if (have(NE)) {
+                lhs = new JNotEqualOp(line, lhs, relationalExpression());
             } else {
                 more = false;
             }
@@ -716,7 +952,7 @@ public class Parser {
      * Parses a relational expression and returns an AST for it.
      *
      * <pre>
-     *   relationalExpression ::= additiveExpression [ ( GT | LE ) additiveExpression
+     *   relationalExpression ::= additiveExpression [ ( GT | LT | GE | LE ) additiveExpression
      *                                               | INSTANCEOF referenceType ]
      * </pre>
      *
@@ -727,6 +963,10 @@ public class Parser {
         JExpression lhs = additiveExpression();
         if (have(GT)) {
             return new JGreaterThanOp(line, lhs, additiveExpression());
+        } else if (have(LT)) {
+            return new JLessThanOp(line, lhs, additiveExpression());
+        } else if (have(GE)) {
+            return new JGreaterEqualOp(line, lhs, additiveExpression());
         } else if (have(LE)) {
             return new JLessEqualOp(line, lhs, additiveExpression());
         } else if (have(INSTANCEOF)) {
@@ -740,7 +980,7 @@ public class Parser {
      * Parses an additive expression and returns an AST for it.
      *
      * <pre>
-     *   additiveExpression ::= multiplicativeExpression { MINUS multiplicativeExpression }
+     *   additiveExpression ::= multiplicativeExpression { ( MINUS | PLUS ) multiplicativeExpression }
      * </pre>
      *
      * @return an AST for an additive expression.
@@ -777,6 +1017,66 @@ public class Parser {
         while (more) {
             if (have(STAR)) {
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
+            } else if (have(DIVIDE)) {
+                lhs = new JDivideOp(line, lhs, unaryExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
+    /**
+     * Parses a remainder expression and returns an AST for it.
+     *
+     * <pre>
+     *   remainderExpression ::= unaryExpression { MOD unaryExpression }
+     * </pre>
+     *
+     * @return an AST for a multiplicative expression.
+     */
+    private JExpression remainderExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = unaryExpression();
+        while (more) {
+            if (have(MOD)) {
+                lhs = new JRemainderOp(line, lhs, unaryExpression());
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
+
+    /**
+     * Parses a bitwise expression and returns an AST for it.
+     *
+     * <pre>
+     *   bitwiseExpression ::= unaryExpression { ( TILDE | BAND | BOR | BXOR | LSHIFT | RSHIFT | URSHIFT ) unaryExpression }
+     * </pre>
+     *
+     * @return an AST for a bitwise expression.
+     */
+    private JExpression bitwiseExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = unaryExpression();
+        while (more) {
+            if (have(TILDE)) {
+                lhs = new JComplementOp(line, lhs);
+            } else if (have(BAND)) {
+                lhs = new JAndOp(line, lhs, unaryExpression());
+            } else if (have(BOR)) {
+                lhs = new JOrOp(line, lhs, unaryExpression());
+            } else if (have(BXOR)) {
+                lhs = new JXorOp(line, lhs, unaryExpression());
+            } else if (have(LSHIFT)) {
+                lhs = new JALeftShiftOp(line, lhs, unaryExpression());
+            } else if (have(RSHIFT)) {
+                lhs = new JARightShiftOp(line, lhs, unaryExpression());
+            } else if (have(URSHIFT)) {
+                lhs = new JLRightShiftOp(line, lhs, unaryExpression());
             } else {
                 more = false;
             }
@@ -789,6 +1089,7 @@ public class Parser {
      *
      * <pre>
      *   unaryExpression ::= INC unaryExpression
+     *                     | DEC unaryExpression
      *                     | MINUS unaryExpression
      *                     | simpleUnaryExpression
      * </pre>
@@ -799,6 +1100,8 @@ public class Parser {
         int line = scanner.token().line();
         if (have(INC)) {
             return new JPreIncrementOp(line, unaryExpression());
+        } else if (have(DEC)) {
+            return new JPreDecrementOp(line, unaryExpression());
         } else if (have(MINUS)) {
             return new JNegateOp(line, unaryExpression());
         } else {
@@ -1022,7 +1325,7 @@ public class Parser {
      * Parses a literal and returns an AST for it.
      *
      * <pre>
-     *   literal ::= CHAR_LITERAL | FALSE | INT_LITERAL | NULL | STRING_LITERAL | TRUE
+     *   literal ::= CHAR_LITERAL | FALSE | INT_LITERAL | NULL | STRING_LITERAL | TRUE | FLOAT | DOUBLE | LONG
      * </pre>
      *
      * @return an AST for a literal.
@@ -1041,6 +1344,12 @@ public class Parser {
             return new JLiteralString(line, scanner.previousToken().image());
         } else if (have(TRUE)) {
             return new JLiteralBoolean(line, scanner.previousToken().image());
+        } else if (have(DOUBLE_LITERAL)) {
+            return new JLiteralDouble(line, scanner.previousToken().image());
+        } else if (have(FLOAT_LITERAL)) {
+            return new JLiteralFloat(line, scanner.previousToken().image());
+        } else if (have(LONG_LITERAL)) {
+            return new JLiteralLong(line, scanner.previousToken().image());
         } else {
             reportParserError("Literal sought where %s found", scanner.token().image());
             return new JWildExpression(line);
@@ -1198,8 +1507,9 @@ public class Parser {
     }
 
     // Returns true if we are looking at a basic type, and false otherwise.
+    // Basic/Primitive types include: int, long, float, double, boolean, char, short, byte
     private boolean seeBasicType() {
-        return (see(BOOLEAN) || see(CHAR) || see(INT));
+        return (see(BOOLEAN) || see(CHAR) || see(INT) || see(LONG) || see(FLOAT) || see(DOUBLE) || see(SHORT) || see(BYTE));
     }
 
     // Returns true if we are looking at a reference type, and false otherwise.

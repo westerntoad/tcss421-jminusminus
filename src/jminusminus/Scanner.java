@@ -12,7 +12,7 @@ import static jminusminus.TokenKind.*;
 
 /**
  * A lexical analyzer for j--, that has no backtracking mechanism.
- * @version 2.1
+ * @version 2.2
  * @author Corey Young
  */
 class Scanner {
@@ -74,6 +74,7 @@ class Scanner {
         reserved.put(TRUE.image(), TRUE);
         reserved.put(VOID.image(), VOID);
         reserved.put(WHILE.image(), WHILE);
+        reserved.put(UNTIL.image(), UNTIL);
 
         reserved.put(ASSERT.image(), ASSERT);
         reserved.put(BREAK.image(), BREAK);

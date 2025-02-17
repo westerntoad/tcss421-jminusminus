@@ -20,6 +20,9 @@ import java.util.Hashtable;
  * <p>
  * IdentifierTypes must be "resolved" at some point, so that all Types having the same name refer
  * to the same Type object. The resolve() method does this.
+ *
+ * @author Corey Young
+ * @version 2.0
  */
 class Type {
     // The Type's internal (Java) representation.
@@ -52,6 +55,21 @@ class Type {
      * The double type.
      */
     public final static Type DOUBLE = typeFor(double.class);
+
+    /**
+     * The float type.
+     */
+    public final static Type FLOAT = typeFor(float.class);
+
+    /**
+     * The short type.
+     */
+    public final static Type SHORT = typeFor(short.class);
+
+    /**
+     * The byte type.
+     */
+    public final static Type BYTE = typeFor(byte.class);
 
     /**
      * The java.lang.Integer type.

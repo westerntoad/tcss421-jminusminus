@@ -1,43 +1,41 @@
-// Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
-
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
 
 /**
- * The AST node for a double literal.
+ * The AST node for a float literal.
  * @author Corey Young
- * @version 2.0
+ * @version 1.0
  */
-class JLiteralDouble extends JExpression {
+class JLiteralFloat extends JExpression {
     // String representation of the literal.
     private String text;
 
     /**
-     * Constructs an AST node for a double literal given its line number and string representation.
+     * Constructs an AST node for a float literal given its line number and string representation.
      *
      * @param line line in which the literal occurs in the source file.
      * @param text string representation of the literal.
      */
-    public JLiteralDouble(int line, String text) {
+    public JLiteralFloat(int line, String text) {
         super(line);
         this.text = text;
     }
 
     /**
-     * Returns the literal as a double.
+     * Returns the literal as a float.
      *
-     * @return the literal as a double.
+     * @return the literal as a float.
      */
-    public double toDouble() {
-        return Double.parseDouble(text);
+    public double toFloat() {
+        return Float.parseFloat(text);
     }
 
     /**
      * {@inheritDoc}
      */
     public JExpression analyze(Context context) {
-        type = Type.DOUBLE;
+        type = Type.FLOAT;
         return this;
     }
 
@@ -53,7 +51,7 @@ class JLiteralDouble extends JExpression {
      */
     public void toJSON(JSONElement json) {
         JSONElement e = new JSONElement();
-        json.addChild("JLiteralDouble:" + line, e);
+        json.addChild("JLiteralFloat:" + line, e);
         e.addAttribute("type", type == null ? "" : type.toString());
         e.addAttribute("value", text);
     }
