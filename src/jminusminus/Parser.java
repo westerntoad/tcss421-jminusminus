@@ -1342,6 +1342,8 @@ public class Parser {
             return new JLiteralNull(line);
         } else if (have(STRING_LITERAL)) {
             return new JLiteralString(line, scanner.previousToken().image());
+        } else if (have(TEXT_BLOCK)) { // Type of string literal
+            return new JLiteralString(line, scanner.previousToken().image());
         } else if (have(TRUE)) {
             return new JLiteralBoolean(line, scanner.previousToken().image());
         } else if (have(DOUBLE_LITERAL)) {
