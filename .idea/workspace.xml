@@ -7,7 +7,24 @@
     <list default="true" id="635c3b74-0e24-42bf-a84e-cbc6a9391ff1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/j--.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/j--.jar" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/CharReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/CharReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/Scanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/Scanner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/TokenInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/TokenInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/jminusminus/TokenKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/jminusminus/TokenKind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/ParseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/ParseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/SimpleCharStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jminusminus/TokenMgrError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/MultiLineCommentsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/NewKeywordsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/NewLiteralsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/jvm/NewOperatorsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/part1/MultilineComment.java" beforeDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/tests/part1/ValidLiterals.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/part1/ValidLiterals.java" afterDir="false" />
+>>>>>>> jeremiah
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,11 +41,31 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="1WioJqpDF6mSNoLN7qdMmxO1tU5" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.SPIM.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "git-widget-placeholder": "mergin",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/abraham/Documents/uwt-classes/TCSS421/tcss422-jminusminus/tests/part1"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;git-widget-placeholder&quot;: &quot;jeremiah&quot;,
@@ -38,13 +75,14 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib" />
+>>>>>>> jeremiah
       <recent name="$PROJECT_DIR$/tests/part1" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tests/jvm" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Scan">
+  <component name="RunManager" selected="Application.SPIM">
     <configuration name="Analyze" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="jminusminus.Main" />
       <module name="j--" />
@@ -173,6 +211,13 @@
       <item itemvalue="Application.SPIM" />
       <item itemvalue="Application.Scan" />
     </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-11.0.22-corretto-11.0.22-4caba194b151-bfa3237e" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">

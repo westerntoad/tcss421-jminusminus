@@ -22,6 +22,9 @@
 hs_err_pid*
 replay_pid*
 
+.idea/
 .vscode/
+out/
 #ignore stupid jar now
 *.jar
+*.class
