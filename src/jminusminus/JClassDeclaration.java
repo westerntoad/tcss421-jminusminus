@@ -1,4 +1,5 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
+// modified by Abe & Jeremiah
 
 package jminusminus;
 
@@ -155,6 +156,17 @@ class JClassDeclaration extends JAST implements JTypeDecl {
      */
     public ArrayList<TypeName> superInterfaces() {
         return superInterfaces;
+    }
+
+    // helper method to be used in JCompilationUnit
+    // changed by abe :)
+    public boolean isPublic() {
+        for (String mod : mods) {
+            if (mod == "public")
+                return true;
+        }
+
+        return false;
     }
 
     /**
