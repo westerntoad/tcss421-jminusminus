@@ -1,9 +1,16 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham & Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
 
+/*
+ * TODO:
+ * Exercise 5.6. Add the do-while statement to j--, adding it to your compiler and testing it
+ * thoroughly (provide short example programs to test it).
+ */
 /**
  * The AST node for a do-statement.
  */

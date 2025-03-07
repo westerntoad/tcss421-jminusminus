@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham & Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
@@ -11,8 +13,14 @@ class JLiteralLong extends JExpression {
     // String representation of the literal.
     private String text;
 
+    /*
+     * (Bonus) Exercise 5.21. Add the primitive type long to j--, adding it to your
+     * compiler and
+     * testing it thoroughly (provide short example programs to test it).
+     */
     /**
-     * Constructs an AST node for a long literal given its line number and string representation.
+     * Constructs an AST node for a long literal given its line number and string
+     * representation.
      *
      * @param line line in which the literal occurs in the source file.
      * @param text string representation of the literal.

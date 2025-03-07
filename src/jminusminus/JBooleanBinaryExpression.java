@@ -1,24 +1,28 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham & Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
 
 /**
- * This abstract base class is the AST node for binary expressions that return booleans.
+ * This abstract base class is the AST node for binary expressions that return
+ * booleans.
  */
 abstract class JBooleanBinaryExpression extends JBinaryExpression {
     /**
      * Constructs an AST node for a boolean binary expression.
      *
-     * @param line     line in which the boolean binary expression occurs in the source file.
+     * @param line     line in which the boolean binary expression occurs in the
+     *                 source file.
      * @param operator the boolean binary operator.
      * @param lhs      lhs operand.
      * @param rhs      rhs operand.
      */
 
     protected JBooleanBinaryExpression(int line, String operator, JExpression lhs,
-                                       JExpression rhs) {
+            JExpression rhs) {
         super(line, operator, lhs, rhs);
     }
 
@@ -44,7 +48,8 @@ class JEqualOp extends JBooleanBinaryExpression {
     /**
      * Constructs an AST node for an equality expression.
      *
-     * @param line line number in which the equality expression occurs in the source file.
+     * @param line line number in which the equality expression occurs in the source
+     *             file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */
@@ -85,7 +90,8 @@ class JLogicalAndOp extends JBooleanBinaryExpression {
     /**
      * Constructs an AST node for a logical-and expression.
      *
-     * @param line line in which the logical-and expression occurs in the source file.
+     * @param line line in which the logical-and expression occurs in the source
+     *             file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */
@@ -121,6 +127,15 @@ class JLogicalAndOp extends JBooleanBinaryExpression {
     }
 }
 
+/*
+ * TODO:
+ * Exercise 5.12. Add the conditional-or operator || to j--, adding it to your
+ * compiler and testing
+ * it thoroughly (provide short example programs to test it). Make sure to avoid
+ * unnecessary
+ * branches to branches. The conditional ||, like the conditional &&, is
+ * short-circuited.
+ */
 /**
  * The AST node for a logical-or (||) expression.
  */
@@ -128,7 +143,8 @@ class JLogicalOrOp extends JBooleanBinaryExpression {
     /**
      * Constructs an AST node for a logical-or expression.
      *
-     * @param line line in which the logical-or expression occurs in the source file.
+     * @param line line in which the logical-or expression occurs in the source
+     *             file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */
@@ -159,7 +175,8 @@ class JNotEqualOp extends JBooleanBinaryExpression {
     /**
      * Constructs an AST node for not-equal-to (!=) expression.
      *
-     * @param line line number in which the not-equal-to (!=) expression occurs in the source file.
+     * @param line line number in which the not-equal-to (!=) expression occurs in
+     *             the source file.
      * @param lhs  lhs operand.
      * @param rhs  rhs operand.
      */

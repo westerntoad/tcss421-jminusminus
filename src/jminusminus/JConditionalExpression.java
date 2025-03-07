@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham & Jeremiah
+
 package jminusminus;
 
 import static jminusminus.CLConstants.*;
@@ -17,16 +19,27 @@ class JConditionalExpression extends JExpression {
     // Else part.
     private JExpression elsePart;
 
+    /*
+     * TODO:
+     * Exercise 5.11. Add conditional expressions to j--, adding them to your
+     * compiler and testing
+     * them thoroughly (provide short example programs to test them). Conditional
+     * expressions are
+     * compiled in a manner identical to if-else statements. The only difference is
+     * that in this case,
+     * both the consequent and the alternative are expressions.
+     */
     /**
      * Constructs an AST node for a conditional expression.
      *
-     * @param line      line in which the conditional expression occurs in the source file.
+     * @param line      line in which the conditional expression occurs in the
+     *                  source file.
      * @param condition test expression.
      * @param thenPart  then part.
      * @param elsePart  else part.
      */
     public JConditionalExpression(int line, JExpression condition, JExpression thenPart,
-                                  JExpression elsePart) {
+            JExpression elsePart) {
         super(line);
         this.condition = condition;
         this.thenPart = thenPart;

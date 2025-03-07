@@ -1,5 +1,7 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
 
+// Modified 2025 - Abraham & Jeremiah
+
 package jminusminus;
 
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ class JForStatement extends JStatement {
     // The body.
     private JStatement body;
 
+    /*
+     * TODO:
+     * Exercise 5.7. Add the classic for-statement to j--, adding it to your
+     * compiler and testing it
+     * thoroughly (provide short example programs to test it).
+     */
     /**
      * Constructs an AST node for a for-statement.
      *
@@ -32,7 +40,7 @@ class JForStatement extends JStatement {
      * @param body      the body.
      */
     public JForStatement(int line, ArrayList<JStatement> init, JExpression condition,
-                         ArrayList<JStatement> update, JStatement body) {
+            ArrayList<JStatement> update, JStatement body) {
         super(line);
         this.init = init;
         this.condition = condition;
