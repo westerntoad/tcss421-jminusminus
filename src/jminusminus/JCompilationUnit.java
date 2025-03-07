@@ -153,9 +153,22 @@ class JCompilationUnit extends JAST {
      * {@inheritDoc}
      */
     public JAST analyze(Context context) {
+        boolean foundPublicClass = false;
+
         for (JAST typeDeclaration : typeDeclarations) {
             typeDeclaration.analyze(this.context);
+            if (((JClassDeclaration) typeDeclaration).isPublic()) {
+                if (foundPublicClass) {
+                    JAST.compilationUnit.reportSemanticError(typeDeclaration.line(), "Multiple public classes defined.");
+                }
+                foundPublicClass = true;
+            }
         }
+
+        if (!foundPublicClass) {
+            JAST.compilationUnit.reportSemanticError(0, "No public class defined.");
+        }
+
         return this;
     }
 
