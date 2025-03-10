@@ -149,12 +149,28 @@ class JCompilationUnit extends JAST {
         }
     }
 
+    /*
+     * Assignment 4.1 - JCompilationUnit = the compiler
+     * Java requirements per source file:
+     * 0 public classes = a-ok
+     * 1 public class = file name must match class name - not the responsibility of this section to verify file name matches.
+     * > 1 public classes = error
+     */
     /**
      * {@inheritDoc}
      */
     public JAST analyze(Context context) {
+        boolean publicClassFound = false;
         for (JAST typeDeclaration : typeDeclarations) {
             typeDeclaration.analyze(this.context);
+            if(typeDeclaration instanceof JClassDeclaration) {
+                if(((JClassDeclaration) typeDeclaration).modifiers().contains("public")) {
+                    if(publicClassFound) {
+                        reportSemanticError(typeDeclaration.line(), "Only 1 or 0 classes can be declared public per source file.");
+                    }
+                    publicClassFound = true;
+                }
+            }
         }
         return this;
     }
