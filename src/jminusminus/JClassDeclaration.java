@@ -8,6 +8,8 @@ import static jminusminus.CLConstants.*;
 
 /**
  * A representation of a class declaration.
+ *  @version 2.0
+ *  @author Corey Young
  */
 class JClassDeclaration extends JAST implements JTypeDecl {
     // Class modifiers.
@@ -129,6 +131,7 @@ class JClassDeclaration extends JAST implements JTypeDecl {
         }
     }
 
+    //get method for assignment 4.1 - to be used in JCompilationUnit
     /**
      * Returns the class modifiers (expressed as Strings).
      *

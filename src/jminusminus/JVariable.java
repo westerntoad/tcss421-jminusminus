@@ -6,6 +6,8 @@ import static jminusminus.CLConstants.*;
 
 /**
  * The AST node for an identifier used as a primary expression.
+ * @version 2.0
+ * @author Corey Young
  */
 class JVariable extends JExpression implements JLhs {
     // The variable's name.
@@ -46,6 +48,7 @@ class JVariable extends JExpression implements JLhs {
         return iDefn;
     }
 
+    //Assignment 4.2
     /**
      * {@inheritDoc}
      */
@@ -58,6 +61,12 @@ class JVariable extends JExpression implements JLhs {
             if (field == null) {
                 type = Type.ANY;
                 JAST.compilationUnit.reportSemanticError(line, "Cannot find name: " + name);
+                //declare variable as Type.ANY in the symbol table
+                //context.addType(line, type); -> doesn't work because the variable is not yet declared in the symbol table
+                //Have to allocate space from the stack with a new definition
+                int offset = ((LocalContext) context).nextOffset();
+                LocalVariableDefn varDefinition = new LocalVariableDefn(type, offset);
+                context.addEntry(line, name, varDefinition);
             } else {
                 // Rewrite a variable denoting a field as an explicit field selection.
                 type = field.type();

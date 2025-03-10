@@ -27,6 +27,8 @@ import java.util.ArrayList;
  *   recursive calls down the tree, to the {@code codegen} methods at each node, for generating
  *   the appropriate instructions.</li>
  * </ol>
+ *  @version 2.0
+ *  @author Corey Young
  */
 class JCompilationUnit extends JAST {
     // Name of the source file.
@@ -166,7 +168,8 @@ class JCompilationUnit extends JAST {
             if(typeDeclaration instanceof JClassDeclaration) {
                 if(((JClassDeclaration) typeDeclaration).modifiers().contains("public")) {
                     if(publicClassFound) {
-                        reportSemanticError(typeDeclaration.line(), "Only 1 or 0 classes can be declared public per source file.");
+                        JAST.compilationUnit.reportSemanticError(typeDeclaration.line(),
+                                "Only 1 or 0 classes can be declared public per source file.");
                     }
                     publicClassFound = true;
                 }
