@@ -43,7 +43,7 @@ class JLiteralLong extends JExpression {
      * {@inheritDoc}
      */
     public JExpression analyze(Context context) {
-        // TODO
+        type = Type.LONG;
         return this;
     }
 
@@ -51,7 +51,14 @@ class JLiteralLong extends JExpression {
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output) {
-        // TODO
+        long i = toLong();
+        if (i == 0L) {
+            output.addNoArgInstruction(LCONST_0);
+        } else if (i == 1L) {
+            output.addNoArgInstruction(LCONST_1);
+        } else {
+            output.addLDCInstruction(i);
+        }
     }
 
     /**

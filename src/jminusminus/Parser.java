@@ -369,12 +369,8 @@ public class Parser {
             }
             // Abraham & Jeremiah, add break
         } else if (have(BREAK)) {
-            if (have(SEMI))
-                return new JBreakStatement(line);
-            // DANGER
-            // TODO: TODON'T
-            else
-                return null;
+            mustBe(SEMI);
+            return new JBreakStatement(line);
         } else if (have(SEMI)) {
             return new JEmptyStatement(line);
         } else if (have(FOR)) {
