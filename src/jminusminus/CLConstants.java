@@ -244,14 +244,12 @@ public class CLConstants {
     /**
      * Identifies RuntimeVisibleParameterAnnotations attribute.
      */
-    public static final String ATT_RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS =
-            "RuntimeVisibleParameterAnnotations";
+    public static final String ATT_RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS = "RuntimeVisibleParameterAnnotations";
 
     /**
      * Identifies RuntimeInvisibleParameterAnnotations attribute.
      */
-    public static final String ATT_RUNTIME_INVISIBLE_PARAMETER_ANNOTATIONS =
-            "RuntimeInvisibleParameterAnnotations";
+    public static final String ATT_RUNTIME_INVISIBLE_PARAMETER_ANNOTATIONS = "RuntimeInvisibleParameterAnnotations";
 
     /**
      * Identifies AnnotationDefault attribute.
@@ -1346,17 +1344,20 @@ public class CLConstants {
         LOAD_STORE1, LOAD_STORE2, LOAD_STORE3, LOAD_STORE4, STACK, MISC;
     }
 
-    // The constants below simply serve as markers. We are not interested in their values, which
+    // The constants below simply serve as markers. We are not interested in their
+    // values, which
     // however have been picked so as not to conflict with others.
 
     /**
-     * Denotes values that are irrelevant to certain instructions. For example, local variable
+     * Denotes values that are irrelevant to certain instructions. For example,
+     * local variable
      * index for arithmetic instructions.
      */
     public static final int IRRELEVANT = -1;
 
     /**
-     * Denotes values that are not statically known. For example, stack units for field
+     * Denotes values that are not statically known. For example, stack units for
+     * field
      * instructions.
      */
     public static final int DYNAMIC = 300;

@@ -4,6 +4,8 @@ package jminusminus;
 
 import static jminusminus.CLConstants.*;
 
+import java.util.ArrayList;
+
 /**
  * The AST node for an if-statement.
  */
