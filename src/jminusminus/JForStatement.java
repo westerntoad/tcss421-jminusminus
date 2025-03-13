@@ -52,7 +52,13 @@ class JForStatement extends JStatement {
      * {@inheritDoc}
      */
     public JForStatement analyze(Context context) {
-        // TODO
+        for (JStatement statement : init)
+            statement = (JStatement) statement.analyze(context);
+        condition = condition.analyze(context);
+        condition.type().mustMatchExpected(line(), Type.BOOLEAN);
+        for (JStatement statement : update)
+            statement = (JStatement) statement.analyze(context);
+        body = (JStatement) body.analyze(context);
         return this;
     }
 
@@ -60,7 +66,17 @@ class JForStatement extends JStatement {
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output) {
-        // TODO
+        String test = output.createLabel();
+        String out = output.createLabel();
+        for (JStatement statement : init)
+            statement.codegen(output);
+        output.addLabel(test);
+        condition.codegen(output, out, false);
+        body.codegen(output);
+        for (JStatement statement : update)
+            statement.codegen(output);
+        output.addBranchInstruction(GOTO, test);
+        output.addLabel(out);
     }
 
     /**
