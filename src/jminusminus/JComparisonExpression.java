@@ -107,11 +107,14 @@ class JGreaterEqualOp extends JComparisonExpression {
         super(line, ">=", lhs, rhs);
     }
 
+    // Abraham & Jeremiah
     /**
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output, String targetLabel, boolean onTrue) {
-        // TODO
+        lhs.codegen(output);
+        rhs.codegen(output);
+        output.addBranchInstruction(onTrue ? IF_ICMPGT : IF_ICMPLE, targetLabel);
     }
 }
 
@@ -132,10 +135,13 @@ class JLessThanOp extends JComparisonExpression {
         super(line, "<", lhs, rhs);
     }
 
+    // Abraham & Jeremiah
     /**
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output, String targetLabel, boolean onTrue) {
-        // TODO
+        lhs.codegen(output);
+        rhs.codegen(output);
+        output.addBranchInstruction(onTrue ? IF_ICMPLE : IF_ICMPGT, targetLabel);
     }
 }
