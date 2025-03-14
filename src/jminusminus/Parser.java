@@ -824,7 +824,7 @@ public class Parser {
             if (have(QMARK)) {
                 JExpression middle = conditionalAndExpression();
                 if (have(COLON)) {
-                    lhs = new JTernaryExpression(line, lhs, middle, conditionalAndExpression());
+                    lhs = new JConditionalExpression(line, lhs, middle, conditionalAndExpression());
                 } else {
                     more = false;
                 }

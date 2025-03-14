@@ -50,7 +50,11 @@ class JConditionalExpression extends JExpression {
      * {@inheritDoc}
      */
     public JExpression analyze(Context context) {
-        // TODO
+        condition = condition.analyze(context);
+        //condition.type().mustMatchExpected(line(), Type.BOOLEAN);
+        thenPart = thenPart.analyze(context);
+        elsePart = elsePart.analyze(context);
+        type = thenPart.type();
         return this;
     }
 
@@ -58,7 +62,14 @@ class JConditionalExpression extends JExpression {
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output) {
-        // TODO
+        String elseLabel = output.createLabel();
+        String endLabel = output.createLabel();
+        condition.codegen(output, elseLabel, false);
+        thenPart.codegen(output);
+        output.addBranchInstruction(GOTO, endLabel);
+        output.addLabel(elseLabel);
+        elsePart.codegen(output);
+        output.addLabel(endLabel);
     }
 
     /**
