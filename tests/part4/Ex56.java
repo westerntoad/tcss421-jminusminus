@@ -38,9 +38,9 @@ public class Ex56 {
         int l = 1;
         do {
             System.out.println(l);
-            l *= 2;
-        } while (l < 100);
-        if (l >= 100) {
+            l += 1;
+        } while (l < 15);
+        if (l == 15) {
             System.out.println("less than do-while passed");
         } else {
             System.out.println("less than do-while failed");
@@ -51,7 +51,7 @@ public class Ex56 {
             System.out.println(m);
             m += 2;
         } while (m <= 20);
-        if (m > 20) {
+        if (m == 22) {
             System.out.println("less than or equal do-while passed");
         } else {
             System.out.println("less than or equal do-while failed");
