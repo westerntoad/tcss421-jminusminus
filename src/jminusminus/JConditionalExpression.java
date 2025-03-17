@@ -6,6 +6,8 @@ import static jminusminus.CLConstants.*;
 
 /**
  * The AST node for a conditional expression.
+ * @version 2.0
+ * @author Corey Young
  */
 class JConditionalExpression extends JExpression {
     // Test expression.
@@ -33,11 +35,18 @@ class JConditionalExpression extends JExpression {
         this.elsePart = elsePart;
     }
 
+    //Assignment 5.11
+    //Copy JIfStatement code, switch then & else JStatements to JExpressions
     /**
      * {@inheritDoc}
      */
     public JExpression analyze(Context context) {
-        // TODO
+        condition = (JExpression) condition.analyze(context);
+        condition.type().mustMatchExpected(line(), Type.BOOLEAN);
+        thenPart = (JExpression) thenPart.analyze(context);
+        if (elsePart != null) {
+            elsePart = (JExpression) elsePart.analyze(context);
+        }
         return this;
     }
 
@@ -45,7 +54,18 @@ class JConditionalExpression extends JExpression {
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output) {
-        // TODO
+        String elseLabel = output.createLabel();
+        String endLabel = output.createLabel();
+        condition.codegen(output, elseLabel, false);
+        thenPart.codegen(output);
+        if (elsePart != null) {
+            output.addBranchInstruction(GOTO, endLabel);
+        }
+        output.addLabel(elseLabel);
+        if (elsePart != null) {
+            elsePart.codegen(output);
+            output.addLabel(endLabel);
+        }
     }
 
     /**
