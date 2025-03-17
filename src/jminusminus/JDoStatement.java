@@ -6,6 +6,8 @@ import static jminusminus.CLConstants.*;
 
 /**
  * The AST node for a do-statement.
+ *  @version 2.0
+ *  @author Corey Young
  */
 public class JDoStatement extends JStatement {
     // Body.
@@ -27,11 +29,14 @@ public class JDoStatement extends JStatement {
         this.condition = condition;
     }
 
+    //Assignment 5.6
     /**
      * {@inheritDoc}
      */
     public JStatement analyze(Context context) {
-        // TODO
+        condition = condition.analyze(context);
+        condition.type().mustMatchExpected(line, Type.BOOLEAN);
+        body = (JStatement) body.analyze(context);
         return this;
     }
 
@@ -39,7 +44,10 @@ public class JDoStatement extends JStatement {
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output) {
-        // TODO
+        String loopStartLabel = output.createLabel();
+        output.addLabel(loopStartLabel);
+        body.codegen(output);
+        condition.codegen(output, loopStartLabel, true);
     }
 
     /**
