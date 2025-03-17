@@ -1,4 +1,5 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
+// Changes to JLogicalOr made by Corey Young
 
 package jminusminus;
 
@@ -121,8 +122,12 @@ class JLogicalAndOp extends JBooleanBinaryExpression {
     }
 }
 
+//Assignment 5.12
+//Copy/Paste JLogicalAnd, switch continue evaluating case to 'on false' instead of 'on true'
 /**
  * The AST node for a logical-or (||) expression.
+ * @version 2.0
+ * @author Corey Young
  */
 class JLogicalOrOp extends JBooleanBinaryExpression {
     /**
@@ -140,15 +145,28 @@ class JLogicalOrOp extends JBooleanBinaryExpression {
      * {@inheritDoc}
      */
     public JExpression analyze(Context context) {
-        // TODO
+        lhs = (JExpression) lhs.analyze(context);
+        rhs = (JExpression) rhs.analyze(context);
+        lhs.type().mustMatchExpected(line(), Type.BOOLEAN);
+        rhs.type().mustMatchExpected(line(), Type.BOOLEAN);
+        type = Type.BOOLEAN;
         return this;
     }
 
+    //mirror of logical and
     /**
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output, String targetLabel, boolean onTrue) {
-        // TODO
+        if (onTrue) {
+            lhs.codegen(output, targetLabel, true);
+            rhs.codegen(output, targetLabel, true);
+        } else {
+            String trueLabel = output.createLabel();
+            lhs.codegen(output, trueLabel, true);
+            rhs.codegen(output, targetLabel, false);
+            output.addLabel(trueLabel);
+        }
     }
 }
 

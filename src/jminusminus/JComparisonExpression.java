@@ -1,4 +1,5 @@
 // Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas
+// Changes to JGreaterEqualOp & JLessThanOp made by Corey Young
 
 package jminusminus;
 
@@ -86,6 +87,8 @@ class JLessEqualOp extends JComparisonExpression {
 
 /**
  * The AST node for a greater-than-or-equal-to (&gt;=) expression.
+ * @version 2.0
+ * @author Corey Young
  */
 class JGreaterEqualOp extends JComparisonExpression {
 
@@ -100,16 +103,21 @@ class JGreaterEqualOp extends JComparisonExpression {
         super(line, ">=", lhs, rhs);
     }
 
+    //Copy/Paste LessEqualOp, then inverse
     /**
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output, String targetLabel, boolean onTrue) {
-        // TODO
+        lhs.codegen(output);
+        rhs.codegen(output);
+        output.addBranchInstruction(onTrue ? IF_ICMPGE : IF_ICMPLT, targetLabel);
     }
 }
 
 /**
  * The AST node for a less-than (&lt;) expression.
+ * @version 2.0
+ * @author Corey Young
  */
 class JLessThanOp extends JComparisonExpression {
     /**
@@ -123,10 +131,13 @@ class JLessThanOp extends JComparisonExpression {
         super(line, "<", lhs, rhs);
     }
 
+    //Copy/Paste GreaterThanOp, then inverse
     /**
      * {@inheritDoc}
      */
     public void codegen(CLEmitter output, String targetLabel, boolean onTrue) {
-        // TODO
+        lhs.codegen(output);
+        rhs.codegen(output);
+        output.addBranchInstruction(onTrue ? IF_ICMPLT : IF_ICMPGE, targetLabel);
     }
 }
